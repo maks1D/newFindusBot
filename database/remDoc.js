@@ -1,6 +1,9 @@
 module.exports = async (searchquery, collectionid) => {
     try {
-        ef['db' + ef.collections[collectionid]].deleteOne(searchquery, (err, result) => {
+        var collectionName
+        ef.db.collections.includes(collectionid) ? collectionName = collectionid : collectionName = ef.db.collections[collectionid]
+
+        ef.db[collectionName].deleteOne(searchquery, (err, result) => {
             if(err) {
                 return console.log(err)
             }

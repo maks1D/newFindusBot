@@ -1,6 +1,9 @@
 module.exports = async (doc, collectionid) => {
     try {
-        ef['db' + ef.collections[collectionid]].insertOne(doc, (err, result) => {
+        var collectionName
+        ef.db.collections.includes(collectionid) ? collectionName = collectionid : collectionName = ef.db.collections[collectionid]
+
+        ef.db[collectionName].insertOne(doc, (err, result) => {
             if(err) {
                 return console.log(err)
             }
