@@ -23,7 +23,7 @@ module.exports = async (data) => {
                   ef.models.def({
                     object: data.object,
                     message: `\`${response.body[data.output]}\``,
-                    footer: `api.badosz.com`
+                    footer: `powered by api.badosz.com`
                   })
                 } else if (data.type == "image") {
                     const type = imageType(response.body)
@@ -33,8 +33,7 @@ module.exports = async (data) => {
                       message: data.title,
                       file: file,
                       image: `attachment://file.${type ? type.ext : 'png'}`,
-                      footer: `api.badosz.com • Invoked by ${/*data.object.author.id*/"Findus"}`,
-                      channel: "519164929966735377"
+                      footer: `powered by api.badosz.com • Invoked by ${data.object.author.id}`,
                     })
                 }
             })//.catch(error => {

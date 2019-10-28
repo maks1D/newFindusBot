@@ -12,7 +12,9 @@ class ef extends Client {
         this.files.files = [
             'release-notes',
             'devs',
-            'colors'
+            'colors',
+            'prefixes',
+            'roles'
         ]
 
         this.files.files.forEach(file => {
@@ -70,6 +72,8 @@ class ef extends Client {
             this.eventHandler = new (require('./handlers/events.js'))(this)
 
             this.models = require("./models")
+
+            this.prefix = this.files.prefixes[this.type]
 
             await this.login(this.tokens[this.type + 'discordapi'])
 
