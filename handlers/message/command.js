@@ -44,18 +44,18 @@ module.exports = async (message, prefix, guild) => {
 
     if(command.data.userPerms.some(perm => !userPerms.has(perm)) && !ef.files.roles.developers.includes(message.author.id)) {
         const perm = command.data.userPerms.filter(perm => !userPerms.has(perm))[0]
-        return ef.models.snap({
+        return ef.models.def({
             object: message,
-            message: `Potrzebujesz uprawnienia: \`${perm.toTitleCase().replace(`_`,` `)}\` aby użyć tej komendy!`,
+            message: `Potrzebujesz uprawnienia: \`${perm.replace(`_`,` `)}\` aby użyć tej komendy!`,
             color: ef.files.colors.red
         })
     }
 
     if (command.data.botPerms.some(perm => !botPerms.has(perm))) {
         const perm = command.data.botPerms.filter(perm => !botPerms.has(perm))[0]
-        return ef.models.snap({
+        return ef.models.def({
             object: message,
-            message: `${ef.user.username} nie posiada następującego uprawnienia: \`${perm.toTitleCase().replace(`_`,` `)}\`!`,
+            message: `${ef.user.username} nie posiada następującego uprawnienia: \`${perm.replace(`_`,` `)}\`!`,
             color: ef.files.colors.red
         })
     }
