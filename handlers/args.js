@@ -29,10 +29,10 @@ module.exports = async (args, command, message) => {
         resolve(false)
 
         function error(message, text) {
-        ef.models.snap({
+        ef.models.send({
             object: message,
             message: text,
-            color: ef.files.colors.red
+            color: ef.colors.red
         })
         resolve(true)
         }

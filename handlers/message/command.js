@@ -23,40 +23,40 @@ module.exports = async (message, prefix, guild) => {
         botPerms: []
     }, command.data)
 
-    if(!ef.files.roles.developers.includes(message.author.id) && command.data.developer){
-        return ef.models.def({
+    if(!ef.roles.developers.includes(message.author.id) && command.data.developer){
+        return ef.models.send({
             object: message,
             message: `\`Ta komenda jest tylko dla developerów!\``,
-            color: ef.files.colors.red
+            color: ef.colors.red
         })
     }
 
     if(command.data.voice == true && !message.member.voiceChannel) {
-        return ef.models.def({
+        return ef.models.send({
             object: message,
             message: `\`Najpierw połącz się z kanałem głosowym!\``,
-            color: ef.files.colors.red
+            color: ef.colors.red
         })
     }
 
     const userPerms = message.guild.members.get(message.author.id).permissions
     const botPerms = message.guild.members.get(ef.user.id).permissions
 
-    if(command.data.userPerms.some(perm => !userPerms.has(perm)) && !ef.files.roles.developers.includes(message.author.id)) {
+    if(command.data.userPerms.some(perm => !userPerms.has(perm)) && !ef.roles.developers.includes(message.author.id)) {
         const perm = command.data.userPerms.filter(perm => !userPerms.has(perm))[0]
-        return ef.models.def({
+        return ef.models.send({
             object: message,
-            message: `Potrzebujesz uprawnienia: \`${perm.replace(`_`,` `)}\` aby użyć tej komendy!`,
-            color: ef.files.colors.red
+            message: `Potrzebujesz uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\` aby użyć tej komendy!`,
+            color: ef.colors.red
         })
     }
 
     if (command.data.botPerms.some(perm => !botPerms.has(perm))) {
         const perm = command.data.botPerms.filter(perm => !botPerms.has(perm))[0]
-        return ef.models.def({
+        return ef.models.send({
             object: message,
-            message: `${ef.user.username} nie posiada następującego uprawnienia: \`${perm.replace(`_`,` `)}\`!`,
-            color: ef.files.colors.red
+            message: `${ef.user.username} nie posiada następującego uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\`!`,
+            color: ef.colors.red
         })
     }
 
@@ -67,5 +67,8 @@ module.exports = async (message, prefix, guild) => {
         message: message,
         args: args,
         guild: guild
+    })
+    .catch(err => {
+        return require('../error')(message, err)
     })
 }

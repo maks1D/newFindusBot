@@ -16,29 +16,29 @@ exports.output = async ({message, guild, args}) => {
                 }
                 if(channel){
                     ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.channel": channel}, 'servers')
-                    return ef.models.def({
+                    return ef.models.send({
                         object: message,
                         message: `Ustawiono kanał na: <#${channel}>.`,
                     })
                 } else {
-                    return ef.models.def({
+                    return ef.models.send({
                         object: message,
                         message: `Nie znaleziono kanału!`,
-                        color: ef.files.colors.red
+                        color: ef.colors.red
                     })
                 }
             } else {
-                return ef.models.def({
+                return ef.models.send({
                     object: message,
                     message: `Musisz wzmiankować kanał!`,
-                    color: ef.files.colors.red
+                    color: ef.colors.red
                 })
             }
         } else if(args[0] == "wiadomość"){
             args.shift()
             var mess = args.join(' ')
             ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.message": mess}, 'servers')
-            return ef.models.def({
+            return ef.models.send({
                 object: message,
                 message: `Nowa wiadomość pomyślnie ustawiona!`
             })
@@ -46,13 +46,13 @@ exports.output = async ({message, guild, args}) => {
     } else if(args[0] == 'on' || args[0] == 'off'){
         var statement = args[0] == 'on' ? "true" : "false"
         ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.enabled": statement}, 'servers')
-        return ef.models.def({
+        return ef.models.send({
             object: message,
             message: `Leaver został ${args[0] == "on" ? "włączony" : "wyłączony"}.`
         })
     }
 
-    ef.models.def({
+    ef.models.send({
         object: message,
         message: `Leaver na twoim serwerze jest ${guild.settings.leaver.enabled == "true" ? `włączony` : `wyłączony`},
                   Kanał: ${guild.settings.leaver.channel != "undefined" ? `<#${guild.settings.leaver.channel}>` : `\`[Nie ustawiony]\``},
@@ -68,12 +68,12 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['leaver'],
-    description: 'Pokazuje ustawienia wiadomości żegnające członków serwera.',
+    description: 'Pokazuje ustawienia wiadomości żegnających członków serwera.',
     usage: [
         '{prefix}{command} kanał <#kanał>',
         '{prefix}{command} <on/off>',
         '{prefix}{command} wiadomość <wiadomość>',
-        '\nZmienne w wiadomości: [\n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. Findus#\`7449\`)\n{user.mention} - wzmianka użytkownika\n]'
+        '\nZmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. Findus#\`7449\`)\n{user.mention} - wzmianka użytkownika\n'
     ],
     userPerms: [
         "MANAGE_GUILD"

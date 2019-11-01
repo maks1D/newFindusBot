@@ -20,7 +20,7 @@ module.exports = async (data) => {
             )
             .then(async response => {
                 if (data.type == 'text') {
-                  ef.models.def({
+                  ef.models.send({
                     object: data.object,
                     message: `\`${response.body[data.output]}\``,
                     footer: `powered by api.badosz.com`
@@ -28,15 +28,15 @@ module.exports = async (data) => {
                 } else if (data.type == "image") {
                     const type = imageType(response.body)
                     const file = new Attachment(response.body, `file.${type ? type.ext : 'png'}`)
-                    ef.models.def({
+                    ef.models.send({
                       object: data.object,
                       message: data.title,
                       file: file,
                       image: `attachment://file.${type ? type.ext : 'png'}`,
-                      footer: `powered by api.badosz.com • Invoked by ${data.object.author.id}`,
+                      footer: `powered by api.badosz.com • Invoked by ${data.object.author.username}`,
                     })
                 }
-            })//.catch(error => {
-              //return require('../handlers/error')(data.object, error)
-            //})
+            }).catch(error => {
+              return require('../handlers/error')(data.object, error)
+            })
 }

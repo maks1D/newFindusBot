@@ -1,5 +1,6 @@
 module.exports = async (message) => {
     if(message.author.bot) return
+    if(!message.guild) return
 
     if(message.content == `<@${ef.user.id}>` || message.content == `<@!${ef.user.id}>`){
         return require('../handlers/message/mention')(message)

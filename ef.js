@@ -7,9 +7,7 @@ class ef extends Client {
 
         global.ef = this
 
-        this.files = []
-
-        this.files.files = [
+        this.files = [
             'release-notes',
             'devs',
             'colors',
@@ -17,13 +15,13 @@ class ef extends Client {
             'roles'
         ]
 
-        this.files.files.forEach(file => {
-            this.files[file] = require(`./files/${file}.json`)
+        this.files.forEach(file => {
+            this[file] = require(`./files/${file}.json`)
         })
 
         this.tokens = []
 
-        this.color = this.files.colors.green
+        this.color = this.colors.green
 
         this.tokens.secrets = [
             'fortniteapi',
@@ -73,11 +71,11 @@ class ef extends Client {
 
             this.models = require("./models")
 
-            this.prefix = this.files.prefixes[this.type]
+            this.prefix = this.prefixes[this.type]
+
+            this.utils = require('./utils')
 
             await this.login(this.tokens[this.type + 'discordapi'])
-
-            //this.models.apibadosz({endpoint: `tweet?text=${encodeURIComponent("this is tome txt")}&username=${encodeURIComponent("Findus")}&url=${encodeURIComponent(this.users.get("512230433782497281").avatarURL)}`})
         })
     }
 }

@@ -16,22 +16,22 @@ exports.output = async ({message, guild, args}) => {
                 }
                 if(channel){
                     ef.db.editDoc({'id': `${guild.id}`}, {"settings.welcomer.channel": channel}, 'servers')
-                    return ef.models.def({
+                    return ef.models.send({
                         object: message,
                         message: `Ustawiono kanał na: <#${channel}>.`,
                     })
                 } else {
-                    return ef.models.def({
+                    return ef.models.send({
                         object: message,
                         message: `Nie znaleziono kanału!`,
-                        color: ef.files.colors.red
+                        color: ef.colors.red
                     })
                 }
             } else {
-                return ef.models.def({
+                return ef.models.send({
                     object: message,
                     message: `Musisz wzmiankować kanał!`,
-                    color: ef.files.colors.red
+                    color: ef.colors.red
                 })
             }
         } else if(args[0] == "wiadomość"){
@@ -39,28 +39,28 @@ exports.output = async ({message, guild, args}) => {
             if(args[0]){
                 var mess = args.join(' ')
                 ef.db.editDoc({'id': `${guild.id}`}, {"settings.welcomer.message": mess}, 'servers')
-                return ef.models.def({
+                return ef.models.send({
                     object: message,
                     message: `Nowa wiadomość pomyślnie ustawiona!`
                 })
             }else{
-                ef.models.def({
+                ef.models.send({
                     object: message,
                     message: `Wpisz poprawną wiadomość!`,
-                    color: ef.files.colors.red
+                    color: ef.colors.red
                 })
             }
         }
     } else if(args[0] == 'on' || args[0] == 'off'){
         var statement = args[0] == 'on' ? "true" : "false"
         ef.db.editDoc({'id': `${guild.id}`}, {"settings.welcomer.enabled": statement}, 'servers')
-        return ef.models.def({
+        return ef.models.send({
             object: message,
             message: `Welcomer został ${args[0] == "on" ? "włączony" : "wyłączony"}.`
         })
     }
 
-    ef.models.def({
+    ef.models.send({
         object: message,
         message: `Welcomer na twoim serwerze jest ${guild.settings.welcomer.enabled == "true" ? `włączony` : `wyłączony`},
                   Kanał: ${guild.settings.welcomer.channel != "undefined" ? `<#${guild.settings.welcomer.channel}>` : `\`[Nie ustawiony]\``},
@@ -81,7 +81,7 @@ exports.data = {
         '{prefix}{command} kanał <#kanał>',
         '{prefix}{command} <on/off>',
         '{prefix}{command} wiadomość <wiadomość>',
-        '\nZmienne w wiadomości: [\n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. Findus#\`7449\`)\n{user.mention} - wzmianka użytkownika\n]'
+        '\nZmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. Findus#\`7449\`)\n{user.mention} - wzmianka użytkownika\n'
     ],
     userPerms: [
         "MANAGE_GUILD"

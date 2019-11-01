@@ -3,9 +3,9 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':control_knobs: Settings',
-  id: 'settings',
-  description: 'Skonfiguruj swój serwer!',
+  name: ':bookmark: Basic',
+  id: 'basic',
+  description: 'Podstawowe informacje o bocie.',
   author: 'Findus#7449',
   commands: commands,
   devOnly: false,
