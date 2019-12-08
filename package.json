@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "express-session": "^1.16.1",
     "ffmpeg-static": "^2.5.0",
-    "fortnite": "^4.1.1",
+    "fortnite": "^4.3.2",
     "image-type": "^4.1.0",
     "marked": "^0.7.0",
     "memorystore": "^1.6.1",
