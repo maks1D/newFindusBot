@@ -5,11 +5,12 @@ var Fortnite = new frtnt(ef.tokens["fortniteapi"])
 
 function draw(Platform, Message, Data)
 {
-    var Stats = Data.stats;   
+    var Stats = Data.stats;
+    if(Stats === undefined) throw 'NoUser'
     if(Stats.solo.wins != 0){var winsol = Math.round(Stats.solo.wins / Stats.solo.matches * 10000)/100;}else{var winsol = 0;}
     if(Stats.duo.wins != 0){var winduo = Math.round(Stats.duo.wins / Stats.duo.matches * 10000)/100;}else{var winduo = 0;}
     if(Stats.squad.wins != 0){var winsq = Math.round(Stats.squad.wins / Stats.squad.matches * 10000)/100;}else{var winsq = 0;}
-    if(Stats.lifetime[8]["Wins"] != 0){var winlt = Math.round(Stats.lifetime[8]["Wins"] / Stats.lifetime[7]["Matches Played"] * 10000)/100;}else{var winlt = 0;}
+    if(Stats.lifetime["wins"] != 0){var winlt = Math.round(Stats.lifetime["wins"] / Stats.lifetime["matches"] * 10000)/100;}else{var winlt = 0;}
 
     const canvas = Canvas.createCanvas(600, 360);
     const ctx = canvas.getContext('2d');
@@ -93,27 +94,27 @@ function draw(Platform, Message, Data)
     ctx.moveTo(20, 100);
     ctx.lineTo(100, 100);
     ctx.stroke();
-    ctx.fillText(`${Stats.lifetime[8]["Wins"]}`, 45, 130);
-    ctx.fillText(`${Stats.lifetime[11]["K/d"]}`, 115, 130);
+    ctx.fillText(`${Stats.lifetime["wins"]}`, 45, 130);
+    ctx.fillText(`${Stats.lifetime['kd']}`, 115, 130);
     ctx.fillText(`${winlt}`, 190, 130);
     ctx.moveTo(20, 163);
     ctx.lineTo(100, 163);
     ctx.stroke();
     ctx.textAlign = "start"; 
-    ctx.fillText(`${Stats.lifetime[10]["Kills"]}`, 15, 190);
-    ctx.fillText(`${Stats.lifetime[7]["Matches Played"]}`, 15, 225);
-    ctx.fillText(`${Stats.lifetime[1]["Top 3s"]}`, 15, 260);
-    ctx.fillText(`${Stats.lifetime[6]["Score"]}`, 15, 295);
-    var posxkill = ctx.measureText(Stats.lifetime[10]["Kills"]).width + 10 + 15;
-    var posxmatch = ctx.measureText(Stats.lifetime[7]["Matches Played"]).width + 10 + 15;
-    var posxtop3 = ctx.measureText(Stats.lifetime[1]["Top 3s"]).width + 10 + 15;
-    var posxscore = ctx.measureText(Stats.lifetime[6]["Score"]).width + 10 + 15;
+    ctx.fillText(`${Stats.lifetime["kills"]}`, 15, 190);
+    ctx.fillText(`${Stats.lifetime["matches"]}`, 15, 225);
+    ctx.fillText(`${Stats.lifetime["top_3"]}`, 15, 260);
+    ctx.fillText(`${Stats.lifetime["top_5"]}`, 15, 295);
+    var posxkill = ctx.measureText(Stats.lifetime["kills"]).width + 10 + 15;
+    var posxmatch = ctx.measureText(Stats.lifetime["matches"]).width + 10 + 15;
+    var posxtop3 = ctx.measureText(Stats.lifetime["top_3"]).width + 10 + 15;
+    var posxtop5 = ctx.measureText(Stats.lifetime["top_5"]).width + 10 + 15;
     ctx.font = '13px sans-serif';
     ctx.fillStyle = '#003387';
     ctx.fillText(`Kills`, posxkill, 190);
     ctx.fillText(`Matches`, posxmatch, 225);
     ctx.fillText(`Top 3s`, posxtop3, 260);
-    ctx.fillText(`Score`, posxscore, 295);
+    ctx.fillText(`Top 5s`, posxtop5, 295);
                 
     var Out = fs.createWriteStream(`./${Data.username}.png`);
     var Stream = canvas.createPNGStream();
@@ -134,7 +135,7 @@ function check(Username, Message){
 
     var user = Username.split(' ')
 
-    if(user[0] == '--ps4'){
+    if(user[0] == '-ps4'){
 
         user.shift()
 
@@ -146,13 +147,19 @@ function check(Username, Message){
             draw(Platform, Message, Data)
         })
         .catch(err => {
-            ef.models.send({
-                object: Message,
-                message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
-                color: ef.colors.red
-            })
+            if(err == 'NoUser'){
+                ef.models.send({
+                    object: Message,
+                    message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
+                    color: ef.colors.red
+                })
+            }
+            else
+            {
+                require('../../../handlers/error')(Message, err)
+            }
         })
-    }else if(user[0] == '--xbx'){
+    }else if(user[0] == '-xbx'){
 
         user.shift()
 
@@ -164,11 +171,17 @@ function check(Username, Message){
             draw(Platform, Message, Data)
         })
         .catch(err => {
-            ef.models.send({
-                object: Message,
-                message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
-                color: ef.colors.red
-            })
+            if(err == 'NoUser'){
+                ef.models.send({
+                    object: Message,
+                    message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
+                    color: ef.colors.red
+                })
+            }
+            else
+            {
+                require('../../../handlers/error')(Message, err)
+            }
         })
     }else{
 
@@ -178,17 +191,23 @@ function check(Username, Message){
             draw(Platform, Message, Data)
         })
         .catch(err => {
-            ef.models.send({
-                object: Message,
-                message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
-                color: ef.colors.red
-            })
+            if(err == 'NoUser'){
+                ef.models.send({
+                    object: Message,
+                    message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
+                    color: ef.colors.red
+                })
+            }
+            else
+            {
+                require('../../../handlers/error')(Message, err)
+            }
         })
     }
 }
 
 exports.output = async ({message, guild, args}) => {
-    if(args.join(" ") == "drop"){
+    if(args.join(" ") == "-drop"){
         var Places = [
             'Skaliste Skarpy',
             'Kurzące Kominy',
@@ -211,7 +230,7 @@ exports.output = async ({message, guild, args}) => {
             object: message,
             message: `Oto miejsce gdzie możesz wylądować: **${Places[picked]}**`
         })
-    }else if(args[0] == "link"){
+    }else if(args[0] == "-link"){
 
         if(!args[1]) return ef.models.send({
             object: message,
@@ -254,7 +273,7 @@ exports.output = async ({message, guild, args}) => {
             object: message,
             message: `Podłączono Twoje konto!\nUżyj \`${ef.prefix}fn\` aby sprawdzić swoje statystyki.`
         })
-    }else if(args[0] == "unlink"){
+    }else if(args[0] == "-unlink"){
 
         var Accounts = await ef.db.findDoc('fortnite')
 
@@ -308,14 +327,11 @@ exports.data = {
     triggers: ['fortnite', 'fn'],
     description: `Sprawdź statystyki z Fortnite lub wylosuj miejsce do lądowania!`,
     usage: [
-        '{prefix}{command} link --ps4/--xbx <Epic Username> - podłącz swoje konto',
+        '{prefix}{command} -link [-ps4/-xbx] <Epic Username> - podłącz swoje konto',
         '{prefix}{command} - sprawdź statystyki podłączonego konta',
-        '{prefix}{command} --ps4/--xbx <Epic Username> - sprawdź statystyki konta',
-        '{prefix}{command} drop - wylosuj miejsce do lądowania',
-        '{prefix}{command} unlink - odłącz konto'
-    ],
-    userPerms: [
-        "MANAGE_GUILD"
+        '{prefix}{command} [-ps4/-xbx] <Epic Username> - sprawdź statystyki konta',
+        '{prefix}{command} -drop - wylosuj miejsce do lądowania',
+        '{prefix}{command} -unlink - odłącz konto'
     ]
 }
   

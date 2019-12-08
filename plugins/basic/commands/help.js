@@ -7,7 +7,9 @@ exports.output = async ({message, guild, args}) => {
             normal: []
         }
         for(const command of plugin.commands){
-            commands.normal.push(`\`${command.data.triggers[0]}\``)
+            if(command.data.hiddenInHelp !== true) {
+                commands.normal.push(`\`${command.data.triggers[0]}\``)
+            }
         }
         return ef.models.send({
             object: message,
@@ -41,16 +43,19 @@ exports.output = async ({message, guild, args}) => {
                 botPerms: []
             }, command.data)
 
-            return ef.models.send({
-                object: message,
-                title: `Komenda: **${command.data.triggers[0]}**`,
-                message: `\u200B
-                          Warianty: \`${command.data.triggers.join(', ')}\`
-                          Opis: \`${command.data.description}\`
-                          
-                          Użycie:
-                          \`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
-            })
+            if(!(command.data.developer && !ef.roles.developers.includes(message.author.id))) {
+
+                return ef.models.send({
+                    object: message,
+                    title: `Komenda: **${command.data.triggers[0]}**`,
+                    message: `\u200B
+                            Warianty: \`${command.data.triggers.join(', ')}\`
+                            Opis: \`${command.data.description}\`
+                            
+                            Użycie:
+                            \`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+                })
+            }
         }
     }
 
@@ -70,10 +75,6 @@ exports.output = async ({message, guild, args}) => {
 }
 
 exports.data = {
-    triggers: ['help'],
+    triggers: ['help', '?'],
     description: 'Pokazuje komendy/moduły bota.',
 }
-
-//.help settings
-//.help fn +
-//.help +

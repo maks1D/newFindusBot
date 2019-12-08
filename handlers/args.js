@@ -5,13 +5,9 @@ module.exports = async (args, command, message) => {
         if (!command.data.args) return resolve(false)
 
         if (command.data.args.length > 0 && args.length < command.data.args.length) {
-            return error(message,`Poprawny sposób użycia:\`\n
-                                ${command.data.usage
-                                .join('\n')
-                                .replace(/{prefix}/g, ef.prefix)
-                                .replace(/{command}/g, command.data.triggers[0])}
-                                \``
-                    )
+            return error(message,`Poprawny sposób użycia:\n\`${command.data.usage.join('\n')
+                .replace(/{prefix}/g, ef.prefix)
+                .replace(/{command}/g, command.data.triggers[0])}\``)
         }
 
         for (i = 0; i < command.data.args.length; i++) {

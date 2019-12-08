@@ -4,11 +4,7 @@ module.exports = async (collectionid) => {
         ef.db.collections.includes(collectionid) ? collectionName = collectionid : collectionName = ef.db.collections[collectionid]
 
         var result = await new Promise((resolve, reject) => {
-            ef.db[collectionName].find().toArray((err, results) => {
-                err 
-                ? reject(err) 
-                : resolve(results)
-            })
+            resolve(ef.db.cache.get(`${collectionName}`))
         })
 
         return result

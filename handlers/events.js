@@ -7,6 +7,7 @@ class events {
         ef.on('guildMemberRemove', member => eReq('guildMemberRemove')(member))
         ef.on('guildCreate', guild => eReq('guildCreate')(guild))
         ef.on('guildDelete', guild => eReq('guildDelete')(guild))
+        ef.on('voiceStateUpdate', (oldMem, newMem) => eReq('voiceStateUpdate')(oldMem, newMem))
     }
 }
 

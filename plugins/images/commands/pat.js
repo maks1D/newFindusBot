@@ -13,7 +13,7 @@ exports.data = {
     usage: [
         '{prefix}{command} [wzmianka]',
         '{prefix}{command} [ID]',
-        '{prefix}{command} [username]'     
+        '{prefix}{command} [nazwa użytkownika]'     
     ]
 }
   

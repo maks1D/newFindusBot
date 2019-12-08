@@ -1,5 +1,6 @@
 const { Client } = require("discord.js")
 require('dotenv').config();
+var json = require('edit-json-file')
 
 class ef extends Client {
     constructor(bot){
@@ -8,11 +9,13 @@ class ef extends Client {
         global.ef = this
 
         this.files = [
-            'release-notes',
+            'releasenotes',
             'devs',
             'colors',
             'prefixes',
-            'roles'
+            'roles',
+            'emotes',
+            'channelsdb'
         ]
 
         this.files.forEach(file => {
@@ -64,6 +67,13 @@ class ef extends Client {
             this.db.collections.forEach(collection => {
                 this.db[collection] = this.dbcli.db("findusbotdata").collection(collection)
             })
+
+            this.db.cache = json('./cache.json')
+
+            for(var i = 0; i < this.db.collections.length; i++){
+                this.db.cache.set(`${this.db.collections[i]}`, await this.db.findDocMongo(`${this.db.collections[i]}`))
+            }
+            this.db.cache.save()
 
             this.http = require('snekfetch')
 

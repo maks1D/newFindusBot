@@ -3,7 +3,7 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':control_knobs: Settings',
+  name: ':gear: Settings',
   id: 'settings',
   description: 'Skonfiguruj swój serwer!',
   author: 'Findus#7449',
