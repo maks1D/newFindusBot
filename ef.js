@@ -10,7 +10,6 @@ class ef extends Client {
 
         this.files = [
             'releasenotes',
-            'devs',
             'colors',
             'prefixes',
             'roles',
