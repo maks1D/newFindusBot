@@ -3,7 +3,7 @@ exports.output = async ({message}) => {
         object: message,
         endpoint: 'yomomma',
         type: 'text',
-        output: 'yomomma'
+        output: 'joke'
     })
 }
 exports.data = {
