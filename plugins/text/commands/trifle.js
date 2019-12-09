@@ -79,7 +79,7 @@ exports.output = async ({message, guild, args}) => {
 }
 
 exports.data = {
-    triggers: ['fraszka', 'trifle'],
+    triggers: ['fraszka', 'trifle', 'flaszka'],
     description: 'Przywołuje fraszkę.',
     usage: [
         '{prefix}{command}'     
