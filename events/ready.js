@@ -1,10 +1,8 @@
-function a() {
-    ef.users.get("531375399813513252").send("Pamiętaj o pojemniku dla Franka!") 
-    setTimeout(a, 1800000) 
-}
-
 module.exports = async () => {
-    a() 
+    function a() {
+        ef.users.get("531375399813513252").send("Pamiętaj o pojemniku dla Franka!") 
+    }
+    setInterval(a, 1800000)
     require('../handlers/plugins')()
     require('../handlers/presence')()
     require('../handlers/update')()
