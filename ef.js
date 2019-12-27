@@ -84,6 +84,8 @@ class ef extends Client {
 
             this.utils = require('./utils')
 
+            this.load = require('lodash')
+
             await this.login(this.tokens[this.type + 'discordapi'])
         })
     }

@@ -21,8 +21,8 @@ module.exports = async (searchquery, changes, collectionid) => {
         for(var i = 0; i < cache.length; i++){
             if(cache[i][key] == searchquery[key]){
                 for(var z = 0; z < changelist.length; z++){
-                    if(cache[i][changelist[z]]) {
-                        cache[i][changelist[z]] = changes[changelist[z]]
+                    if(ef.load.get(cache, `[${i}].${changelist[z]}`)) {
+                        ef.load.set(cache, `[${i}].${changelist[z]}`, ef.load.get(changes, changelist[z]))
                     }
                 }
             }
@@ -30,6 +30,8 @@ module.exports = async (searchquery, changes, collectionid) => {
         
         ef.db.cache.set(`${collectionName}`, cache)
         ef.db.cache.save()
+
+        //console.log(cache)
 
         ef.db[collectionName].updateOne(searchquery, {$set: changes}, (err, result) => {
             if(err) {
