@@ -1,10 +1,14 @@
 exports.output = async ({message, guild, args}) => {
 
-    var target = await message.channel.fetchMessage(`${args[0]}`)
+    try {
+        var target = await message.channel.fetchMessage(`${args[0]}`)
 
-    target.delete()
+        target.delete()
 
-    message.delete()
+        message.delete()
+    } catch (error) {
+        
+    }
 }
 
 exports.data = {
