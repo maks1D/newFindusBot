@@ -16,7 +16,7 @@ exports.output = async ({message, guild, args}) => {
             ef.models.send({
                 object: message,
                 title: `**Jan Kochanowski - Na dom w Czarnolesie**`,
-                message: `Panie, to moja praca, a zdareznie Twoje;
+                message: `Panie, to moja praca, a zdarzenie Twoje;
                 Raczysz błogosławieństwo dać do końca swoje.
                 Inszy niechaj pałace marmórowe mają
                 I szczerym złotogłowiem ściany obijają,
