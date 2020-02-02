@@ -6,12 +6,13 @@ module.exports = async (oldMem, newMem) => {
         if (!player || vC != player.connection.channel.id) return
         if (!ef.channels.get(player.connection.channel.id)) return
         var nconnected = true
-        for(var key in ef.channels.get(player.connection.channel.id)) {
-            if(key == ef.user.id) {
+        var array = ef.channels.get(player.connection.channel.id).members.array()
+        for(var key in array) {
+            if(array[key].user.id == ef.user.id) {
                 nconnected = false
             }
         }
-        if(nconnected) {
+        if(nconnected == true) {
             ef.queue[guild].queue = []
             ef.queue[guild].player.end()
             await ef.guilds.get(guild).voiceConnection.disconnect()

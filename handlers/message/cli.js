@@ -124,6 +124,23 @@ module.exports = async (message) => {
                     object: message,
                     message: `Pomyślnie usunięto dane dla serwera **${stored.guild.name}**!`
                 })
+            }else if(tokens[i] == 'queue') {
+                var data = ef.queue[stored.guild.id]
+                if(data === undefined) return ef.models.send({
+                    object: message,
+                    color: ef.colors.red,
+                    message: `Nic nie jest aktualnie odtwarzane!`
+                })
+                var queue = []
+                for(var a in data.queue) {
+                    queue.push(data.queue[a].url.replace("https:\/\/youtube.com\/watch?v=", ''))
+                }
+                const table = new AsciiTable(`${stored.guild.id} - QUEUE`)
+                .addRow('nowPlaying', `ID: ${data.nowPlaying.url.replace("https:\/\/youtube.com\/watch?v=", '')}`)
+                .addRow('queue', `${queue.join('; ')}`)
+                .addRow('volume', `${data.volume}`)
+                .addRow('autoleave', `${data.autoleave ? 'True' : 'False'}`)
+                send(table, message)
             }
         }
         if(tokens[i] == 'user'){
@@ -229,11 +246,14 @@ module.exports = async (message) => {
                         commands.count++
                     }
                 })
+                var listencnt = 0
+                for(var a in ef.queue) listencnt++
                 const table = new AsciiTable(`ROOT - PRINT`)
                 .addRow(`Name`, `${ef.user.username}#${ef.user.discriminator}`)
                 .addRow(`Server Count`, `${ef.guilds.size}`)
-                .addRow(`Member Count`, usrcnt)
+                .addRow(`Member Count`, `${usrcnt}`)
                 .addRow(`Command Count`, `${commands.count}`)
+                .addRow('People listening music', `${listencnt}`)
                 send(table, message)
             } else if(tokens[i] == 'members') {
                 const table = new AsciiTable(`ROOT - MEMBERS`)
@@ -288,7 +308,7 @@ module.exports = async (message) => {
         }
         if(tokens[i] == 'syntax') {
             const table = new AsciiTable(`CLI SYNTAX`)
-            .addRow(`guild`, `<id>/self print/channels/members/roles/delete`)
+            .addRow(`guild`, `<id>/self print/channels/members/roles/delete/queue`)
             .addRow(`user`, `<id>/self print/<guild id>`)
             .addRow(`role`, `<id> print`)
             .addRow(`root`, `memebers/guilds/tokens/collections/print`)
