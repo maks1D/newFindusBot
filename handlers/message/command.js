@@ -79,7 +79,7 @@ module.exports = async (message, prefix, guild) => {
     .catch(err => {
         return require('../error')(message, err)
     })
-    if(ef.type == 'beta') {
+    if(ef.type != 'beta') {
         ef.models.send({
             channel: ef.channelsdb.logs,
             title: message.content,
