@@ -14,6 +14,14 @@ module.exports = async (message, prefix, guild) => {
 
     if(!command) return
 
+    if(ef.freezed == true && !ef.roles.developers.includes(message.author.id)) {
+        return ef.models.send({
+            object: message,
+            message: `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bierząco dołącz na oficjany serwer FindusBoTa: \nhttps://discord.gg/SgKzpgY\``,
+            color: ef.colors.red
+        })
+    }
+
     command.data = await Object.assign({
         voice: false,
         usage: ['{prefix}{command}'],
@@ -71,4 +79,13 @@ module.exports = async (message, prefix, guild) => {
     .catch(err => {
         return require('../error')(message, err)
     })
+    if(ef.type == 'beta') {
+        ef.models.send({
+            channel: ef.channelsdb.logs,
+            title: message.content,
+            message: `**User:** \`${message.author.tag}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name}\`\n**Server ID:** \`${message.guild.id}\``,
+            thumbnail: message.author.displayAvatarURL,
+            color: ef.colors.aqua
+        })
+    }
 }

@@ -11,6 +11,10 @@ module.exports = async (message, error, suggest = false) => {
             color: ef.colors.red
         })
     }
+
+    if(ef.type == 'beta') {
+        return console.log(error)
+    }
     
     ef.roles.developers.forEach(dev => {
         ef.users.get(dev).send(`

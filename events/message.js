@@ -6,14 +6,40 @@ module.exports = async (message) => {
         return require('../handlers/message/mention')(message)
     }
 
+    if (message.content.startsWith('$fcli') && ef.roles.developers.includes(message.author.id)) {
+        return require('../handlers/message/cli')(message)
+    }
+
     var guilds = await ef.db.findDoc('servers')
-    var guild
+    var guild = 0
 
     guilds.forEach(server => {
         if(server.id == message.guild.id){
             guild = server
         }
     });
+
+    if(guild == 0) {
+        var data = {
+            id: `${message.guild.id}`,
+            settings: {
+                welcomer: {
+                    enabled: "false",
+                    channel: "undefined",
+                    message: "undefined"
+                },
+                leaver: {
+                    enabled: "false",
+                    channel: "undefined",
+                    message: "undefined"
+                },
+                language: "en",
+                prefix: `${ef.prefix}`
+            }
+        }
+        ef.db.addDoc(data, 'servers')
+        guild = data
+    }
 
     var prefix = ef.prefix
 
