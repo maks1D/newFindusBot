@@ -15,9 +15,18 @@ module.exports = async (message, prefix, guild) => {
     if(!command) return
 
     if(ef.freezed == true && !ef.roles.developers.includes(message.author.id)) {
+        if(ef.type != 'beta') {
+            ef.models.send({
+                channel: ef.channelsdb.logs,
+                title: message.content,
+                message: `**User:** \`${message.author.tag}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name}\`\n**Server ID:** \`${message.guild.id}\``,
+                thumbnail: message.author.displayAvatarURL,
+                color: ef.colors.blue
+            })
+        }
         return ef.models.send({
             object: message,
-            message: `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bierząco dołącz na oficjany serwer FindusBoTa: \nhttps://discord.gg/SgKzpgY\``,
+            message: `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bierząco dołącz na oficjany serwer FindusBoTa: \`\n**https://discord.gg/SgKzpgY**`,
             color: ef.colors.red
         })
     }
