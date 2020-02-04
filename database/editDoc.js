@@ -3,7 +3,7 @@ module.exports = async (searchquery, changes, collectionid) => {
         var collectionName
         ef.db.collections.includes(collectionid) ? collectionName = collectionid : collectionName = ef.db.collections[collectionid]
 
-        var cache = ef.db.cache.get(collectionName)
+        var cache = ef.db.cache[collectionName]
         var key
         for(key in searchquery) {
             if(searchquery.hasOwnProperty(key)){
@@ -28,10 +28,7 @@ module.exports = async (searchquery, changes, collectionid) => {
             }
         }
         
-        ef.db.cache.set(`${collectionName}`, cache)
-        ef.db.cache.save()
-
-        //console.log(cache)
+        ef.db.cache[collectionName] = cache
 
         ef.db[collectionName].updateOne(searchquery, {$set: changes}, (err, result) => {
             if(err) {

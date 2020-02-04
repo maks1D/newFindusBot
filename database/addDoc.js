@@ -3,11 +3,7 @@ module.exports = async (doc, collectionid) => {
         var collectionName
         ef.db.collections.includes(collectionid) ? collectionName = collectionid : collectionName = ef.db.collections[collectionid]
 
-        var cache = ef.db.cache.get(collectionName)
-        cache.push(doc)
-        
-        ef.db.cache.set(`${collectionName}`, cache)
-        ef.db.cache.save()
+        ef.db.cache[collectionName].push(doc)
 
         ef.db[collectionName].insertOne(doc, (err, result) => {
             if(err) {

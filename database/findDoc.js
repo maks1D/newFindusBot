@@ -3,9 +3,7 @@ module.exports = async (collectionid) => {
         var collectionName
         ef.db.collections.includes(collectionid) ? collectionName = collectionid : collectionName = ef.db.collections[collectionid]
 
-        var result = await new Promise((resolve, reject) => {
-            resolve(ef.db.cache.get(`${collectionName}`))
-        })
+        var result = ef.db.cache[collectionName]
 
         return result
         

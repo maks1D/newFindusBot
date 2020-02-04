@@ -67,12 +67,11 @@ class ef extends Client {
                 this.db[collection] = this.dbcli.db("findusbotdata").collection(collection)
             })
 
-            this.db.cache = json('./cache.json')
+            this.db.cache = {}
 
             for(var i = 0; i < this.db.collections.length; i++){
-                this.db.cache.set(`${this.db.collections[i]}`, await this.db.findDocMongo(`${this.db.collections[i]}`))
+                this.db.cache[this.db.collections[i]] = await this.db.findDocMongo(`${this.db.collections[i]}`)
             }
-            this.db.cache.save()
 
             this.http = require('snekfetch')
 
