@@ -2,7 +2,7 @@ exports.output = async ({message, guild, args}) => {
 
     async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
 
-    ef.models.send({
+    await ef.models.send({
 
         object: message,
 
