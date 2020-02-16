@@ -14,7 +14,9 @@ module.exports = async (message, prefix, guild) => {
 
     if(!command) return
 
-    ef.db.cache['botinfo'][0].commandsdone ++
+    if(ef.type !== 'beta') {
+        ef.db.cache['botinfo'][0].commandsdone ++
+    }
 
     if(ef.freezed == true && !ef.roles.developers.includes(message.author.id)) {
         if(ef.type != 'beta') {
