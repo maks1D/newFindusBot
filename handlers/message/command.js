@@ -40,6 +40,8 @@ module.exports = async (message, prefix, guild) => {
         botPerms: []
     }, command.data)
 
+    if(command.data.disabled === true) return
+
     if(!ef.roles.developers.includes(message.author.id) && command.data.developer){
         return ef.models.send({
             object: message,

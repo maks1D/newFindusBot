@@ -7,7 +7,7 @@ exports.output = async ({message, guild, args}) => {
             normal: []
         }
         for(const command of plugin.commands){
-            if(command.data.hiddenInHelp !== true) {
+            if(command.data.hiddenInHelp !== true && command.data.disabled !== true) {
                 commands.normal.push(`\`${command.data.triggers[0]}\``)
             }
         }
@@ -43,7 +43,7 @@ exports.output = async ({message, guild, args}) => {
                 botPerms: []
             }, command.data)
 
-            if(!(command.data.developer && !ef.roles.developers.includes(message.author.id))) {
+            if(!(command.data.developer && !ef.roles.developers.includes(message.author.id)) && command.data.disabled !== true) {
 
                 return ef.models.send({
                     object: message,

@@ -1,5 +1,4 @@
 exports.output = async ({message, args}) => {
-    return
     const user = await ef.utils.users.search(message, args[0])
     var url = user.avatar == null ? `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png` : user.displayAvatarURL
     ef.models.apibadosz({
@@ -17,6 +16,6 @@ exports.data = {
         '{prefix}{command} [ID]',
         '{prefix}{command} [nazwa użytkownika]'
     ], 
-    hiddenInHelp: true
+    disabled: true
 }
   
