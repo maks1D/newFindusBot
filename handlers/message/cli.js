@@ -75,7 +75,8 @@ module.exports = async (message) => {
                 .addRow('Bot Farm', Math.round(stored.guild.members.filter(m => m.user.bot).size/stored.guild.members.size*100).toString() + "%")
                 message.channel.send(`\`\`\`css\n${table.toString()}\n\`\`\``)
             }else if(tokens[i] == 'channels') {
-                const table = new AsciiTable(`${stored.guild.id} - ${stored.guild.name}`)
+                const table = new AsciiTable(`${stored.guild.id}`)
+                .addRow('Name', stored.guild.name)
                 var categories = {}
                 categories.null = []
                 var categs = []
@@ -104,13 +105,15 @@ module.exports = async (message) => {
                 })
                 send(table, message)
             }else if(tokens[i] == 'members') {
-                const table = new AsciiTable(`${stored.guild.id} - ${stored.guild.name}`)
+                const table = new AsciiTable(`${stored.guild.id}`)
+                .addRow('Name', stored.guild.name)
                 stored.guild.members.forEach(member => {
                     table.addRow(`${member.user.bot ? 'BOT' : 'USER'}`, `${member.user.username}#${member.user.discriminator} - ${member.user.id}`)
                 });
                 send(table, message)
             }else if(tokens[i] == 'roles') {
-                const table = new AsciiTable(`${stored.guild.id} - ${stored.guild.name}`)
+                const table = new AsciiTable(`${stored.guild.id}`)
+                .addRow('Name', stored.guild.name)
                 var roles = []
                 stored.guild.roles.forEach(role => {roles.push(role)});
                 roles.sort(function(a, b){return a.position < b.position})
@@ -136,6 +139,7 @@ module.exports = async (message) => {
                     queue.push(data.queue[a].url.replace("https:\/\/youtube.com\/watch?v=", ''))
                 }
                 const table = new AsciiTable(`${stored.guild.id} - QUEUE`)
+                .addRow('Name', stored.guild.name)
                 .addRow('nowPlaying', `ID: ${data.nowPlaying.url.replace("https:\/\/youtube.com\/watch?v=", '')}`)
                 .addRow('queue', `${queue.join('; ')}`)
                 .addRow('volume', `${data.volume}`)
