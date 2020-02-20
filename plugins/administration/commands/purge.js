@@ -2,17 +2,25 @@ exports.output = async ({message, guild, args}) => {
     var Message = message
     message.delete()
     if(args[0] <= 100 && args[0] > 0){
-        var fetched = await Message.channel.fetchMessages({limit: args[0]})
+        var fetched = await Message.channel.fetchMessages({limit: args[0]}, true)
         fetched = fetched.array()
 
         try{
             await Message.channel.bulkDelete(fetched)
             .then(messages => {
                 if(args[1] != '-nolog'){
-                    ef.models.send({
-                        object: Message,
-                        message: `**Pomyślnie usunięto ${messages.array().length} wiadomości!**`
-                    })
+                    if(messages.array().length > 0) {
+                        ef.models.send({
+                            object: Message,
+                            message: `**Pomyślnie usunięto ${messages.array().length} wiadomoś${messages.array().length == 1 ? 'ć' : 'ci'}!**`
+                        })
+                    } else {
+                        ef.models.send({
+                            object: Message,
+                            message: `**Nie można usunąć tych wiadomości!**`,
+                            color: ef.colors.red
+                        })
+                    }
                 }
             })
         }catch(e){
@@ -33,7 +41,7 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['purge', 'p'],
-    description: 'Usuwa określoną ilość wiadomości (od 1 do 100).',
+    description: 'Usuwa określoną ilość wiadomości (od 1 do 100). Wiadomości muszą być maksymalnie sprzed 2 tygodni.',
     usage: [
         '{prefix}{command} <ilość wiadomości do usunięcia> [-nolog]'
     ],

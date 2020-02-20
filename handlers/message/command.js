@@ -54,14 +54,6 @@ module.exports = async (message, prefix, guild) => {
         })
     }
 
-    if(command.data.voice == true && !message.member.voiceChannel) {
-        return ef.models.send({
-            object: message,
-            message: `\`Najpierw połącz się z kanałem głosowym!\``,
-            color: ef.colors.red
-        })
-    }
-
     const userPerms = message.guild.members.get(message.author.id).permissions
     const botPerms = message.guild.members.get(ef.user.id).permissions
 

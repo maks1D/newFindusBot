@@ -15,6 +15,7 @@ exports.output = async ({message, args}) => {
         '{prefix}{command} [wzmianka]',
         '{prefix}{command} [ID]',
         '{prefix}{command} [nazwa użytkownika]'
-    ]
+    ],
+    disabled: true
   }
   
