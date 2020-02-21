@@ -82,6 +82,7 @@ class ef extends Client {
                 this.db.cache[this.db.collections[i]] = await this.db.findDocMongo(`${this.db.collections[i]}`)
             }
 
+            
             this.http = require('snekfetch')
 
             this.eventHandler = new (require('./handlers/events.js'))(this)
