@@ -33,7 +33,8 @@ class ef extends Client {
             'youtubeapi',
             'badoszapi',
             'maindiscordapi',
-            'betadiscordapi'
+            'betadiscordapi',
+            'istest'
         ]
 
         this.tokens.secrets.forEach(secret =>
@@ -44,6 +45,9 @@ class ef extends Client {
 
         if(!this.types.includes(process.argv[2])){
             console.log(`Frozen own process (version argument needed (${this.types.join(", ")}))`)
+            if(this.tokens.istest == 'true') {
+                process.exit(2)
+            }
             while(true){}
         }
 
@@ -54,6 +58,9 @@ class ef extends Client {
             if(err) {
                 console.log(err)
                 console.log("Frozen own process (error on connection with DB)") 
+                if(this.tokens.istest == 'true') {
+                    process.exit(1)
+                }
                 while(true){}
             }
 
