@@ -4,7 +4,7 @@
   "description": "",
   "main": "ef.js",
   "scripts": {
-    "test": "node ./.circleci/test.js main && exit 0"
+    "test": "node ./ef.js main && exit 0"
   },
   "author": "EFindusStudios",
   "license": "ISC",

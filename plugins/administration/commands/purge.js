@@ -1,6 +1,6 @@
 exports.output = async ({message, guild, args}) => {
     var Message = message
-    message.delete()
+    await message.delete()
     if(args[0] <= 100 && args[0] > 0){
         var fetched = await Message.channel.fetchMessages({limit: args[0]}, true)
         fetched = fetched.array()
