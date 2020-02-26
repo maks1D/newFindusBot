@@ -150,7 +150,7 @@ function check(Username, Message){
             if(err == 'NoUser'){
                 ef.models.send({
                     object: Message,
-                    message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
+                    message: `${ef.emotes.markNo}**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
                     color: ef.colors.red
                 })
             }
@@ -174,7 +174,7 @@ function check(Username, Message){
             if(err == 'NoUser'){
                 ef.models.send({
                     object: Message,
-                    message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
+                    message: `${ef.emotes.markNo}**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
                     color: ef.colors.red
                 })
             }
@@ -194,7 +194,7 @@ function check(Username, Message){
             if(err == 'NoUser'){
                 ef.models.send({
                     object: Message,
-                    message: `**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
+                    message: `${ef.emotes.markNo}**${Message.member.displayName}**, nie znaleziono użytkownika. Spróbuj sprawdzić na innych platformach!`,
                     color: ef.colors.red
                 })
             }
@@ -234,7 +234,7 @@ exports.output = async ({message, guild, args}) => {
 
         if(!args[1]) return ef.models.send({
             object: message,
-            message: `Podaj poprawną nazwę użytkownika!`,
+            message: `${ef.emotes.markNo}Podaj poprawną nazwę użytkownika!`,
             color: ef.colors.red
         })
 
@@ -271,7 +271,7 @@ exports.output = async ({message, guild, args}) => {
         }
         return ef.models.send({
             object: message,
-            message: `Podłączono Twoje konto!\nUżyj \`${ef.prefix}fn\` aby sprawdzić swoje statystyki.`
+            message: `${ef.emotes.markYes}Podłączono Twoje konto!\nUżyj \`${ef.prefix}fn\` aby sprawdzić swoje statystyki.`
         })
     }else if(args[0] == "-unlink"){
 
@@ -289,12 +289,12 @@ exports.output = async ({message, guild, args}) => {
         if(exist){
             return ef.models.send({
                 object: message,
-                message: `Pomyślnie odłączono twoje konto!`
+                message: `${ef.emotes.markYes}Pomyślnie odłączono twoje konto!`
             })
         }else{
             return ef.models.send({
                 object: message,
-                message: `Twoje konto nie zosało podłączone!`,
+                message: `${ef.emotes.markNo}Twoje konto nie zosało podłączone!`,
                 color: ef.colors.red
             })
         }
@@ -314,7 +314,7 @@ exports.output = async ({message, guild, args}) => {
         if(!exist){
             return ef.models.send({
                 object: message,
-                message: `Twoje konto nie zosało podłączone!`,
+                message: `${ef.emotes.markNo}Twoje konto nie zosało podłączone!`,
                 color: ef.colors.red
             })
         }

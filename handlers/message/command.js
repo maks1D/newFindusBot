@@ -30,7 +30,7 @@ module.exports = async (message, prefix, guild) => {
         }
         return ef.models.send({
             object: message,
-            message: `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bierząco dołącz na oficjany serwer FindusBoTa: \`\n**https://discord.gg/SgKzpgY**`,
+            message: `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bierząco dołącz na oficjany serwer FindusBoTa\` [tutaj](https://discord.gg/SgKzpgY).`,
             color: ef.colors.red
         })
     }
@@ -49,7 +49,7 @@ module.exports = async (message, prefix, guild) => {
     if(!ef.roles.developers.includes(message.author.id) && command.data.developer){
         return ef.models.send({
             object: message,
-            message: `\`Ta komenda jest tylko dla developerów!\``,
+            message: `${ef.emotes.markNo}\`Ta komenda jest tylko dla developerów!\``,
             color: ef.colors.red
         })
     }
@@ -61,7 +61,7 @@ module.exports = async (message, prefix, guild) => {
         const perm = command.data.userPerms.filter(perm => !userPerms.has(perm))[0]
         return ef.models.send({
             object: message,
-            message: `Potrzebujesz uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\` aby użyć tej komendy!`,
+            message: `${ef.emotes.markNo}Potrzebujesz uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\` aby użyć tej komendy!`,
             color: ef.colors.red
         })
     }
@@ -70,7 +70,7 @@ module.exports = async (message, prefix, guild) => {
         const perm = command.data.botPerms.filter(perm => !botPerms.has(perm))[0]
         return ef.models.send({
             object: message,
-            message: `${ef.user.username} nie posiada następującego uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\`!`,
+            message: `${ef.emotes.markNo}**${ef.user.username}** nie posiada następującego uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\`!`,
             color: ef.colors.red
         })
     }

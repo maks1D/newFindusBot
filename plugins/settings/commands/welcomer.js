@@ -18,19 +18,19 @@ exports.output = async ({message, guild, args}) => {
                     ef.db.editDoc({'id': `${guild.id}`}, {"settings.welcomer.channel": channel}, 'servers')
                     return ef.models.send({
                         object: message,
-                        message: `Ustawiono kanał na: <#${channel}>.`,
+                        message: `${ef.emotes.markYes}Pomyślnie ustawiono kanał na: <#${channel}>.`,
                     })
                 } else {
                     return ef.models.send({
                         object: message,
-                        message: `Nie znaleziono kanału!`,
+                        message: `${ef.emotes.markNo}Nie znaleziono kanału!`,
                         color: ef.colors.red
                     })
                 }
             } else {
                 return ef.models.send({
                     object: message,
-                    message: `Musisz wzmiankować kanał!`,
+                    message: `${ef.emotes.markNo}Musisz wzmiankować kanał!`,
                     color: ef.colors.red
                 })
             }
@@ -41,12 +41,12 @@ exports.output = async ({message, guild, args}) => {
                 ef.db.editDoc({'id': `${guild.id}`}, {"settings.welcomer.message": mess}, 'servers')
                 return ef.models.send({
                     object: message,
-                    message: `Nowa wiadomość pomyślnie ustawiona!`
+                    message: `${ef.emotes.markYes}Nowa wiadomość pomyślnie ustawiona!`
                 })
             }else{
                 ef.models.send({
                     object: message,
-                    message: `Wpisz poprawną wiadomość!`,
+                    message: `${ef.emotes.markNo}Wpisz poprawną wiadomość!`,
                     color: ef.colors.red
                 })
             }

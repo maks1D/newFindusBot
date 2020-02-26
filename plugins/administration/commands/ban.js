@@ -1,11 +1,9 @@
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
-
     var mention = message.mentions.members.first()
     if(!mention.bannable){
         return ef.models.send({
             object: message,
-            message: `${await emoji("markNo")} Nie mogę zbanować **${mention.user.tag}**!`,
+            message: `${ef.emotes.markNo} Nie mogę zbanować **${mention.user.tag}**!`,
             color: ef.colors.red
         })
     }
@@ -13,7 +11,7 @@ exports.output = async ({message, guild, args}) => {
     .catch(async (err) => {
         return ef.models.send({
             object: message,
-            message: `${await emoji("markNo")} \`Nie mogę zbanować tego użytkownika!\``,
+            message: `${ef.emotes.markNo} \`Nie mogę zbanować tego użytkownika!\``,
             color: ef.colors.red
         })
     })
@@ -25,7 +23,7 @@ exports.output = async ({message, guild, args}) => {
     ef.models.send({
         object: message,
         author: [mention.user.tag, mention.user.displayAvatarURL],
-        title: `${await emoji("markYes")} **Użytkownik: \`${mention.user.tag}\` pomyślnie zbanowany!**`,
+        title: `${ef.emotes.markYes} **Użytkownik: \`${mention.user.tag}\` pomyślnie zbanowany!**`,
         message: `${reason !== undefined ? `**Powód:** \`${reason}\`` : ''}`
     })
 }

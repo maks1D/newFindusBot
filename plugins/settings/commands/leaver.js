@@ -18,37 +18,45 @@ exports.output = async ({message, guild, args}) => {
                     ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.channel": channel}, 'servers')
                     return ef.models.send({
                         object: message,
-                        message: `Ustawiono kanał na: <#${channel}>.`,
+                        message: `${ef.emotes.markYes}Pomyślnie stawiono kanał na: <#${channel}>.`,
                     })
                 } else {
                     return ef.models.send({
                         object: message,
-                        message: `Nie znaleziono kanału!`,
+                        message: `${ef.emotes.markNo}Nie znaleziono kanału!`,
                         color: ef.colors.red
                     })
                 }
             } else {
                 return ef.models.send({
                     object: message,
-                    message: `Musisz wzmiankować kanał!`,
+                    message: `${ef.emotes.markNo}Musisz wzmiankować kanał!`,
                     color: ef.colors.red
                 })
             }
         } else if(args[0] == "message"){
             args.shift()
-            var mess = args.join(' ')
-            ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.message": mess}, 'servers')
-            return ef.models.send({
-                object: message,
-                message: `Nowa wiadomość pomyślnie ustawiona!`
-            })
+            if(args[0]){
+                var mess = args.join(' ')
+                ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.message": mess}, 'servers')
+                return ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markYes}Nowa wiadomość pomyślnie ustawiona!`
+                })
+            }else{
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo}Wpisz poprawną wiadomość!`,
+                    color: ef.colors.red
+                })
+            }
         }
     } else if(args[0] == 'on' || args[0] == 'off'){
         var statement = args[0] == 'on' ? "true" : "false"
         ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.enabled": statement}, 'servers')
         return ef.models.send({
             object: message,
-            message: `Leaver został ${args[0] == "on" ? "włączony" : "wyłączony"}.`
+            message: `${ef.emotes.markYes}Leaver został ${args[0] == "on" ? "włączony" : "wyłączony"}.`
         })
     }
 

@@ -1,12 +1,9 @@
 exports.output = async ({message, guild, args}) => {
-
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
-
     await ef.models.send({
 
         object: message,
 
-        message: `${await emoji('markYes')}Pomyślnie rozpoczęto restart bota.`
+        message: `${ef.emotes.markYes}Pomyślnie rozpoczęto restart bota.`
 
     })
 

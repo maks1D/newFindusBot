@@ -12,12 +12,12 @@ exports.output = async ({message, guild, args}) => {
                     if(messages.array().length > 0) {
                         ef.models.send({
                             object: Message,
-                            message: `**Pomyślnie usunięto ${messages.array().length} wiadomoś${messages.array().length == 1 ? 'ć' : 'ci'}!**`
+                            message: `${ef.emotes.markYes}**Pomyślnie usunięto ${messages.array().length} wiadomoś${messages.array().length == 1 ? 'ć' : 'ci'}!**`
                         })
                     } else {
                         ef.models.send({
                             object: Message,
-                            message: `**Nie można usunąć tych wiadomości!**`,
+                            message: `${ef.emotes.markNo}**Nie można usunąć tych wiadomości!**`,
                             color: ef.colors.red
                         })
                     }
@@ -26,14 +26,14 @@ exports.output = async ({message, guild, args}) => {
         }catch(e){
             ef.models.send({
                 object: Message,
-                message: `**Nie można usunąć tych wiadomości!**`,
+                message: `${ef.emotes.markNo}**Nie można usunąć tych wiadomości!**`,
                 color: ef.colors.red
             })
         }
     }else{
         ef.models.send({
             object: Message,
-            message: `**Liczba wiadomości musi być pomiędzy 1 a 100!**`,
+            message: `${ef.emotes.markNo}**Liczba wiadomości musi być pomiędzy 1 a 100!**`,
             color: ef.colors.red
         })
     }

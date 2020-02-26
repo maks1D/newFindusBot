@@ -1,10 +1,10 @@
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
     var channel = ef.channels.get(args[0])
     if(channel === undefined) {
         return ef.models.send({
             object: message,
-            message: `${await emoji('markNo')}Niepoprawne ID kanału.`
+            message: `${ef.emotes.markNo}Niepoprawne ID kanału.`,
+            color: ef.colors.red
         })
     }
     var id = args[0]
@@ -19,7 +19,8 @@ exports.output = async ({message, guild, args}) => {
     })
     .catch(async(e) => {ef.models.send({
             object: message,
-            message: `${await emoji('markNo')}Nie można wysłać wiadomości.`
+            message: `${ef.emotes.markNo}Nie można wysłać wiadomości.`,
+            color: ef.colors.red
         })
         error = e
         require('../../../handlers/error')(message, e, true)
@@ -27,8 +28,8 @@ exports.output = async ({message, guild, args}) => {
   
     if(error === undefined){
         ef.models.send({
-        object: message,
-        message: `${await emoji('markYes')}Pomyślnie wysłano wiadomość.`
+            object: message,
+            message: `${ef.emotes.markYes}Pomyślnie wysłano wiadomość.`
         })
         
         message.delete()

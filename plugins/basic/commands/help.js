@@ -14,7 +14,7 @@ exports.output = async ({message, guild, args}) => {
         return ef.models.send({
             object: message,
             title: `**${plugin.name}**`,
-            message: `\u200B\nOpis: \`${plugin.description}\`
+            message: `\u200B\nOpis: \`${!plugin.description.en ? plugin.description : plugin.description[guild.settings.language]}\`
                       
                       Komendy:
                       ${commands.normal.join(', ')}`
@@ -50,7 +50,7 @@ exports.output = async ({message, guild, args}) => {
                     title: `Komenda: **${command.data.triggers[0]}**`,
                     message: `\u200B
                             Warianty: \`${command.data.triggers.join(', ')}\`
-                            Opis: \`${command.data.description}\`
+                            Opis: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
                             
                             Użycie:
                             \`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``

@@ -1,42 +1,48 @@
-exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
+exports.output = async ({message, guild, args}) => { 
+    async function check() {
+        if(!message.member.voiceChannel) {
+            ef.models.send({
+                object: message,
+                message: `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`,
+                color: ef.colors.red
+            })
+            return -1
+        } else {
+            if(!message.guild.voiceConnection){
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo} Nie jestem obecnie połączony z żadnym kanałem głosowym.`,
+                    color: ef.colors.red
+                })
+                return -1
+            } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo} Nie jestem obecnie połączony z tym kanałem głosowym.`,
+                    color: ef.colors.red
+                })
+                return -1
+            }
+        }
+        return 0
+    }
+
+    if(!ef.roles.developers.includes(message.author.id) || !ef.queue[message.guild.id]) { if (await check() == -1) return }
     
-    if(!message.member.voiceChannel) {
+    var state = await ef.player.resume(message)
+    if(state == true) {
         ef.models.send({
             object: message,
-            message: `${await emoji("markNo")} Nie jesteś połączony z żadnym kanałem głosowym.`,
-            color: ef.colors.red
+            message: `${ef.emotes.markYes} Pomyślnie wznowiono odtwarzanie filmu.`,
         })
     } else {
-        if(!message.guild.voiceConnection){
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nie jestem obecnie połączony z żadnym kanałem głosowym.`,
-                color: ef.colors.red
-            })
-            return
-        } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nie jestem obecnie połączony z tym kanałem głosowym.`,
-                color: ef.colors.red
-            })
-            return
-        }
-        var state = await ef.player.resume(message)
-        if(state == true) {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markYes")} Pomyślnie wznowiono odtwarzanie filmu.`,
-            })
-        } else {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nic nie jest aktualnie odtwarzane.`,
-                color: ef.colors.red
-            })
-        }
+        ef.models.send({
+            object: message,
+            message: `${ef.emotes.markNo} Nic nie jest aktualnie odtwarzane.`,
+            color: ef.colors.red
+        })
     }
+    
 }
 
 exports.data = {

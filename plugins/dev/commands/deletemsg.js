@@ -14,7 +14,7 @@ exports.output = async ({message, guild, args}) => {
                     if(args[3] != '-nolog') {
                         ef.models.send({
                             object: message,
-                            message: `Pomyślnie usunięto wiadomość!`
+                            message: `${ef.emotes.markYes}Pomyślnie usunięto wiadomość!`
                         })
                     }
                     return
@@ -30,7 +30,7 @@ exports.output = async ({message, guild, args}) => {
                     if(args[3] != '-nolog') {
                         ef.models.send({
                             object: message,
-                            message: `Pomyślnie usunięto wiadomość!`
+                            message: `${ef.emotes.markYes}Pomyślnie usunięto wiadomość!`
                         })
                     }
                     return
@@ -91,7 +91,7 @@ exports.output = async ({message, guild, args}) => {
                 ef.models.send({
                     object: message,
                     color: ef.colors.red,
-                    message: `Nie znaleziono wiadomości!`
+                    message: `${ef.emotes.markNo}Nie znaleziono wiadomości!`
                 })
             }
         } else {
@@ -99,7 +99,7 @@ exports.output = async ({message, guild, args}) => {
             if(args[special ? 3 : 1] != '-nolog') {
                 ef.models.send({
                     object: message,
-                    message: `Pomyślnie usunięto wiadomość!`
+                    message: `${ef.emotes.markYes}Pomyślnie usunięto wiadomość!`
                 })
             }
         }
@@ -108,7 +108,7 @@ exports.output = async ({message, guild, args}) => {
         if(args[special === true ? 3 : 1] != '-nolog') {
             ef.models.send({
                 object: message,
-                message: `Pomyślnie usunięto wiadomość!`
+                message: `${ef.emotes.markYes}Pomyślnie usunięto wiadomość!`
             })
         }
     }

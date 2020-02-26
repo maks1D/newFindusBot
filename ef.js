@@ -1,6 +1,5 @@
 const { Client } = require("discord.js")
 require('dotenv').config();
-var json = require('edit-json-file')
 
 class ef extends Client {
     constructor(bot){

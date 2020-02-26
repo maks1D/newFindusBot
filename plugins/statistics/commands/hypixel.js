@@ -5,7 +5,7 @@ async function send(user, message)  {
     const response = await ef.http.get(`${baseURL}${user}.png`)
     fs.writeFileSync(`${__dirname}/trash.txt`, response.body)
     var data = fs.readFileSync(`${__dirname}/trash.txt`, 'utf8')
-    if(data == "ensure==BadPlayerException"){ef.models.send({object: message, message: `Użytkownik nie istnieje!`, color: ef.colors.red})}
+    if(data == "ensure==BadPlayerException"){ef.models.send({object: message, message: `${ef.emotes.markNo}Użytkownik nie istnieje!`, color: ef.colors.red})}
     else {
         ef.models.send({
             object: message,
@@ -20,7 +20,7 @@ async function send(user, message)  {
 
 exports.output = async ({message, guild, args}) => {
     var user = args.join(' ');
-    if(/[^a-z0-9_]/i.test(user)) return ef.models.send({object: message, message: `Podaj poprawną nazwę użytkownika!`, color: ef.colors.red})
+    if(/[^a-z0-9_]/i.test(user)) return ef.models.send({object: message, message: `${ef.emotes.markNo}Podaj poprawną nazwę użytkownika!`, color: ef.colors.red})
     send(user, message);
 }
 

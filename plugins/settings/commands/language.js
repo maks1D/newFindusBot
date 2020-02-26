@@ -1,27 +1,26 @@
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
     if(args[0] == 'pl'){
         ef.db.editDoc({id: guild.id}, {"settings.language": `pl`}, 'servers')
         ef.models.send({
             object: message,
-            message: `${await emoji("markYes")}Język serwera został zmieniony na Polski!`,
+            message: `${ef.emotes.markYes}Język serwera został zmieniony na Polski!`,
         })
     }else if(args[0] == 'ru'){
         ef.db.editDoc({id: guild.id}, {"settings.language": `ru`}, 'servers')
         ef.models.send({
             object: message,
-            message: `${await emoji("markYes")}Язык сервера был изменен на русский!`,
+            message: `${ef.emotes.markYes}Язык сервера был изменен на русский!`,
         })
     }else if(args[0] == 'en'){
         ef.db.editDoc({id: guild.id}, {"settings.language": `en`}, 'servers')
         ef.models.send({
             object: message,
-            message: `${await emoji("markYes")}Server language has been changed to English!`,
+            message: `${ef.emotes.markYes}Server language has been changed to English!`,
         })
     }else if(args[0]){
         ef.models.send({
             object: message,
-            message: `${await emoji("markNo")}Wybrany język nie jest obsługiwany (lub nie istnieje)!`,
+            message: `${ef.emotes.markNo}Wybrany język nie jest obsługiwany (lub nie istnieje)!`,
             color: ef.colors.red
         })
     }else{

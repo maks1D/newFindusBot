@@ -23,7 +23,7 @@ module.exports = async (member) => {
             .replace(new RegExp("{user.id}", "g"), member.user.id)
 
         channel.send(msg).catch(e => {
-            console.log(e)
+            require('../handlers/error')(channel, e, true)
         })
     }
 }

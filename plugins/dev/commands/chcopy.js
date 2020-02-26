@@ -1,12 +1,10 @@
 var {Attachment} = require('discord.js')
 
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
-
     if(ef.channels.get(args[0]) === undefined) return ef.models.send({
         object: message,
         color: ef.colors.red,
-        message: `${await emoji('markNo')}Podaj poprawne ID kanału źródłowego!`
+        message: `${ef.emotes.markNo}Podaj poprawne ID kanału źródłowego!`
     })
 
     var messages = await ef.channels.get(args[0]).fetchMessages()
@@ -16,7 +14,7 @@ exports.output = async ({message, guild, args}) => {
     if(ef.channels.get(args[1]) === undefined) return ef.models.send({
         object: message,
         color: ef.colors.red,
-        message: `${await emoji('markNo')}Podaj poprawne ID kanału docelowego!`
+        message: `${ef.emotes.markNo}Podaj poprawne ID kanału docelowego!`
     })
 
     var target = ef.channels.get(args[1])
@@ -46,7 +44,7 @@ exports.output = async ({message, guild, args}) => {
 
     ef.models.send({
         object: message,
-        message: `${await emoji('markYes')}**Pomyślnie skopiowano kanał!**`
+        message: `${ef.emotes.markYes}**Pomyślnie skopiowano kanał!**`
     })
 }
 

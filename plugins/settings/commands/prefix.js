@@ -4,7 +4,7 @@ exports.output = async ({message, guild, args}) => {
         ef.db.editDoc({id: guild.id}, {"settings.prefix": args[0]}, 'servers')
         return ef.models.send({
             object: message,
-            message: `Pomyślnie zmieniono prefix na: \`${args[0]}\``
+            message: `${ef.emotes.markYes}Pomyślnie zmieniono prefix na: \`${args[0]}\``
         })
     }
 

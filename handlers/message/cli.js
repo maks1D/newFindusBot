@@ -55,7 +55,7 @@ module.exports = async (message) => {
                 return ef.models.send({
                     object: message,
                     color: ef.colors.red,
-                    message: `Niepoprawne id serwera!`
+                    message: `${ef.emotes.markNo}Niepoprawne id serwera!`
                 })
             }
             
@@ -125,14 +125,14 @@ module.exports = async (message) => {
                 ef.db.remDoc({id: `${stored.guild.id}`}, 'servers')
                 ef.models.send({
                     object: message,
-                    message: `Pomyślnie usunięto dane dla serwera **${stored.guild.name}**!`
+                    message: `${ef.emotes.markYes}Pomyślnie usunięto dane dla serwera **${stored.guild.name}**!`
                 })
             }else if(tokens[i] == 'queue') {
                 var data = ef.queue[stored.guild.id]
                 if(data === undefined) return ef.models.send({
                     object: message,
                     color: ef.colors.red,
-                    message: `Nic nie jest aktualnie odtwarzane!`
+                    message: `${ef.emotes.markNo}Nic nie jest aktualnie odtwarzane!`
                 })
                 var queue = []
                 for(var a in data.queue) {
@@ -154,7 +154,7 @@ module.exports = async (message) => {
                 return ef.models.send({
                     object: message,
                     color: ef.colors.red,
-                    message: `Niepoprawne id użytkownika!`
+                    message: `${ef.emotes.markNo}Niepoprawne id użytkownika!`
                 })
             }
             i++
@@ -214,7 +214,7 @@ module.exports = async (message) => {
             if(fund == false) {
                 ef.models.send({
                     object: message,
-                    message: `No role found.`
+                    message: `${ef.emotes.markNo}Nie znaleziono roli.`
                 })
                 return
             }

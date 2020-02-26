@@ -1,6 +1,4 @@
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
-
     try
     {
         var before = Date.now()

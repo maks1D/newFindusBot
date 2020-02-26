@@ -1,42 +1,67 @@
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
-    
-    if(!message.member.voiceChannel) {
-        ef.models.send({
-            object: message,
-            message: `${await emoji("markNo")} Nie jesteś połączony z żadnym kanałem głosowym.`,
-            color: ef.colors.red
-        })
-    } else {
-        if(!message.guild.voiceConnection){
+    var translations = {}
+    translations.en = []
+    translations.pl = []
+    translations.ru = []
+    async function check() {
+        if(!message.member.voiceChannel) {
+            translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`
+            translations.en[0] = `${ef.emotes.markNo} You are not connected to any voice channel.`
+            translations.ru[0] = `${ef.emotes.markNo} Вы не подключены к какому-либо голосовому каналу.`
             ef.models.send({
                 object: message,
-                message: `${await emoji("markNo")} Nie jestem obecnie połączony z żadnym kanałem głosowym.`,
+                message: `${translations[guild.settings.language][0]}`,
                 color: ef.colors.red
             })
-            return
-        } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nie jestem obecnie połączony z tym kanałem głosowym.`,
-                color: ef.colors.red
-            })
-            return
+            return -1
+        } else {
+            if(!message.guild.voiceConnection){
+                translations.pl[1] = `${ef.emotes.markNo} Nie jestem obecnie połączony z żadnym kanałem głosowym.`
+                translations.en[1] = `${ef.emotes.markNo} I am currently not connected to any voice channel.`
+                translations.ru[1] = `${ef.emotes.markNo} В настоящее время я не подключен ни к одному голосовому каналу.`
+                ef.models.send({
+                    object: message,
+                    message: `${translations[guild.settings.language][1]}`,
+                    color: ef.colors.red
+                })
+                return -1
+            } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
+                translations.pl[2] = `${ef.emotes.markNo} Nie jestem obecnie połączony z tym kanałem głosowym.`
+                translations.en[2] = `${ef.emotes.markNo} I am not currently connected to this voice channel.`
+                translations.ru[2] = `${ef.emotes.markNo} В настоящее время я не подключен к этому голосовому каналу.`
+                ef.models.send({
+                    object: message,
+                    message: `${translations[guild.settings.language][2]}`,
+                    color: ef.colors.red
+                })
+                return -1
+            }
         }
-        ef.queue[message.guild.id].queue = []
-        ef.queue[message.guild.id].player.end()
-        await message.guild.voiceConnection.disconnect()
-        delete ef.queue[message.guild.id]
-        ef.models.send({
-            object: message,
-            message: `${await emoji("markYes")} Pomyślnie opuszczono kanał głosowy.`,
-        })
+        return 0
     }
+
+    if(!ef.roles.developers.includes(message.author.id) || !ef.queue[message.guild.id]) { if (await check() == -1) return }
+
+    ef.queue[message.guild.id].queue = []
+    ef.queue[message.guild.id].player.end()
+    await message.guild.voiceConnection.disconnect()
+    delete ef.queue[message.guild.id]
+    translations.pl[3] = `${ef.emotes.markYes} Pomyślnie opuszczono kanał głosowy.`
+    translations.en[3] = `${ef.emotes.markYes} Successfully left voice channel.`
+    translations.ru[3] = `${ef.emotes.markYes} Успешно покинул голосовой канал.`
+    ef.models.send({
+        object: message,
+        message: `${translations[guild.settings.language][3]}`
+    })
 }
 
 exports.data = {
     triggers: ['leave'],
-    description: 'Sprawia, że bot opuszcza kanał. (Bot automatycznie opuszcza kanał po 10s od opuszczenia kanału przez ostatniego użytkownika.',
+    description: {
+        pl: 'Sprawia, że bot opuszcza kanał. (Bot automatycznie opuszcza kanał po 10s od opuszczenia kanału przez ostatniego użytkownika.',
+        en: 'Makes the bot leave the channel. (Bot automatically leaves the channel 10s after the last user left the channel.',
+        ru: 'Заставляет бота покинуть канал. (Бот автоматически покидает канал через 10 секунд после того, как последний пользователь покинул канал.'
+    },
     usage: [
         '{prefix}{command}'
     ]

@@ -1,10 +1,9 @@
 exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
     var found = false
     if(ef.guilds.get(args[0]).available == false) return ef.models.send({
         object: message,
         color: ef.colors.red,
-        message: `${await emoji('markNo')}Ten serwer jest niedostępny.`
+        message: `${ef.emotes.markNo}Ten serwer jest niedostępny.`
     })
     await ef.guilds.get(args[0]).fetchInvites()
     .then(async invites => {
@@ -15,7 +14,7 @@ exports.output = async ({message, guild, args}) => {
                     found = true
                     ef.models.send({
                         object: message,
-                        message: `${await emoji('markYes')}Pomyślnie utworzono zaproszenie: **https://discord.gg/${array[i].code}**.`
+                        message: `${ef.emotes.markYes}Pomyślnie utworzono zaproszenie: **https://discord.gg/${array[i].code}**.`
                     })
                     break
                 }
@@ -31,13 +30,13 @@ exports.output = async ({message, guild, args}) => {
     if(channel == 'null') return ef.models.send({
                                     object: message,
                                     color: ef.colors.red,
-                                    message: `${await emoji('markNo')}Nie da się utworzyć zaproszenia na ten serwer.`
+                                    message: `${ef.emotes.markNo}Nie da się utworzyć zaproszenia na ten serwer.`
                                 })
     var invite = await ef.channels.get(channel).createInvite({maxUses: 5, maxAge: 3600})
 
     ef.models.send({
         object: message,
-        message: `${await emoji('markYes')}Pomyślnie utworzono zaproszenie: **https://discord.gg/${invite.code}**.`
+        message: `${ef.emotes.markYes}Pomyślnie utworzono zaproszenie: **https://discord.gg/${invite.code}**.`
     })
 }
 

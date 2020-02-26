@@ -1,49 +1,54 @@
-exports.output = async ({message, guild, args}) => {
-    async function emoji(emojiname) { return await ef.utils.emoji.get(emojiname, message) }
-    
-    if(!message.member.voiceChannel) {
+exports.output = async ({message, guild, args}) => { 
+    async function check() {
+        if(!message.member.voiceChannel) {
+            ef.models.send({
+                object: message,
+                message: `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`,
+                color: ef.colors.red
+            })
+            return -1
+        } else {
+            if(!message.guild.voiceConnection){
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo} Nie jestem obecnie połączony z żadnym kanałem głosowym.`,
+                    color: ef.colors.red
+                })
+                return -1
+            } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo} Nie jestem obecnie połączony z tym kanałem głosowym.`,
+                    color: ef.colors.red
+                })
+                return -1
+            }
+        }
+        return 0
+    }
+
+    if(!ef.roles.developers.includes(message.author.id) || !ef.queue[message.guild.id]) { if (await check() == -1) return }
+
+    if(!args[0]) {
         ef.models.send({
             object: message,
-            message: `${await emoji("markNo")} Nie jesteś połączony z żadnym kanałem głosowym.`,
+            message: `${ef.emotes.markNo} Podaj nową głośność.`,
             color: ef.colors.red
         })
+        return
+    }
+    var state = await ef.player.volume(message, args)
+    if(state == true) {
+        ef.models.send({
+            object: message,
+            message: `${ef.emotes.markYes} Pomyślnie ustawiono nową głośność na **${parseInt(args[0])}%**.`,
+        })
     } else {
-        if(!message.guild.voiceConnection){
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nie jestem obecnie połączony z żadnym kanałem głosowym.`,
-                color: ef.colors.red
-            })
-            return
-        } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nie jestem obecnie połączony z tym kanałem głosowym.`,
-                color: ef.colors.red
-            })
-            return
-        }
-        if(!args[0]) {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Podaj nową głośność.`,
-                color: ef.colors.red
-            })
-            return
-        }
-        var state = await ef.player.volume(message, args)
-        if(state == true) {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markYes")} Pomyślnie ustawiono nową głośność na **${parseInt(args[0])}%**.`,
-            })
-        } else {
-            ef.models.send({
-                object: message,
-                message: `${await emoji("markNo")} Nie udało się zmienić głośności.`,
-                color: ef.colors.red
-            })
-        }
+        ef.models.send({
+            object: message,
+            message: `${ef.emotes.markNo} Nie udało się zmienić głośności.`,
+            color: ef.colors.red
+        })
     }
 }
 
