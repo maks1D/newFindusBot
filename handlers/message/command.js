@@ -84,7 +84,7 @@ module.exports = async (message, prefix, guild) => {
         guild: guild
     })
     .catch(err => {
-        return require('../error')(message, err)
+        return require('../error')(message, guild, err)
     })
     if(ef.type != 'beta') {
         ef.models.send({

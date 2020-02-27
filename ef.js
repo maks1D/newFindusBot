@@ -40,6 +40,8 @@ class ef extends Client {
             this.tokens[secret] = process.env[secret]
         )
 
+        if(this.tokens['istest'] !== 'true') this.tokens['istest'] = 'false'
+
         this.types = ['main', 'beta']
 
         if(!this.types.includes(process.argv[2])){

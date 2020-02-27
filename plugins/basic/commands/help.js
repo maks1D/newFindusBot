@@ -1,5 +1,7 @@
 exports.output = async ({message, guild, args}) => {
 
+    var translations = {en: [], pl: [], ru: []}
+
     const plugin = ef.plugins.find(plugin => plugin.id == (args[0] ? args[0].toLowerCase() : '*'))
 
     if(plugin && !(plugin.devOnly && !ef.roles.developers.includes(message.author.id))){
@@ -11,15 +13,29 @@ exports.output = async ({message, guild, args}) => {
                 commands.normal.push(`\`${command.data.triggers[0]}\``)
             }
         }
+        translations.pl[0] = 
+`\u200B
+Opis: \`${!plugin.description.en ? plugin.description : plugin.description[guild.settings.language]}\`
+
+Komendy:
+${commands.normal.join(', ')}`
+        translations.en[0] = 
+`\u200B
+Description: \`${!plugin.description.en ? plugin.description : plugin.description[guild.settings.language]}\`
+
+Commands:
+${commands.normal.join(', ')}`
+        translations.ru[0] = 
+`\u200B
+Описание: \`${!plugin.description.en ? plugin.description : plugin.description[guild.settings.language]}\`
+
+команды:
+${commands.normal.join(', ')}`
         return ef.models.send({
             object: message,
             title: `**${plugin.name}**`,
-            message: `\u200B\nOpis: \`${!plugin.description.en ? plugin.description : plugin.description[guild.settings.language]}\`
-                      
-                      Komendy:
-                      ${commands.normal.join(', ')}`
+            message: `${translations[guild.settings.language][0]}`
         })
-
     }
 
     var command
@@ -44,16 +60,34 @@ exports.output = async ({message, guild, args}) => {
             }, command.data)
 
             if(!(command.data.developer && !ef.roles.developers.includes(message.author.id)) && command.data.disabled !== true) {
+                var title = {en: 'Command', pl: 'Komenda', ru: 'командование'}
+
+                translations.pl[1] = 
+`\u200B
+Warianty: \`${command.data.triggers.join(', ')}\`
+Opis: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
+
+Użycie:
+\`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+                translations.en[1] = 
+`\u200B
+Triggers: \`${command.data.triggers.join(', ')}\`
+Description: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
+
+Usage:
+\`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+                translations.ru[1] = 
+`\u200B
+Триггеры: \`${command.data.triggers.join(', ')}\`
+описание: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
+
+использование:
+\`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
 
                 return ef.models.send({
                     object: message,
-                    title: `Komenda: **${command.data.triggers[0]}**`,
-                    message: `\u200B
-                            Warianty: \`${command.data.triggers.join(', ')}\`
-                            Opis: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
-                            
-                            Użycie:
-                            \`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+                    title: `${title[guild.settings.language]}: **${command.data.triggers[0]}**`,
+                    message: `${translations[guild.settings.language][1]}`
                 })
             }
         }
@@ -65,16 +99,27 @@ exports.output = async ({message, guild, args}) => {
         if(!(plugin.devOnly && !ef.roles.developers.includes(message.author.id)) && !plugin.hiddenInHelp){
             help += `**${plugin.name}** (ID: \`${plugin.id}\`)\n`
         }
-    });
-    help += `\nWpisz: \`${ef.prefix}help <ID modułu>\` aby uzyskać szczegółowe inforamcje.`
+    })
+
+    translations.pl[2] =
+`\nWpisz: \`${ef.prefix}help <ID modułu>\`, aby uzyskać szczegółowe informacje.`
+    translations.en[2] =
+`\nType: \`${ef.prefix}help <plugin ID>\` to get detailed informations.`
+    translations.ru[2] =
+`\nнапишите: \`${ef.prefix}help <плагины ID>\` чтобы получить подробную информацию.`
+    
+    help += translations[guild.settings.language][2]
+
+    var title2 = {en: 'Available plugins', pl: 'Dostępne moduły', ru: 'Доступные плагины'}
+
     ef.models.send({
         object: message,
-        title: `**Dostępne moduły:**`,
+        title: `**${title2[guild.settings.language]}:**`,
         message: help
     })
 }
 
 exports.data = {
     triggers: ['help', '?'],
-    description: 'Pokazuje komendy/moduły bota.',
+    description: {pl: 'Pokazuje komendy/moduły bota.', en: 'Shows bot commands / plugins.', ru: 'Показывает команды бота / плагины.'}
 }
