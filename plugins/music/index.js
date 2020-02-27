@@ -3,7 +3,7 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':musical_note: Muzyka',
+  name: ':musical_note: Music',
   id: 'music',
   description: 'Muzyka.',
   author: 'Findus#7449',

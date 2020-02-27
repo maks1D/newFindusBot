@@ -20,9 +20,29 @@ module.exports = async (data) => {
             )
             .then(async response => {
                 if (data.type == 'text') {
+                  var text = response.body[data.output]
+                  if(data.endpoint == 'dadjoke' && text.includes('?')) {
+                    var substrs = []
+                    for(var i = 0; i < text.length; i++) {
+                      if(text[i] == '?') {
+                        if(i + 1 == text.length) break
+                        substrs[0] = text.substr(0, i + 1)
+                        substrs[1] = text.substr(i + 1, text.length)
+                        break
+                      }
+                    }
+                    if(substrs.length === 2) {
+                      text = `\`` + substrs.join('\`||')
+                      text += '||'
+                    } else {
+                      text = `\`` + text + `\``
+                    }
+                  } else {
+                    text = `\`` + text + `\``
+                  }
                   ef.models.send({
                     object: data.object,
-                    message: `\`${response.body[data.output]}\``,
+                    message: `${text}`,
                     footer: `powered by api.badosz.com`
                   })
                 } else if (data.type == "image") {

@@ -3,7 +3,7 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':frame_photo: Obrazki',
+  name: ':frame_photo: Images',
   id: 'images',
   description: 'Różne generatory obrazków.',
   author: 'Findus#7449',

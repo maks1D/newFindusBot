@@ -1,8 +1,5 @@
 exports.output = async ({message, guild, args}) => {
-    var translations = {}
-    translations.en = []
-    translations.pl = []
-    translations.ru = []
+    var translations = {en: [], pl: [], ru: []}
     async function check() {
         if(!message.member.voiceChannel) {
             translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`
