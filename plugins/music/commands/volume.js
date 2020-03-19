@@ -37,11 +37,19 @@ exports.output = async ({message, guild, args}) => {
         })
         return
     }
+    if(args[0] !== 'earrape' && isNaN(args[0])) {
+        ef.models.send({
+            object: message,
+            message: `${ef.emotes.markNo} Podaj poprawną głośność.`,
+            color: ef.colors.red
+        })
+        return
+    }
     var state = await ef.player.volume(message, args)
     if(state == true) {
         ef.models.send({
             object: message,
-            message: `${ef.emotes.markYes} Pomyślnie ustawiono nową głośność na **${parseInt(args[0])}%**.`,
+            message: `${ef.emotes.markYes} Pomyślnie ustawiono nową głośność na **${ef.queue[message.guild.id].volume}%**.`,
         })
     } else {
         ef.models.send({
