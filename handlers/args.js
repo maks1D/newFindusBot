@@ -1,25 +1,49 @@
-module.exports = async (args, command, message) => {
+module.exports = async (args, command, message, guild) => {
+
+    var translations = {en: [], pl: [], ru: []}
   
     return new Promise(async (resolve, reject) => {
       
         if (!command.data.args) return resolve(false)
 
-        if (command.data.args.length > 0 && args.length < command.data.args.length) {
-            return error(message,`Poprawny sposób użycia:\n\`${command.data.usage.join('\n')
-                .replace(/{prefix}/g, ef.prefix)
-                .replace(/{command}/g, command.data.triggers[0])}\``)
+        var shortcut, shortcut2
+
+        if(command.data.args.en) {
+            shortcut = command.data.args[guild.settings.language]
+        } else {
+            shortcut = command.data.args
         }
 
-        for (i = 0; i < command.data.args.length; i++) {
+        if(command.data.usage.en) {
+            shortcut2 = command.data.usage[guild.settings.language]
+        } else {
+            shortcut2 = command.data.usage
+        }
+
+        if (shortcut.length > 0 && args.length < shortcut.length) {
+            translations.pl[0] = 
+`Poprawny sposób użycia:\n\`${shortcut2.join('\n')
+.replace(/{prefix}/g, ef.prefix)
+.replace(/{command}/g, command.data.triggers[0])}\``
+            translations.en[0] = 
+`Correct usage:\n\`${shortcut2.join('\n')
+.replace(/{prefix}/g, ef.prefix)
+.replace(/{command}/g, command.data.triggers[0])}\``
+            translations.ru[0] = 
+`Правильное использование:\n\`${shortcut2.join('\n')
+.replace(/{prefix}/g, ef.prefix)
+.replace(/{command}/g, command.data.triggers[0])}\``
+            return error(message, translations[guild.settings.language][0])
+        }
+
+        for (i = 0; i < shortcut.length; i++) {
         
-            if (command.data.args[i].type == 'mention' && !message.mentions.members.first()) {
-                return error(message, `Zły argument: \`[${command.data.args[i].name}]\`\n\n Musi on być typu: \`[${command.data.args[i].type}]\`!`)
+            if ((shortcut[i].type == 'mention' && !message.mentions.members.first()) || (shortcut[i].type == 'number' && isNaN(args[i]))) {
+                translations.pl[1] = `Zły argument: \`[${shortcut[i].name}]\`\n\nMusi on być typu: \`[${shortcut[i].type}]\`!`
+                translations.en[1] = `Wrong argument: \`[${shortcut[i].name}]\`\n\nIt have to be of type: \`[${shortcut[i].type}]\`!`
+                translations.ru[1] = `Неправильный аргумент: \`[${shortcut[i].name}]\`\n\nОн должен быть типом: \`[${shortcut[i].type}]\`!`
+                return error(message, translations[guild.settings.language][1])
             }
-            
-            if (command.data.args[i].type == 'number' && isNaN(args[i])) {
-                return error(message, `Zły argument: \`[${command.data.args[i].name}]\`\n\n Musi on być typu: \`[${command.data.args[i].type}]\`!`)
-            }
-            
         }
         
         resolve(false)

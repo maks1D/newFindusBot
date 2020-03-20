@@ -33,7 +33,7 @@ ${commands.normal.join(', ')}`
 ${commands.normal.join(', ')}`
         return ef.models.send({
             object: message,
-            title: `**${plugin.name}**`,
+            title: `**${!plugin.name.en ? plugin.name : plugin.name[guild.settings.language]}**`,
             message: `${translations[guild.settings.language][0]}`
         })
     }
@@ -65,24 +65,24 @@ ${commands.normal.join(', ')}`
                 translations.pl[1] = 
 `\u200B
 Warianty: \`${command.data.triggers.join(', ')}\`
-Opis: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
+Opis: \`${!command.data.description.pl ? command.data.description : command.data.description[guild.settings.language]}\`
 
 Użycie:
-\`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+\`${!command.data.usage.pl ? command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0]) : command.data.usage.pl.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
                 translations.en[1] = 
 `\u200B
 Triggers: \`${command.data.triggers.join(', ')}\`
 Description: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
 
 Usage:
-\`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+\`${!command.data.usage.en ? command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0]) : command.data.usage.en.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
                 translations.ru[1] = 
 `\u200B
 Триггеры: \`${command.data.triggers.join(', ')}\`
-описание: \`${!command.data.description.en ? command.data.description : command.data.description[guild.settings.language]}\`
+описание: \`${!command.data.description.ru ? command.data.description : command.data.description[guild.settings.language]}\`
 
 использование:
-\`${command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
+\`${!command.data.usage.ru ? command.data.usage.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0]) : command.data.usage.ru.join('\n').replace(/{prefix}/g, ef.prefix).replace(/{command}/g, command.data.triggers[0])}\``
 
                 return ef.models.send({
                     object: message,
@@ -97,16 +97,19 @@ Usage:
     var help = `\u200B\n`
     await ef.plugins.forEach(plugin => {
         if(!(plugin.devOnly && !ef.roles.developers.includes(message.author.id)) && !plugin.hiddenInHelp){
-            help += `**${plugin.name}** (ID: \`${plugin.id}\`)\n`
+            help += `**${plugin.name.en ? plugin.name[guild.settings.language] : plugin.name}** (ID: \`${plugin.id}\`)\n`
         }
     })
 
     translations.pl[2] =
-`\nWpisz: \`${ef.prefix}help <ID modułu>\`, aby uzyskać szczegółowe informacje.`
+`\nWpisz: \`${ef.prefix}help <ID modułu>\`, aby uzyskać szczegółowe informacje.
+Wpisz: \`${ef.prefix}language <pl/en/ru>\`, aby zmienić język.`
     translations.en[2] =
-`\nType: \`${ef.prefix}help <plugin ID>\` to get detailed informations.`
+`\nType: \`${ef.prefix}help <plugin ID>\` to get detailed informations.
+Type: \`${ef.prefix}language <pl/en/ru>\` to change language.`
     translations.ru[2] =
-`\nнапишите: \`${ef.prefix}help <плагины ID>\` чтобы получить подробную информацию.`
+`\nнапишите: \`${ef.prefix}help <плагины ID>\` чтобы получить подробную информацию.
+напишите: \`${ef.prefix}language <pl/en/ru>\` чтобы сменить язык.`
     
     help += translations[guild.settings.language][2]
 

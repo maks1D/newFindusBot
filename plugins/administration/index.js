@@ -3,9 +3,9 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':hammer_pick: Administration',
+  name: {en: ':hammer_pick: Administration', pl: ':hammer_pick: Administracja', ru: ':hammer_pick: администрация'},
   id: 'admin',
-  description: 'Wymierzaj sprawiedliwość i pilnuj porządku!',
+  description: {pl: 'Wymierzaj sprawiedliwość i pilnuj porządku!', en: 'Do justice and keep order!', ru: 'Делай справедливость и следи за порядком!'},
   author: 'Findus#7449',
   commands: commands,
   devOnly: false,
