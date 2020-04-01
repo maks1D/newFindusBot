@@ -1,5 +1,6 @@
-var YouTube = require('youtube-node');
-var YouTube_Search = new YouTube();
+var YouTube = require('youtube-node')
+var he = require("he")
+var YouTube_Search = new YouTube()
 YouTube_Search.setKey(ef.tokens.youtubeapi)
 
 module.exports = async function search(searchkey) {
@@ -14,12 +15,8 @@ module.exports = async function search(searchkey) {
             for(var i = 0; i < records; i++) {
                 if(result.items[i].id.kind == 'youtube#video') {
                     parsedSong = {
-                        title: result.items[i].snippet.title.replace(/&quot;/g, "\"")
-                                                            .replace(/&amp;/g, "&")
-                                                            .replace(/&apos;/g, "'")
-                                                            .replace(/&lt;/g, "<")
-                                                            .replace(/&gt;/g, ">"),
-                        channel: result.items[i].snippet.channelTitle,
+                        title: he.decode(result.items[i].snippet.title),
+                        channel: he.decode(result.items[i].snippet.channelTitle),
                         imageURL: result.items[i].snippet.thumbnails.high.url,
                         url: `https://youtube.com/watch?v=${result.items[i].id.videoId}`
                     }

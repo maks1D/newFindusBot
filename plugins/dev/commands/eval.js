@@ -2,7 +2,7 @@ exports.output = async ({message, guild, args}) => {
     try
     {
         var before = Date.now()
-        var output = eval(args.join(' '))
+        var output = await eval(args.join(' '))
         var duration = Date.now() - before
         ef.models.send({
             object: message,
