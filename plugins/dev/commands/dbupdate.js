@@ -1,9 +1,8 @@
 exports.output = async ({message, guild, args}) => {
-    for(var i = 0; i < ef.db.collections.length; i++){
-        ef.db.cache.set(`${ef.db.collections[i]}`, await ef.db.findDocMongo(`${ef.db.collections[i]}`))
-    }
 
-    ef.db.cache.save()
+    for(var i = 0; i < ef.db.collections.length; i++){
+        ef.db.cache[ef.db.collections[i]] = await ef.db.findDocMongo(`${ef.db.collections[i]}`)
+    }
 
     ef.models.send({
         object: message,
