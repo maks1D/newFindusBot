@@ -7,5 +7,10 @@ exports.output = async ({message, args}) => {
 
 exports.data = {
     triggers: ['kiss'],
-    description: 'Pocałunek.',
+    description: {
+        pl: 'Pocałunek.',
+        en: 'Kiss.',
+        ru: 'Поцелуй.'
+    }
 }
+

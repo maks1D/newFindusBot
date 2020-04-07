@@ -7,10 +7,22 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['changemymind','cmm'],
-    description: 'Generuje zdjęcie change my mind.',
-    usage: [
-        '{prefix}{command} <text>',
-    ],
+    description: {
+        pl: 'Generuje zdjęcie change my mind.',
+        en: 'Generates change my mind image.',
+        ru: 'Создает изображение «передумай».'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} <text>',
+        ],
+        en: [
+            '{prefix}{command} <text>',
+        ],
+        ru: [
+            '{prefix}{command} <текст>'
+        ]
+    },
     args: [
     {
         type:'text',

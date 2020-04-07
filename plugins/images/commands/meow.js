@@ -10,6 +10,10 @@ exports.output = async ({message}) => {
   
 exports.data = {
     triggers: ['meow'],
-    description: 'Pokazuje zdjęcie kota.'
+    description: {
+        pl: 'Pokazuje losowe zdjęcie kota.',
+        en: 'Shows random cat image.',
+        ru: 'Показывает случайное изображение кошки.'
+    }
 }
   

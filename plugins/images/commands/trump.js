@@ -7,10 +7,22 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['trump'],
-    description: 'Generuje tweet trumpa.',
-    usage: [
-        '{prefix}{command} <tekst>',
-    ],
+    description: {
+        pl: 'Generuje tweet trumpa.',
+        en: 'Generates Trump\'s tweet.',
+        ru: 'Создает твит Трампа.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} <text>',
+        ],
+        en: [
+            '{prefix}{command} <text>',
+        ],
+        ru: [
+            '{prefix}{command} <текст>'
+        ]
+    },
     args: [
     {
         type:'text',

@@ -10,12 +10,28 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['triggered'],
-    description: 'Generates triggered image.',
-    usage: [
-        '{prefix}{command} [wzmianka]',
-        '{prefix}{command} [ID]',
-        '{prefix}{command} [nazwa użytkownika]'
-    ], 
+    description: {
+        pl: 'Generuje mem triggered.',
+        en: 'Generates triggered image.',
+        ru: 'Создает мем сработал.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} [wzmianka]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [nazwa użytkownika]'
+        ],
+        en: [
+            '{prefix}{command} [mention]',
+            '{prefix}{command} [id]',
+            '{prefix}{command} [name]'
+        ],
+        ru: [
+            '{prefix}{command} [упоминание]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [имя пользователя]'
+        ]
+    },
     disabled: true
 }
   

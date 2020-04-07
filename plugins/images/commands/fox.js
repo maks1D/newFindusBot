@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
   
 exports.data = {
     triggers: ['fox'],
-    description: 'Pokazuje zdjęcie lisa.'
+    description: {
+        pl: 'Pokazuje zdjęcie lisa.',
+        en: 'Shows fox image.',
+        ru: 'Показывает изображение лисы.'
+    }
 }
   

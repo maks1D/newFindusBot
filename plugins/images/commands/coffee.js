@@ -5,7 +5,7 @@ exports.output = async ({message, args}) => {
                 let file = res.file
                 ef.models.send({
                     object: message,
-                    message: "☕ Your coffee is ready",
+                    message: "☕",
                     image: file,
                 })
             })

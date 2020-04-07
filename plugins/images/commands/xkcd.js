@@ -10,6 +10,10 @@ exports.output = async ({message}) => {
   
 exports.data = {
     triggers: ['xkcd'],
-    description: 'Pokazuje zdjęcie z komiksu xkcd.'
+    description: {
+        pl: 'Pokazuje zdjęcie z komiksu xkcd.',
+        en: 'Shows xkcd image.',
+        ru: 'Показывает фото из комикса xkcd.'
+    }
 }
   

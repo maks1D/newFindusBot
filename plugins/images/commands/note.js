@@ -7,10 +7,22 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['note'],
-    description: 'Generuje notatkę.',
-    usage: [
-        '{prefix}{command} <tekst>',
-    ],
+    description: {
+        pl: 'Generuje notatkę.',
+        en: 'Generates note image.',
+        ru: 'Создает заметку.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} <text>',
+        ],
+        en: [
+            '{prefix}{command} <text>',
+        ],
+        ru: [
+            '{prefix}{command} <текст>'
+        ]
+    },
     args: [
     {
         type:'text',

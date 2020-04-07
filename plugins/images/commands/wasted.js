@@ -10,11 +10,27 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['wasted'],
-    description: 'Generuje zdjęcie wasted z GTA.',
-    usage: [
-        '{prefix}{command} [wzmianka]',
-        '{prefix}{command} [ID]',
-        '{prefix}{command} [nazwa użytkownika]'
-    ]
+    description: {
+        pl: 'Generuje zdjęcie wasted z GTA.',
+        en: 'Generates wasted image.',
+        ru: 'Создает потраченное впустую изображение из GTA.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} [wzmianka]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [nazwa użytkownika]'
+        ],
+        en: [
+            '{prefix}{command} [mention]',
+            '{prefix}{command} [id]',
+            '{prefix}{command} [name]'
+        ],
+        ru: [
+            '{prefix}{command} [упоминание]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [имя пользователя]'
+        ]
+    }
 }
   

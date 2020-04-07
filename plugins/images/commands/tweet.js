@@ -7,10 +7,22 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['tweet'],
-    description: 'Generuje tweet.',
-    usage: [
-        '{prefix}{command} <treść tweeta>'     
-    ],
+    description: {
+        pl: 'Generuje tweet.',
+        en: 'Generates tweet.',
+        ru: 'Создает твит.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} <text>',
+        ],
+        en: [
+            '{prefix}{command} <text>',
+        ],
+        ru: [
+            '{prefix}{command} <текст>'
+        ]
+    },
     disabled: true
 }
   

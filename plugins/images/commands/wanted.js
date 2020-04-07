@@ -10,11 +10,27 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['wanted'],
-    description: 'Generuje zdjęcie poszukiwanego.',
-    usage: [
-        '{prefix}{command} [wzmianka]',
-        '{prefix}{command} [ID]',
-        '{prefix}{command} [nazwa użytkownika]'
-    ]
+    description: {
+        pl: 'Generuje zdjęcie poszukiwanego.',
+        en: 'Generates wanted image.',
+        ru: 'Создает фотографию нужного.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} [wzmianka]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [nazwa użytkownika]'
+        ],
+        en: [
+            '{prefix}{command} [mention]',
+            '{prefix}{command} [id]',
+            '{prefix}{command} [name]'
+        ],
+        ru: [
+            '{prefix}{command} [упоминание]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [имя пользователя]'
+        ]
+    }
 }
   

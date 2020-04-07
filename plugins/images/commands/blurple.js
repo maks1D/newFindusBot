@@ -10,11 +10,27 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['blurple'],
-    description: 'Generuje zblurplowaną wersję twojego lub wybranej osoby awatara.',
-    usage: [
-        '{prefix}{command} [wzmianka]',
-        '{prefix}{command} [ID]',
-        '{prefix}{command} [nazwa użytkownika]'
-    ]
+    description: {
+        pl: 'Generuje zblurplowany awatar.',
+        en: 'Generates blurple avatar image.',
+        ru: 'Создает пурпурно-синее изображение аватара.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} [wzmianka]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [nazwa użytkownika]'
+        ],
+        en: [
+            '{prefix}{command} [mention]',
+            '{prefix}{command} [id]',
+            '{prefix}{command} [name]'
+        ],
+        ru: [
+            '{prefix}{command} [упоминание]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [имя пользователя]'
+        ]
+    }
 }
   

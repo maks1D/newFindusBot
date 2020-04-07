@@ -10,11 +10,27 @@ exports.output = async ({message, args}) => {
   
 exports.data = {
     triggers: ['invert'],
-    description: 'Generuje negatyw zdjęcia.',
-    usage: [
-        '{prefix}{command} [wzmianka]',
-        '{prefix}{command} [ID]',
-        '{prefix}{command} [nazwa użytkownika]'
-    ]
+    description: {
+        pl: 'Generuje negatyw zdjęcia.',
+        en: 'Generates inverted image.',
+        ru: 'Создает негативное фото.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} [wzmianka]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [nazwa użytkownika]'
+        ],
+        en: [
+            '{prefix}{command} [mention]',
+            '{prefix}{command} [id]',
+            '{prefix}{command} [name]'
+        ],
+        ru: [
+            '{prefix}{command} [упоминание]',
+            '{prefix}{command} [ID]',
+            '{prefix}{command} [имя пользователя]'
+        ]
+    }
 }
   

@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
   
 exports.data = {
     triggers: ['bird'],
-    description: 'Pokazuje zdjęcie ptaka.'
+    description: {
+        pl: 'Pokazuje losowy obraz ptaka.',
+        en: 'Shows random bird image.',
+        ru: 'Показывает случайное изображение птицы.'
+    }
 }
   
