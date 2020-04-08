@@ -30,7 +30,7 @@ module.exports = async (message, prefix, guild) => {
                 color: ef.colors.blue
             })
         }
-        translations.pl[0] = `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bierząco dołącz na oficjany serwer FindusBoTa\` [tutaj](https://discord.gg/SgKzpgY).`
+        translations.pl[0] = `\`Developer tymczasowo zawiesił możliwość korzystania z komend! Jeśli chcesz być na bieżąco dołącz na oficjany serwer FindusBoTa\` [tutaj](https://discord.gg/SgKzpgY).`
         translations.en[0] = `\`The developer has temporarily suspended the ability to use commands! If you want to be up to date, join the official FindusBoT server\` [here](https://discord.gg/SgKzpgY).`
         translations.ru[0] = `\`Разработчик временно приостановил возможность использования команд! Если вы хотите быть в курсе, присоединяйтесь к официальному серверу FindusBoT\` [здесь](https://discord.gg/SgKzpgY).` 
         return ef.models.send({
