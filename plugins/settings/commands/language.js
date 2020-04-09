@@ -44,7 +44,7 @@ exports.output = async ({message, guild, args}) => {
 }
 
 exports.data = {
-    triggers: ['language'],
+    triggers: ['language', 'lang'],
     description: 'Zmienia język na serwerze.',
     usage: [
         '{prefix}{command} [pl/en/ru]'     
