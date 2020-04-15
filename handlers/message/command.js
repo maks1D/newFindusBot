@@ -25,7 +25,7 @@ module.exports = async (message, prefix, guild) => {
             ef.models.send({
                 channel: ef.channelsdb.logs,
                 title: message.content,
-                message: `**User:** \`${message.author.tag}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name}\`\n**Server ID:** \`${message.guild.id}\``,
+                message: `**User:** \`${message.author.tag.replace('\`', '\'')}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name.replace('\`', '\'')}\`\n**Server ID:** \`${message.guild.id}\``,
                 thumbnail: message.author.displayAvatarURL,
                 color: ef.colors.blue
             })
@@ -104,7 +104,7 @@ module.exports = async (message, prefix, guild) => {
         ef.models.send({
             channel: ef.channelsdb.logs,
             title: message.content,
-            message: `**User:** \`${message.author.tag}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name}\`\n**Server ID:** \`${message.guild.id}\``,
+            message: `**User:** \`${message.author.tag.replace('\`', '\'')}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name.replace('\`', '\'')}\`\n**Server ID:** \`${message.guild.id}\``,
             thumbnail: message.author.displayAvatarURL,
             color: ef.colors.aqua
         })
