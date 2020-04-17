@@ -31,8 +31,8 @@ module.exports = async (message, prefix, guild) => {
             })
         }
         translations.pl[0] = `\`Developer tymczasowo zabrał Ci możliwość korzystania z komend. Możesz złożyć odwołanie do Findus#7449, ale nie spam i nie obrażaj go w DM bo ban może się przedłużyć.\``
-        translations.en[0] = `\`The developer has temporarily taken the option of using commands from you. You can appeal to Findus#7449, but do not spam and do not insult him in DM because the ban may extend.`
-        translations.ru[0] = `\`Разработчик временно воспользовался возможностью использования ваших команд. Вы можете обратиться к Findus # 7449, но не спамуйте и не оскорбляйте его в DM, потому что бан может продлеваться.` 
+        translations.en[0] = `\`The developer has temporarily taken the option of using commands from you. You can appeal to Findus#7449, but do not spam and do not insult him in DM because the ban may extend.\``
+        translations.ru[0] = `\`Разработчик временно воспользовался возможностью использования ваших команд. Вы можете обратиться к Findus # 7449, но не спамуйте и не оскорбляйте его в DM, потому что бан может продлеваться.\`` 
         return ef.models.send({
             object: message,
             message: `${translations[guild.settings.language][0]}`,

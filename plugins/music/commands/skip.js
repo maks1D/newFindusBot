@@ -52,7 +52,7 @@ exports.output = async ({message, guild, args}) => {
                 message: `${ef.emotes.markNo} Nic nie jest aktualnie odtwarzane.`,
                 color: ef.colors.red
             })
-        } else if(id + 1 <= ef.queue[message.guild.id].queue.length) {
+        } else if(id + 1 <= ef.queue[message.guild.id].queue.length && id >= 0) {
             var curr = ef.queue[message.guild.id].queue[id]
             ef.queue[message.guild.id].queue.splice(id, 1)
             ef.models.send({
