@@ -71,7 +71,9 @@ exports.output = async ({message, guild, args}) => {
             queue: [song],
             connection: message.guild.voiceConnection,
             volume: 100,
-            autoleave: true
+            autoleave: true,
+            autoreconnect: false,
+            autounmute: false
         }
     }
     ef.models.send({

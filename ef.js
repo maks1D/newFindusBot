@@ -23,6 +23,8 @@ class ef extends Client {
         this.tokens = []
 
         this.freezed = false
+        
+        this.userbans = []
 
         this.color = this.colors.green
 

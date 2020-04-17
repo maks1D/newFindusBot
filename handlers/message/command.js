@@ -20,6 +20,26 @@ module.exports = async (message, prefix, guild) => {
         ef.db.cache['botinfo'][0].commandsdone ++
     }
 
+    if(ef.userbans.includes(message.author.id) && !ef.roles.developers.includes(message.author.id)) {
+        if(ef.type != 'beta') {
+            ef.models.send({
+                channel: ef.channelsdb.logs,
+                title: message.content,
+                message: `**User:** \`${message.author.tag.replace('\`', '\'')}\`\n**User ID:** \`${message.author.id}\`\n**Server:** \`${message.guild.name.replace('\`', '\'')}\`\n**Server ID:** \`${message.guild.id}\``,
+                thumbnail: message.author.displayAvatarURL,
+                color: ef.colors.red
+            })
+        }
+        translations.pl[0] = `\`Developer tymczasowo zabrał Ci możliwość korzystania z komend. Możesz złożyć odwołanie do Findus#7449, ale nie spam i nie obrażaj go w DM bo ban może się przedłużyć.\``
+        translations.en[0] = `\`The developer has temporarily taken the option of using commands from you. You can appeal to Findus#7449, but do not spam and do not insult him in DM because the ban may extend.`
+        translations.ru[0] = `\`Разработчик временно воспользовался возможностью использования ваших команд. Вы можете обратиться к Findus # 7449, но не спамуйте и не оскорбляйте его в DM, потому что бан может продлеваться.` 
+        return ef.models.send({
+            object: message,
+            message: `${translations[guild.settings.language][0]}`,
+            color: ef.colors.red
+        })
+    }
+
     if(ef.freezed == true && !ef.roles.developers.includes(message.author.id)) {
         if(ef.type != 'beta') {
             ef.models.send({
