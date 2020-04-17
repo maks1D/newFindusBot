@@ -12,7 +12,7 @@ module.exports = async function search(searchkey) {
                 resolve('noVideo')
                 return
             }
-            for(var i = 0; i < records; i++) {
+            for(var i = 0; i < result.items.length; i++) {
                 if(result.items[i].id.kind == 'youtube#video') {
                     parsedSong = {
                         title: he.decode(result.items[i].snippet.title),
@@ -25,7 +25,7 @@ module.exports = async function search(searchkey) {
                         console.log(info)
                     })*/
                     return resolve(parsedSong)
-                } else if(i == records - 1) {
+                } else if(i == result.items.length - 1) {
                     return resolve('noVideo')
                 }
             }
