@@ -1,12 +1,5 @@
 exports.output = async ({message, guild, args}) => {
-    if(isNaN(args[0])) {
-        return ef.models.send({
-            object: message,
-            message: `${ef.emotes.markNo}Podaj poprawną liczbę.`,
-            color: ef.colors.red
-        })
-    }
-    if(isNaN(args[1])) {
+    if(isNaN(args[0]) || isNaN(args[1]) {
         return ef.models.send({
             object: message,
             message: `${ef.emotes.markNo}Podaj poprawną liczbę.`,
@@ -20,20 +13,7 @@ exports.output = async ({message, guild, args}) => {
         b = a
         a = tmp
     }
-    if(a < 0) {
-        return ef.models.send({
-            object: message,
-            message: `${ef.emotes.markNo}Obsługa liczb ujemnych zostanie dodana w przyszłości.`,
-            color: ef.colors.red
-        })
-    }
-    if(b < 0) {
-        return ef.models.send({
-            object: message,
-            message: `${ef.emotes.markNo}Obsługa liczb ujemnych zostanie dodana w przyszłości.`,
-            color: ef.colors.red
-        })
-    }
+ 
     var rng = await ef.utils.number.random(a, b)
     ef.models.send({
         object: message,
