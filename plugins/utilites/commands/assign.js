@@ -26,7 +26,7 @@ exports.output = async ({message, guild, args}) => {
         if(!(args.length < id * 2)) {
             roles.splice(index, 1)
         } else {
-            if(roles.length == 0) continue
+            if(roles.length == 1) continue
             var temp = 0
             for(var x = 0; x < assignments.length; x++) {
                 if(assignments[x].role == roles[index]) temp++

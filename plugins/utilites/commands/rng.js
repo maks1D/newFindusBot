@@ -1,5 +1,5 @@
 exports.output = async ({message, guild, args}) => {
-    if(isNaN(args[0]) || isNaN(args[1]) {
+    if(isNaN(args[0]) || isNaN(args[1])) {
         return ef.models.send({
             object: message,
             message: `${ef.emotes.markNo}Podaj poprawną liczbę.`,
