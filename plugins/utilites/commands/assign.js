@@ -17,7 +17,7 @@ exports.output = async ({message, guild, args}) => {
         roles.push(args[i])
     }
     for(var i = 0; i < users.length; i++) {
-        var index = Math.floor(Math.random() * (roles.length - 1))
+        var index = await ef.utils.number.random(0, roles.length - 1)
         var data = {
             user: users[i],
             role: roles[index]
