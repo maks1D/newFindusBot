@@ -30,12 +30,10 @@ exports.output = async ({message, guild, args}) => {
     if(!ef.roles.developers.includes(message.author.id) || !ef.queue[message.guild.id]) { if (await check() == -1) return }
 
     if(!args[0]) {
-        ef.models.send({
+        return ef.models.send({
             object: message,
-            message: `${ef.emotes.markNo} Podaj nową głośność.`,
-            color: ef.colors.red
+            message: `Aktualna głośność wynosi **${ef.queue[message.guild.id].volume}%**.`,
         })
-        return
     }
     if(args[0] !== 'earrape' && isNaN(args[0])) {
         ef.models.send({

@@ -1,9 +1,23 @@
 exports.output = async ({message, guild, args}) => {
+    var translations = {en: [], pl: [], ru: []}
     var id = message.mentions.members.array().length
+
     if(id == 0 || id > 25) {
+        translations.pl[0] = `${ef.emotes.markNo}Wprowadź poprawną liczbę użytkowników.`
+        translations.en[0] = `${ef.emotes.markNo}Enter the correct number of users.`
+        translations.ru[0] = `${ef.emotes.markNo}Введите правильное количество пользователей.`
         return ef.models.send({
             object: message,
-            message: `${ef.emotes.markNo}Wprowadź poprawną liczbę ról i użytkowników.`,
+            message: `${translations[guild.settings.language][0]}`,
+            color: ef.colors.red
+        })
+    } else if(args.length == id) {
+        translations.pl[1] = `${ef.emotes.markNo}Wprowadź poprawną liczbę argumentów.`
+        translations.en[1] = `${ef.emotes.markNo}Enter the correct number of arguments.`
+        translations.ru[1] = `${ef.emotes.markNo}Введите правильное количество аргументов`
+        return ef.models.send({
+            object: message,
+            message: `${translations[guild.settings.language][1]}`,
             color: ef.colors.red
         })
     }
@@ -34,10 +48,16 @@ exports.output = async ({message, guild, args}) => {
             if(temp == Math.floor(users.length / roles.length)) roles.splice(index, 1)
         }
     }
-    if(args.length < id * 2) { 
-        var output = '**Drużyny:**\n'
+    if(args.length < id * 2) {
+        translations.pl[2] = `**Drużyny:**\n`
+        translations.en[2] = `**Teams:**\n`
+        translations.ru[2] = `**Команды:**\n`
+        var output = `${translations[guild.settings.language][2]}`
     } else {
-        var output = '**Przypisania:**\n'
+        translations.pl[2] = `**Przypisania:**\n`
+        translations.en[2] = `**Assignments:**\n`
+        translations.ru[2] = `**назначение:**\n`
+        var output = `${translations[guild.settings.language][2]}`
     }
     for(var i = 0; i < assignments.length; i++) {
         output += `<@${assignments[i].user.id}>: \`${assignments[i].role}\`\n`
@@ -50,8 +70,20 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['assign'],
-    description: 'Przypisuje danym osobom daną ilość ról. (Max 25)',
-    usage: [
-        '{prefix}{command} <Wzmianki osób> <role oddzielone spacjami>'
-    ]
+    description: {
+        pl: 'Przypisuje danym osobom daną ilość ról. (Max 25)',
+        en: 'Assigns a given number of roles to a given persons. (Max 25)',
+        ru: 'Назначает определенное количество ролей указанному количеству людей. (Максимум 25)'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} <Wzmianki osób> <role oddzielone spacjami>'
+        ],
+        en: [
+            '{prefix}{command} <user mentions> <roles separated by spaces>'
+        ],
+        ru: [
+            '{prefix}{command} <Упоминание людей> <роли, разделенные пробелами>'
+        ]
+    }
 }

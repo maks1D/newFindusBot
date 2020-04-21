@@ -2,14 +2,6 @@ module.exports = async (message) => {
     if(message.author.bot) return
     if(!message.guild) return
 
-    if(message.content == `<@${ef.user.id}>` || message.content == `<@!${ef.user.id}>`){
-        return require('../handlers/message/mention')(message)
-    }
-
-    if (message.content.startsWith('$fcli') && ef.roles.developers.includes(message.author.id)) {
-        return require('../handlers/message/cli')(message)
-    }
-
     var guilds = await ef.db.findDoc('servers')
     var guild = 0
 
@@ -39,6 +31,14 @@ module.exports = async (message) => {
         }
         ef.db.addDoc(data, 'servers')
         guild = data
+    }
+
+    if(message.content == `<@${ef.user.id}>` || message.content == `<@!${ef.user.id}>`){
+        return require('../handlers/message/mention')(message, guild)
+    }
+
+    if (message.content.startsWith('$fcli') && ef.roles.developers.includes(message.author.id)) {
+        return require('../handlers/message/cli')(message)
     }
 
     var prefix = ef.prefix
