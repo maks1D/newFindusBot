@@ -3,10 +3,69 @@ const fs = require("fs");
 var frtnt = require("fortnite")
 var Fortnite = new frtnt(ef.tokens["fortniteapi"])
 
-function draw(Platform, Message, Data)
+async function draw(Platform, Message, Data)
 {
     var Stats = Data.stats;
     if(Stats === undefined) throw 'NoUser'
+
+    Stats = await Object.assign({
+        solo: {
+            kd: 0.0,
+            kills: 0,
+            kills_per_match: 0.0,
+            matches: 0,
+            score: 0,
+            score_per_match: 0.0,
+            top_12: 0,
+            top_25: 0,
+            top_3: 0,
+            top_5: 0,
+            top_6: 0,
+            wins: 0
+        },
+        duo: {
+            kd: 0.0,
+            kills: 0,
+            kills_per_match: 0.0,
+            matches: 0,
+            score: 0,
+            score_per_match: 0.0,
+            top_12: 0,
+            top_25: 0,
+            top_3: 0,
+            top_5: 0,
+            top_6: 0,
+            wins: 0
+        },
+        squad: {
+            kd: 0.0,
+            kills: 0,
+            kills_per_match: 0.0,
+            matches: 0,
+            score: 0,
+            score_per_match: 0.0,
+            top_12: 0,
+            top_25: 0,
+            top_3: 0,
+            top_5: 0,
+            top_6: 0,
+            wins: 0
+        },
+        lifetime: {
+            kd: 0.0,
+            kills: 0,
+            matches: 0,
+            score: 0,
+            top_12: 0,
+            top_25: 0,
+            top_3: 0,
+            top_5: 0,
+            top_6: 0,
+            wins: 0
+        },
+        recent: []
+    }, Stats)
+
     if(Stats.solo.wins != 0){var winsol = Math.round(Stats.solo.wins / Stats.solo.matches * 10000)/100;}else{var winsol = 0;}
     if(Stats.duo.wins != 0){var winduo = Math.round(Stats.duo.wins / Stats.duo.matches * 10000)/100;}else{var winduo = 0;}
     if(Stats.squad.wins != 0){var winsq = Math.round(Stats.squad.wins / Stats.squad.matches * 10000)/100;}else{var winsq = 0;}
@@ -129,7 +188,7 @@ function draw(Platform, Message, Data)
     });
 }
 
-function check(Username, Message){
+async function check(Username, Message, guild){
 
     var Platforms = [["pc", "PC"], ["xbl", "Xbox"], ["psn", "PlayStation"]];
 
@@ -143,8 +202,8 @@ function check(Username, Message){
 
         var Platform = Platforms[2][1]
 
-        Fortnite.user(Username, Platforms[2][0]).then(Data => {
-            draw(Platform, Message, Data)
+        Fortnite.user(Username, Platforms[2][0]).then(async Data => {
+            await draw(Platform, Message, Data)
         })
         .catch(err => {
             if(err == 'NoUser'){
@@ -156,7 +215,7 @@ function check(Username, Message){
             }
             else
             {
-                require('../../../handlers/error')(Message, err)
+                require('../../../handlers/error')(Message, guild, err)
             }
         })
     }else if(user[0] == '-xbx'){
@@ -167,8 +226,8 @@ function check(Username, Message){
 
         var Platform = Platforms[1][1]
 
-        Fortnite.user(Username, Platforms[1][0]).then(Data => {
-            draw(Platform, Message, Data)
+        Fortnite.user(Username, Platforms[1][0]).then(async Data => {
+            await draw(Platform, Message, Data)
         })
         .catch(err => {
             if(err == 'NoUser'){
@@ -180,15 +239,15 @@ function check(Username, Message){
             }
             else
             {
-                require('../../../handlers/error')(Message, err)
+                require('../../../handlers/error')(Message, guild, err)
             }
         })
     }else{
 
         var Platform = Platforms[0][1]
 
-        Fortnite.user(Username, Platforms[0][0]).then(Data => {
-            draw(Platform, Message, Data)
+        Fortnite.user(Username, Platforms[0][0]).then(async Data => {
+            await draw(Platform, Message, Data)
         })
         .catch(err => {
             if(err == 'NoUser'){
@@ -200,7 +259,7 @@ function check(Username, Message){
             }
             else
             {
-                require('../../../handlers/error')(Message, err)
+                require('../../../handlers/error')(Message, guild, err)
             }
         })
     }
@@ -304,13 +363,18 @@ exports.output = async ({message, guild, args}) => {
 
         var exist = false
 
-        Accounts.forEach(account => {
-            if(account.id == message.author.id){
-                check(account.username, message)
-                exist = true
-            }
+        var promise = await new Promise((resolve, reject) => {
+            Accounts.forEach(async account => {
+                if(account.id == message.author.id){
+                    await check(account.username, message, guild)
+                    exist = true
+                    resolve()
+                }
+            })
         })
-        
+
+        await promise
+
         if(!exist){
             return ef.models.send({
                 object: message,
@@ -319,7 +383,7 @@ exports.output = async ({message, guild, args}) => {
             })
         }
     }else{
-        check(args.join(' '), message)
+        await check(args.join(' '), message, guild)
     }
 }
 
