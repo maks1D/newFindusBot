@@ -21,7 +21,7 @@ module.exports = async (searchquery, changes, collectionid) => {
         for(var i = 0; i < cache.length; i++){
             if(cache[i][key] == searchquery[key]){
                 for(var z = 0; z < changelist.length; z++){
-                    if(ef.load.get(cache, `[${i}].${changelist[z]}`)) {
+                    if(ef.load.get(cache, `[${i}].${changelist[z]}`) !== undefined) {
                         ef.load.set(cache, `[${i}].${changelist[z]}`, ef.load.get(changes, changelist[z]))
                     }
                 }
