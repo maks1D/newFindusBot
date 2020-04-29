@@ -169,10 +169,11 @@ exports.output = async ({message, guild, args}) => {
                 color: ef.colors.red
             })
         } else {
-            ef.models.send({
+            var Message = ef.models.send({
                 object: message,
                 message: `${ef.emotes.markYes}Pomyślnie się zapisałeś **${message.author.tag}**!`
             })
+            Message.delete(20000)
         }
         var applymessage = args.join(' ')
         message.guild.channels.get(thisdata.logid).send(`**${message.author.tag} zapisał się:** \`${applymessage}\``)
