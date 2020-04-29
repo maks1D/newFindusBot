@@ -171,7 +171,7 @@ exports.output = async ({message, guild, args}) => {
         } else {
             ef.models.send({
                 object: message,
-                message: `${ef.emotes.markYes}Pomyślnie się zapisałeś!`
+                message: `${ef.emotes.markYes}Pomyślnie się zapisałeś **${message.author.tag}**!`
             })
         }
         var applymessage = args.join(' ')
@@ -182,6 +182,7 @@ exports.output = async ({message, guild, args}) => {
         if(thisdata.roleGive != '') {
             message.member.addRole(thisdata.roleGive)
         }
+        message.delete()
     }
 }
 
