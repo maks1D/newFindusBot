@@ -88,6 +88,7 @@ exports.output = async ({message, guild, args}) => {
         message: `Welcomer na twoim serwerze jest ${guild.settings.welcomer.enabled == "true" ? `włączony` : `wyłączony`},
                   Kanał: ${guild.settings.welcomer.channel != "undefined" ? `<#${guild.settings.welcomer.channel}>` : `\`[Nie ustawiony]\``},
                   Wiadomość: ${guild.settings.welcomer.message != "undefined" ? `\`${guild.settings.welcomer.message}\`` : `\`[Nie ustawiona]\``}.
+                  Dodawanie roli: ${guild.settings.welcomer.roleGive != '' ? `\`${message.guild.roles.get(guild.settings.welcomer.roleGive).name}\`` : `\`[Nie ustawiona]\``}
                   
                   Aby zmienić ustawienia:
                   **kanału**, wpisz: \`${ef.prefix}welcomer channel <#nowy kanał>\`,
@@ -106,7 +107,7 @@ exports.data = {
         '{prefix}{command} <on/off>',
         '{prefix}{command} message <wiadomość>',
         '{prefix}{command} addrole <@rola>',
-        '\n\`Zmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#**7449**\`)\n\`{user.mention}\` - wzmianka użytkownika\`\n'
+        '\n\`Zmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#\`**7449**)\n\`{user.mention}\` - wzmianka użytkownika\n\`'
     ],
     userPerms: [
         "MANAGE_GUILD"
