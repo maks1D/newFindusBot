@@ -2,6 +2,7 @@ exports.output = async ({message, guild, args}) => {
     var data = await ef.db.findDoc('applydata')
     var thisdata
     var applymodel = {
+        guildid: message.guild.id,
         id: '',
         logid: '',
         status: 'off',

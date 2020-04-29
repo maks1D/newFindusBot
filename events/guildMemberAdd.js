@@ -25,5 +25,9 @@ module.exports = async (member) => {
         channel.send(msg).catch(e => {
             require('../handlers/error')(channel, {}, e, true)
         })
+
+        if(guild.settings.welcomer.roleGive !== '') {
+            ef.guilds.get(guild.id).addRole(guild.settings.welcomer.roleGive).catch(e => {})
+        }
     }
 }

@@ -18,7 +18,8 @@ module.exports = async (message) => {
                 welcomer: {
                     enabled: "false",
                     channel: "undefined",
-                    message: "undefined"
+                    message: "undefined",
+                    roleGive: ''
                 },
                 leaver: {
                     enabled: "false",

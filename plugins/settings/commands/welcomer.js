@@ -50,6 +50,29 @@ exports.output = async ({message, guild, args}) => {
                     color: ef.colors.red
                 })
             }
+        } else if(args[0 == 'addrole']) {
+            var id = args[1].replace(/[<@&>]/g, '')
+            var role
+
+            if(message.guild.roles.get(id)){
+                role = message.guild.roles.get(id).id
+            } else if(message.guild.roles.get(args[1])) {
+                role = message.guild.roles.get(args[1]).id
+            }
+
+            if(!role) {
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markYes}Pomyślnie wyłączono dodawanie ról!`
+                })
+                return ef.db.editDoc({id: guild.id}, {'settings.welcomer.roleGive': ''}, 'servers')
+            } else {
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markYes}Pomyślnie włączono dodawanie ról!`
+                })
+                return ef.db.editDoc({id: guild.id}, {'settings.welcomer.roleGive': role}, 'servers')
+            }
         }
     } else if(args[0] == 'on' || args[0] == 'off'){
         var statement = args[0] == 'on' ? "true" : "false"
@@ -69,7 +92,8 @@ exports.output = async ({message, guild, args}) => {
                   Aby zmienić ustawienia:
                   **kanału**, wpisz: \`${ef.prefix}welcomer channel <#nowy kanał>\`,
                   **wiadomości**, wpisz: \`${ef.prefix}welcomer message <nowa wiadomość>\`,
-                  **włączenia**, wpisz \`${ef.prefix}welcomer <on/off>\`
+                  **włączenia**, wpisz \`${ef.prefix}welcomer <on/off>\`,
+                  **dodawania ról**, wpisz \`${ef.prefix}welcomer addrole <@rola / nic (aby wyłączyć)>\`
                 `
     })
 }
@@ -81,6 +105,7 @@ exports.data = {
         '{prefix}{command} channel <#kanał>',
         '{prefix}{command} <on/off>',
         '{prefix}{command} message <wiadomość>',
+        '{prefix}{command} addrole <@rola>',
         '\nZmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#**7449**\`)\n\`{user.mention}\` - wzmianka użytkownika\n'
     ],
     userPerms: [
