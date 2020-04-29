@@ -27,7 +27,7 @@ module.exports = async (member) => {
         })
 
         if(guild.settings.welcomer.roleGive !== '') {
-            ef.guilds.get(guild.id).addRole(guild.settings.welcomer.roleGive).catch(e => {})
+            member.addRole(guild.settings.welcomer.roleGive).catch(e => {})
         }
     }
 }
