@@ -50,7 +50,7 @@ exports.output = async ({message, guild, args}) => {
                     color: ef.colors.red
                 })
             }
-        } else if(args[0 == 'addrole']) {
+        } else if(args[0] == 'addrole') {
             var id = args[1].replace(/[<@&>]/g, '')
             var role
 
@@ -106,7 +106,7 @@ exports.data = {
         '{prefix}{command} <on/off>',
         '{prefix}{command} message <wiadomość>',
         '{prefix}{command} addrole <@rola>',
-        '\nZmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#**7449**\`)\n\`{user.mention}\` - wzmianka użytkownika\n'
+        '\n\`Zmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#**7449**\`)\n\`{user.mention}\` - wzmianka użytkownika\`\n'
     ],
     userPerms: [
         "MANAGE_GUILD"
