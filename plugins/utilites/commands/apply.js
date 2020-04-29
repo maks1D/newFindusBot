@@ -22,7 +22,7 @@ exports.output = async ({message, guild, args}) => {
             message: `${ef.emotes.markNo}Funkcja nie została skonfigurawana!`,
             color: ef.colors.red
         })
-    } else if(args[0] == '-set' && !(message.member.hasPermission('MANAGE_SERVER') || ef.roles.developers.inclues(message.author.id))) {
+    } else if(args[0] == '-set' && !(message.member.hasPermission('MANAGE_GUILD') || ef.roles.developers.inclues(message.author.id))) {
         ef.models.send({
             object: message,
             message: `${ef.emotes.markNo}Nie masz uprawnień aby skonfigurawać tę funkcję!`,
