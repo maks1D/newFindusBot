@@ -163,13 +163,26 @@ exports.output = async ({message, guild, args}) => {
         }
     } else {
         if(thisdata.status != 'on') {
-            return ef.models.send({
+            var Message = await ef.models.send({
                 object: message,
                 message: `${ef.emotes.markNo}Ta funkcja jest wyłączona!`,
                 color: ef.colors.red
             })
+            message.delete()
+            Message.delete(20000)
+            return
         } else {
-            var Message = ef.models.send({
+            if(!args[0]) {
+                var Message = await ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo}Musisz wpisać tekst zgłoszenia!`,
+                    color: ef.colors.red
+                })
+                message.delete()
+                Message.delete(20000)
+                return
+            }
+            var Message = await ef.models.send({
                 object: message,
                 message: `${ef.emotes.markYes}Pomyślnie się zapisałeś **${message.author.tag}**!`
             })
