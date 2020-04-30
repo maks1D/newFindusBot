@@ -73,7 +73,8 @@ class ef extends Client {
                 'fortnite',
                 'botinfo',
                 'servers',
-                'applydata'
+                'applydata',
+                'scheduledmsgs'
             ]
 
             this.db.collections.forEach(collection => {
