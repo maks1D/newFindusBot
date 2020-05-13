@@ -3,9 +3,10 @@ module.exports = async (message, guild, error, suggest = false) => {
     var ehash = require('crypto').createHash('sha256').update(error.stack == undefined ? 'undefined' : error.stack).digest('base64')
     var code = ''
     for(var i = 0; i < 7; i++){
-        code += ehash[i] * 10 ^ i
+        code += ehash[i].charCodeAt(0) * Math.pow(10, Math.floor(i / 2))
     }
     code = '0x' + code
+    code = code.slice(0, 10)
     if(!suggest){
         translations.pl[0] = 
 `O nie! Jakiś błąd wkradł się do mojego kodu!

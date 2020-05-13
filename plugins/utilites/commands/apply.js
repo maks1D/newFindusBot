@@ -23,7 +23,7 @@ exports.output = async ({message, guild, args}) => {
             message: `${ef.emotes.markNo}Funkcja nie została skonfigurawana!`,
             color: ef.colors.red
         })
-    } else if(args[0] == '-set' && !(message.member.hasPermission('MANAGE_GUILD') || ef.roles.developers.inclues(message.author.id))) {
+    } else if(args[0] == '-set' && !(message.member.hasPermission('MANAGE_GUILD') || ef.roles.developers.includes(message.author.id))) {
         ef.models.send({
             object: message,
             message: `${ef.emotes.markNo}Nie masz uprawnień aby skonfigurawać tę funkcję!`,
@@ -189,12 +189,39 @@ exports.output = async ({message, guild, args}) => {
             Message.delete(20000)
         }
         var applymessage = args.join(' ')
-        message.guild.channels.get(thisdata.logid).send(`**${message.author.tag} zapisał się:** \`${applymessage}\``)
+        var logchannel = message.guild.channels.get(thisdata.logid)
+        if(logchannel !== undefined) {
+            logchannel.send(`**${message.author.tag} zapisał się:** \`${applymessage}\``)
+        } else {
+            ef.models.send({
+                object: message,
+                message: `${ef.emotes.red}Kanał logowania zapisów jest niepoprawny.`,
+                color: ef.colors.red
+            })
+        }
         if(thisdata.roleTake != '') {
-            message.member.removeRole(thisdata.roleTake)
+            var trole = message.guild.roles.get(thisdata.roleTake)
+            if(trole !== undefined) {
+                message.member.removeRole(thisdata.roleTake)
+            } else {
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.red}Rola do zabrania jest niepoprawna.`,
+                    color: ef.colors.red
+                })
+            }
         }
         if(thisdata.roleGive != '') {
-            message.member.addRole(thisdata.roleGive)
+            var grole = message.guild.roles.get(thisdata.roleGive)
+            if(grole !== undefined) {
+                message.member.addRole(thisdata.roleGive)
+            } else {
+                ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.red}Rola do dodania jest niepoprawna.`,
+                    color: ef.colors.red
+                })
+            }
         }
         message.delete()
     }
@@ -202,7 +229,7 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['apply'],
-    description: 'Tymczasowa customowa komenda.',
+    description: 'Tymczasowa customowa komenda. Niedługo zostanie ulepszona i otrzyma oficjalne wsparcie.',
     usage: [
         '{prefix}{command} <argumenty> - zgłoszenie',
         '{prefix}{command} -set <#channel> addrole <role mention/nothing (to disable)>',
