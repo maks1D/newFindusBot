@@ -195,7 +195,7 @@ exports.output = async ({message, guild, args}) => {
         } else {
             ef.models.send({
                 object: message,
-                message: `${ef.emotes.red}Kanał logowania zapisów jest niepoprawny.`,
+                message: `${ef.emotes.markNo}Kanał logowania zapisów jest niepoprawny.`,
                 color: ef.colors.red
             })
         }
@@ -206,7 +206,7 @@ exports.output = async ({message, guild, args}) => {
             } else {
                 ef.models.send({
                     object: message,
-                    message: `${ef.emotes.red}Rola do zabrania jest niepoprawna.`,
+                    message: `${ef.emotes.markNo}Rola do zabrania jest niepoprawna.`,
                     color: ef.colors.red
                 })
             }
@@ -218,7 +218,7 @@ exports.output = async ({message, guild, args}) => {
             } else {
                 ef.models.send({
                     object: message,
-                    message: `${ef.emotes.red}Rola do dodania jest niepoprawna.`,
+                    message: `${ef.emotes.markNo}Rola do dodania jest niepoprawna.`,
                     color: ef.colors.red
                 })
             }
