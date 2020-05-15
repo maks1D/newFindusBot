@@ -19,7 +19,8 @@ exports.output = async ({message, guild, args}) => {
     }
     return ef.models.send({
         object: message,
-        message: `${ef.emotes.markNo} Użytkownik nie został zbanowany!`
+        message: `${ef.emotes.markNo} Użytkownik nie został zbanowany!`,
+        color: ef.colors.red
     })
 }
 

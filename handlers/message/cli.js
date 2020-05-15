@@ -116,7 +116,7 @@ module.exports = async (message) => {
                 .addRow('Name', stored.guild.name)
                 var roles = []
                 stored.guild.roles.forEach(role => {roles.push(role)});
-                roles.sort(function(a, b){return a.position < b.position})
+                roles.sort(function(a, b){return a.calculatedPosition < b.calculatedPosition})
                 roles.forEach(role => {
                     table.addRow(role.name, `${role.id}; Perms: ${role.permissions}`)
                 });
@@ -182,7 +182,7 @@ module.exports = async (message) => {
                     .addRow(`ROLES`, `Roles:`)
                     var roles = []
                     rols.forEach(role => {roles.push(role)});
-                    roles.sort(function(a, b){return a.position < b.position})
+                    roles.sort(function(a, b){return a.calculatedPosition < b.calculatedPosition})
                     roles.forEach(role => {
                         table.addRow(role.name, `${role.id}; Perms: ${role.permissions}; Pos: ${role.calculatedPosition}`)
                     });
