@@ -396,6 +396,7 @@ exports.data = {
         '{prefix}{command} [-ps4/-xbx] <Epic Username> - sprawdź statystyki konta',
         '{prefix}{command} -drop - wylosuj miejsce do lądowania',
         '{prefix}{command} -unlink - odłącz konto'
-    ]
+    ],
+    disabled: true
 }
   
