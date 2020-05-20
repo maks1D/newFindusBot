@@ -42,8 +42,8 @@ exports.output = async ({message, guild, args}) => {
     
     var state = await ef.player.pause(message)
     if(state == true) {
-        translations.pl[0] = `${ef.emotes.markYes} Pomyślnie zatrzymano odtwarzanie filmu.`
-        translations.en[0] = `${ef.emotes.markYes} Movie paused successfully.`
+        translations.pl[0] = `${ef.emotes.markYes} Pomyślnie zatrzymano odtwarzanie utworu.`
+        translations.en[0] = `${ef.emotes.markYes} Music paused successfully.`
         translations.ru[0] = `${ef.emotes.markYes} Фильм успешно остановлен.`
         ef.models.send({
             object: message,

@@ -93,14 +93,14 @@ module.exports = async (message) => {
                         categories.null.push(channel)
                     }
                 })
-                categories.null = categories.null.sort(function(a, b){return a.position > b.position})
+                categories.null = categories.null.sort(function(a, b){return a.position - b.position})
                 categories.null.forEach(channel => {
                     table.addRow(channel.type, `${channel.name} - ${channel.id}`)
                 })
-                categs = categs.sort(function(a, b){return a.position > b.position})
+                categs = categs.sort(function(a, b){return a.position - b.position})
                 categs.forEach(category => {
                     table.addRow('category', `${category.name}: - ${category.id}`)
-                    categories[category.id] = categories[category.id].sort(function(a, b){return a.position > b.position})
+                    categories[category.id] = categories[category.id].sort(function(a, b){return a.position - b.position})
                     categories[category.id].forEach(channel => {
                         table.addRow(channel.type, `  ${channel.name} - ${channel.id}`)
                     })
@@ -118,7 +118,7 @@ module.exports = async (message) => {
                 .addRow('Name', stored.guild.name)
                 var roles = []
                 stored.guild.roles.forEach(role => {roles.push(role)});
-                roles = roles.sort(function(a, b){return a.position < b.position})
+                roles = roles.sort(function(a, b){return a.position - b.position})
                 roles.forEach(role => {
                     table.addRow(role.name, `${role.id}; Perms: ${role.permissions}`)
                 });
@@ -184,7 +184,7 @@ module.exports = async (message) => {
                     .addRow(`ROLES`, `Roles:`)
                     var roles = []
                     rols.forEach(role => {roles.push(role)});
-                    roles = roles.sort(function(a, b){return a.position < b.position})
+                    roles = roles.sort(function(a, b){return a.position - b.position})
                     roles.forEach(role => {
                         table.addRow(role.name, `${role.id}; Perms: ${role.permissions}; Pos: ${role.calculatedPosition}`)
                     });

@@ -42,7 +42,7 @@ exports.output = async ({message, guild, args}) => {
     
     var state = await ef.player.resume(message)
     if(state == true) {
-        translations.pl[0] = `${ef.emotes.markYes} Pomyślnie wznowiono odtwarzanie filmu.`
+        translations.pl[0] = `${ef.emotes.markYes} Pomyślnie wznowiono odtwarzanie utworu.`
         translations.en[0] = `${ef.emotes.markYes} Music resumed successfully.`
         translations.ru[0] = `${ef.emotes.markYes} Музыка возобновилась успешно.`
         ef.models.send({
