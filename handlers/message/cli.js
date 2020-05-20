@@ -78,30 +78,38 @@ module.exports = async (message) => {
                 const table = new AsciiTable(`${stored.guild.id}`)
                 .addRow('Name', stored.guild.name)
                 var categories = {}
-                categories.null = []
+                categories.null = {text: [], voice: []}
                 var categs = []
                 stored.guild.channels.forEach(channel => {
                     if(channel.type == 'category') {
-                        categories[channel.id] = []
+                        categories[channel.id] = {text: [], voice: []}
                         categs.push(channel)
                     }
                 })
                 stored.guild.channels.forEach(channel => {
                     if(channel.parentID !== undefined && channel.type != 'category') {
-                        categories[channel.parentID].push(channel)
+                        categories[channel.parentID][channel.type].push(channel)
                     } else if (channel.parentID === undefined && channel.type != 'category') {
-                        categories.null.push(channel)
+                        categories.null[channel.type].push(channel)
                     }
                 })
-                categories.null = categories.null.sort(function(a, b){return a.position - b.position})
-                categories.null.forEach(channel => {
+                categories.null.text = categories.null.text.sort(function(a, b){return a.position - b.position})
+                categories.null.voice = categories.null.voice.sort(function(a, b){return a.position - b.position})
+                categories.null.text.forEach(channel => {
+                    table.addRow(channel.type, `${channel.name} - ${channel.id}`)
+                })
+                categories.null.voice.forEach(channel => {
                     table.addRow(channel.type, `${channel.name} - ${channel.id}`)
                 })
                 categs = categs.sort(function(a, b){return a.position - b.position})
                 categs.forEach(category => {
                     table.addRow('category', `${category.name}: - ${category.id}`)
-                    categories[category.id] = categories[category.id].sort(function(a, b){return a.position - b.position})
-                    categories[category.id].forEach(channel => {
+                    categories[category.id].text = categories[category.id].text.sort(function(a, b){return a.position - b.position})
+                    categories[category.id].text.forEach(channel => {
+                        table.addRow(channel.type, `  ${channel.name} - ${channel.id}`)
+                    })
+                    categories[category.id].voice = categories[category.id].voice.sort(function(a, b){return a.position - b.position})
+                    categories[category.id].voice.forEach(channel => {
                         table.addRow(channel.type, `  ${channel.name} - ${channel.id}`)
                     })
                 })
@@ -118,7 +126,7 @@ module.exports = async (message) => {
                 .addRow('Name', stored.guild.name)
                 var roles = []
                 stored.guild.roles.forEach(role => {roles.push(role)});
-                roles = roles.sort(function(a, b){return a.position - b.position})
+                roles = roles.sort(function(a, b){return b.position - a.position})
                 roles.forEach(role => {
                     table.addRow(role.name, `${role.id}; Perms: ${role.permissions}`)
                 });
@@ -184,7 +192,7 @@ module.exports = async (message) => {
                     .addRow(`ROLES`, `Roles:`)
                     var roles = []
                     rols.forEach(role => {roles.push(role)});
-                    roles = roles.sort(function(a, b){return a.position - b.position})
+                    roles = roles.sort(function(a, b){return b.position - a.position})
                     roles.forEach(role => {
                         table.addRow(role.name, `${role.id}; Perms: ${role.permissions}; Pos: ${role.calculatedPosition}`)
                     });

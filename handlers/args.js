@@ -49,14 +49,14 @@ module.exports = async (args, command, message, guild) => {
         resolve(false)
 
         function error(message, text) {
-        ef.models.send({
-            object: message,
-            message: text,
-            color: ef.colors.red
-        })
-        resolve(true)
+            ef.models.send({
+                object: message,
+                message: text,
+                color: ef.colors.red
+            })
+            resolve(true)
         }
 
-  })
+    })
 
 }

@@ -3,9 +3,17 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':video_game: Statistics',
+  name: {
+    pl: ':video_game: Statystyki',
+    en: ':video_game: Statistics',
+    ru: ':video_game: Статистика'
+  },
   id: 'stats',
-  description: 'Spawdź swoje statystyki!',
+  description: {
+    pl: 'Spawdź swoje statystyki!',
+    en: 'Check your stats!',
+    ru: 'Проверьте свою статистику!'
+  },
   author: 'Findus#7449',
   commands: commands,
   devOnly: false,
