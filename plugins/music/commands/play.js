@@ -111,7 +111,7 @@ exports.output = async ({message, guild, args}) => {
         object: message,
         message: `${translations[guild.settings.language][0]}`,
         thumbnail: song.imageURL,
-        footer: `${translations[guild.settings.language[1]]}`
+        footer: `${translations[guild.settings.language][1]}`
     })
     ef.player.play(message)
 }
