@@ -48,7 +48,7 @@ exports.output = async ({message, guild, args}) => {
         var current = ef.queue[message.guild.id].nowPlaying
         var state = await ef.player.skip(message)
         translations.pl[0] = `${ef.emotes.markYes} Pomyślnie pominięto utwór **${current.title}**.`
-        translations.en[0] = `${ef.emotes.markYes} Song **${current.title}** successfully skipped..`
+        translations.en[0] = `${ef.emotes.markYes} Song **${current.title}** successfully skipped.`
         translations.ru[0] = `${ef.emotes.markYes} Песня **${current.title}** успешно пропущена.`
         if(state == true) {
             ef.models.send({
@@ -74,7 +74,7 @@ exports.output = async ({message, guild, args}) => {
             var curr = ef.queue[message.guild.id].queue[id]
             ef.queue[message.guild.id].queue.splice(id, 1)
             translations.pl[0] = `${ef.emotes.markYes} Pomyślnie pominięto utwór **${curr.title}**.`
-            translations.en[0] = `${ef.emotes.markYes} Song **${curr.title}** successfully skipped..`
+            translations.en[0] = `${ef.emotes.markYes} Song **${curr.title}** successfully skipped.`
             translations.ru[0] = `${ef.emotes.markYes} Песня **${curr.title}** успешно пропущена.`
             ef.models.send({
                 object: message,

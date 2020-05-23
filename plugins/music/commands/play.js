@@ -74,8 +74,8 @@ exports.output = async ({message, guild, args}) => {
     
     var song = await ef.player.search(args.join(' '))
     if(song == 'noVideo') {
-        translations.pl[0] = `${ef.emotes.markNo} Nie znaleziono filmu.`
-        translations.en[0] = `${ef.emotes.markNo} Movie not found.`
+        translations.pl[0] = `${ef.emotes.markNo} Nie znaleziono utworu.`
+        translations.en[0] = `${ef.emotes.markNo} Track not found.`
         translations.ru[0] = `${ef.emotes.markNo} Фильм не найден.`
         ef.models.send({
             object: message,
