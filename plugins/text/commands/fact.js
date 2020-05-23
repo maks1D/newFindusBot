@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['fact'],
-    description: 'Pokazuje losowy fakt. (W języku angielskim)'
+    description: {
+        pl: 'Pokazuje losowy fakt. (W języku angielskim)',
+        en: 'Summons random fact.',
+        ru: 'Показывает случайный факт. (На английском языке)'
+    }
 }
   

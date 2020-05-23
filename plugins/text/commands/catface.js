@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['catface'],
-    description: 'Pokazuje losową twarz kota z ASCII art.'
+    description: {
+        pl: 'Pokazuje kocią twarz z ASCII artu.',
+        en: 'Shows ASCII art cat face.',
+        ru: 'Показывает лицо кота от ASCII art.'
+    }
 }
   

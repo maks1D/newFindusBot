@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['dadjoke'],
-    description: `Pokazuje żatr 'taty'. (W języku angielskim)`
+    description: {
+        pl: `Pokazuje żart 'taty'. (W języku angielskim)`,
+        en: `Summons dadjoke.`,
+        ru: `Призывает Даджиоке. (На английском)`
+    }
 }
   

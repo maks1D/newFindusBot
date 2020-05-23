@@ -8,5 +8,9 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['advice'],
-    description: `Pokazuje poradę. (W języku angielskim)`
+    description: {
+        pl: `Pokazuje poradę. (W języku angielskim)`,
+        en: 'Summons advice.',
+        ru: 'Призывает совет. (На английском)'
+    }
 }

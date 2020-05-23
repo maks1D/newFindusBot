@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['why'],
-    description: `Pokazuje pytanie w stylu: 'dlaczego?'. (W języku angielskim)`
+    description: {
+        pl: `Pokazuje losowe pytanie w stylu: 'dlaczego?'. (W języku angielskim)`,
+        en: 'Why?',
+        ru: 'Показывает случайный вопрос типа «почему?» (На английском языке)'
+    }
 }
   

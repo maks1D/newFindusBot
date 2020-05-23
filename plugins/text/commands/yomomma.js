@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['yomomma'],
-    description: `Pokazuje losowy żart o 'twojej starej'. (W języku angielskim)`
+    description: {
+        pl: `Pokazuje losowy żart o 'twojej starej'. (W języku angielskim)`,
+        en: 'Summons yomomma joke.',
+        ru: 'Показывает случайную шутку про "твою старую". (На английском)'
+    }
 }
   

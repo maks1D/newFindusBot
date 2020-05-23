@@ -8,6 +8,10 @@ exports.output = async ({message}) => {
 }
 exports.data = {
     triggers: ['chucknorris'],
-    description: `Pokazuje żart o Chucku Norrisie. (W języku angielskim)`
+    description: {
+        pl: `Pokazuje żart o Chucku Norrisie. (W języku angielskim)`,
+        en: `Shows a joke about Chuck Norris.`,
+        ru: `Показывает анекдот про Чака Норриса. (На английском)`
+    }
 }
   
