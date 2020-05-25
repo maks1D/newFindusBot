@@ -40,7 +40,6 @@
     "pokedex-api": "^1.1.2",
     "qrcode": "^1.4.1",
     "rebuild": "^0.1.2",
-    "rethinkdb": "^2.3.3",
     "steam-provider": "^0.3.2",
     "tempy": "^0.3.0",
     "twemoji": "^12.1.2",
