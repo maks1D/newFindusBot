@@ -3,9 +3,17 @@ const commands = require('fs').readdirSync(`${__dirname}/commands/`)
   .map(file => require(`${__dirname}/commands/${file}`))
 
 module.exports = {
-  name: ':gear: Settings',
+  name: {
+    pl: ':gear: Ustawienia',
+    en: ':gear: Settings',
+    ru: ':gear: настройки'
+  },
   id: 'settings',
-  description: 'Skonfiguruj swój serwer!',
+  description: {
+    pl: 'Spersonalizuj ustawienia bota na serwerze!',
+    en: 'Personalize bot settings on the server!',
+    ru: 'Персонализируйте настройки бота на сервере!'
+  },
   author: 'Findus#7449',
   commands: commands,
   devOnly: false,

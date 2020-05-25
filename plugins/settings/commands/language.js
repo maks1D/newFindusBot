@@ -1,4 +1,6 @@
 exports.output = async ({message, guild, args}) => {
+    var translations = {en: [], pl: [], ru: []}
+
     if(args[0] == 'pl'){
         ef.db.editDoc({id: guild.id}, {"settings.language": `pl`}, 'servers')
         ef.models.send({
@@ -18,9 +20,12 @@ exports.output = async ({message, guild, args}) => {
             message: `${ef.emotes.markYes}Server language has been changed to English!`,
         })
     }else if(args[0]){
+        translations.pl[0] = `${ef.emotes.markNo}Wybrany język nie jest obsługiwany (lub nie istnieje)!`
+        translations.en[0] = `${ef.emotes.markNo}The selected language is not supported (or does not exist)!`
+        translations.ru[0] = `${ef.emotes.markNo}Выбранный язык не поддерживается (или не существует)!`
         ef.models.send({
             object: message,
-            message: `${ef.emotes.markNo}Wybrany język nie jest obsługiwany (lub nie istnieje)!`,
+            message: `${translations[guild.settings.language][0]}`,
             color: ef.colors.red
         })
     }else{
@@ -45,7 +50,11 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['language', 'lang'],
-    description: 'Zmienia język na serwerze.',
+    description: {
+        pl: 'Zmienia język na serwerze.',
+        en: 'Chaneges server language.',
+        ru: 'Меняет язык сервера.'
+    },
     usage: [
         '{prefix}{command} [pl/en/ru]'     
     ],
@@ -53,4 +62,3 @@ exports.data = {
         "MANAGE_GUILD"
     ]
 }
-  

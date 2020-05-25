@@ -1,4 +1,5 @@
 exports.output = async ({message, guild, args}) => {
+    var translations = {en: [], pl: [], ru: []}
 
     if(args.length >= 2){
 
@@ -16,21 +17,30 @@ exports.output = async ({message, guild, args}) => {
                 }
                 if(channel){
                     ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.channel": channel}, 'servers')
+                    translations.pl[0] = `${ef.emotes.markYes}Pomyślnie ustawiono kanał na: <#${channel}>.`
+                    translations.en[0] = `${ef.emotes.markYes}The channel has been successfully set to: <#${channel}>.`
+                    translations.ru[0] = `${ef.emotes.markYes}Канал был успешно настроен на: <#${channel}>.`
                     return ef.models.send({
                         object: message,
-                        message: `${ef.emotes.markYes}Pomyślnie stawiono kanał na: <#${channel}>.`,
+                        message: `${translations[guild.settings.language][0]}`
                     })
                 } else {
+                    translations.pl[0] = `${ef.emotes.markNo}Nie znaleziono kanału!`
+                    translations.en[0] = `${ef.emotes.markNo}Channel not found!`
+                    translations.ru[0] = `${ef.emotes.markNo}Канал не найден!`
                     return ef.models.send({
                         object: message,
-                        message: `${ef.emotes.markNo}Nie znaleziono kanału!`,
+                        message: `${translations[guild.settings.language][0]}`,
                         color: ef.colors.red
                     })
                 }
             } else {
+                translations.pl[0] = `${ef.emotes.markNo}Musisz wzmiankować kanał!`
+                translations.en[0] = `${ef.emotes.markNo}You have to mention the channel!`
+                translations.ru[0] = `${ef.emotes.markNo}Вы должны упомянуть канал!`
                 return ef.models.send({
                     object: message,
-                    message: `${ef.emotes.markNo}Musisz wzmiankować kanał!`,
+                    message: `${translations[guild.settings.language][0]}`,
                     color: ef.colors.red
                 })
             }
@@ -39,14 +49,20 @@ exports.output = async ({message, guild, args}) => {
             if(args[0]){
                 var mess = args.join(' ')
                 ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.message": mess}, 'servers')
+                translations.pl[1] = `${ef.emotes.markYes}Nowa wiadomość pomyślnie ustawiona!`
+                translations.en[1] = `${ef.emotes.markYes}New message successfully set!`
+                translations.ru[1] = `${ef.emotes.markYes}Новое сообщение успешно установлено!`
                 return ef.models.send({
                     object: message,
-                    message: `${ef.emotes.markYes}Nowa wiadomość pomyślnie ustawiona!`
+                    message: `${translations[guild.settings.language][1]}`
                 })
             }else{
-                ef.models.send({
+                translations.pl[1] = `${ef.emotes.markNo}Wpisz poprawną wiadomość!`
+                translations.en[1] = `${ef.emotes.markNo}Enter the correct message!`
+                translations.ru[1] = `${ef.emotes.markNo}Введите правильное сообщение!`
+                return ef.models.send({
                     object: message,
-                    message: `${ef.emotes.markNo}Wpisz poprawną wiadomość!`,
+                    message: `${translations[guild.settings.language][1]}`,
                     color: ef.colors.red
                 })
             }
@@ -54,35 +70,78 @@ exports.output = async ({message, guild, args}) => {
     } else if(args[0] == 'on' || args[0] == 'off'){
         var statement = args[0] == 'on' ? "true" : "false"
         ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.enabled": statement}, 'servers')
+        translations.pl[3] = `${ef.emotes.markYes}Leaver został ${args[0] == "on" ? "włączony" : "wyłączony"}.`
+        translations.en[3] = `${ef.emotes.markYes}Leaver has been ${args[0] == "on" ? "enabled" : "disabled"}.`
+        translations.ru[3] = `${ef.emotes.markYes}ливер было ${args[0] == "on" ? "включен" : "отключено"}.`
         return ef.models.send({
             object: message,
-            message: `${ef.emotes.markYes}Leaver został ${args[0] == "on" ? "włączony" : "wyłączony"}.`
+            message: `${translations[guild.settings.language][3]}`
         })
     }
 
+    translations.pl[4] = 
+`Leaver na twoim serwerze jest ${guild.settings.leaver.enabled == "true" ? `włączony` : `wyłączony`},
+Kanał: ${guild.settings.leaver.channel != "undefined" ? `<#${guild.settings.leaver.channel}>` : `\`[Nie ustawiony]\``},
+Wiadomość: ${guild.settings.leaver.message != "undefined" ? `\`${guild.settings.leaver.message}\`` : `\`[Nie ustawiona]\``}.
+
+Aby zmienić ustawienia:
+**kanału**, wpisz: \`${ef.prefix}leaver channel <#nowy kanał>\`,
+**wiadomości**, wpisz: \`${ef.prefix}leaver message <nowa wiadomość>\`,
+**włączenia**, wpisz: \`${ef.prefix}leaver <on/off>\`.`
+
+    translations.en[4] = 
+`Leaver on your server is ${guild.settings.leaver.enabled == "true" ? "enabled" : "disabled"},
+Channel: ${guild.settings.leaver.channel != "undefined" ? `<#${guild.settings.leaver.channel}>` : `\`[Not set]\``},
+Message: ${guild.settings.leaver.message != "undefined" ? `\`${guild.settings.leaver.message}\`` : `\`[Not set]\``}.
+
+To change settings of:
+**channel**, type: \`${ef.prefix}leaver channel <#new channel>\`,
+**messages**, type: \`${ef.prefix}leaver message <new message>\`,
+**status**, type: \`${ef.prefix}leaver <on/off>\`.`
+
+    translations.ru[4] = 
+`ливер на вашем сервере ${guild.settings.leaver.enabled == "true" ? "включен" : "отключено"},
+Канал:  ${guild.settings.leaver.channel != "undefined" ? `<#${guild.settings.leaver.channel}>` : `\`[Не установлено]\``},
+Сообщение: ${guild.settings.leaver.message != "undefined" ? `\`${guild.settings.leaver.message}\`` : `\`[Не установлено]\``}.
+
+Чтобы изменить настройки:
+**канал**, введите: \`${ef.prefix}leaver channel <#новый канал>\`,
+**сообщения**, введите: \`${ef.prefix}leaver message <новое сообщение>\`,
+**включение**, введите: \`${ef.prefix}leaver <on/off>\`.`
+
     ef.models.send({
         object: message,
-        message: `Leaver na twoim serwerze jest ${guild.settings.leaver.enabled == "true" ? `włączony` : `wyłączony`},
-                  Kanał: ${guild.settings.leaver.channel != "undefined" ? `<#${guild.settings.leaver.channel}>` : `\`[Nie ustawiony]\``},
-                  Wiadomość: ${guild.settings.leaver.message != "undefined" ? `\`${guild.settings.leaver.message}\`` : `\`[Nie ustawiona]\``}.
-                  
-                  Aby zmienić ustawienia:
-                  **kanału**, wpisz: \`${ef.prefix}leaver channel <#nowy kanał>\`,
-                  **wiadomości**, wpisz: \`${ef.prefix}leaver message <nowa wiadomość>\`,
-                  **włączenia**, wpisz \`${ef.prefix}leaver <on/off>\`
-                `
+        message: `${translations[guild.settings.language][4]}`
     })
 }
 
 exports.data = {
     triggers: ['leaver'],
-    description: 'Pokazuje ustawienia wiadomości żegnających członków serwera.',
-    usage: [
-        '{prefix}{command} channel <#kanał>',
-        '{prefix}{command} <on/off>',
-        '{prefix}{command} message <wiadomość>',
-        '\nZmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#**7449**\`)\n\`{user.mention}\` - wzmianka użytkownika\n'
-    ],
+    description: {
+        pl: 'Pokazuje lub zmienia ustawienia wiadomości żegnających członków serwera.',
+        en: 'Shows or changes settings of goodbye messages.',
+        ru: 'Показывает или изменяет настройки сообщений, прощающихся с участниками сервера.'
+    },
+    usage: {
+        pl: [
+            '{prefix}{command} channel <#kanał>',
+            '{prefix}{command} <on/off>',
+            '{prefix}{command} message <wiadomość>',
+            '\`\nZmienne w wiadomości: \n\`{user.name}\` - nazwa użytkownika\n\`{user.id}\` - id użytkownika\n\`{user.tag}\` - tag użytkownika (np. \`Findus#\`**7449**)\n\`{user.mention}\` - wzmianka użytkownika \`(np. @Findus)'
+        ],
+        en: [
+            '{prefix}{command} channel <#channel>',
+            '{prefix}{command} <on/off>',
+            '{prefix}{command} message <message>',
+            '\`\nVariables in message:\n\`{user.name}\`- username\n\`{user.id}\`- user id\n\`{user.tag}\`- user tag (e.g. \`Findus#\`**7449**)\n\`{user.mention}\` - mention of user \`(e.g. @Findus)'
+        ],
+        ru: [
+            '{prefix}{command} channel <#канал>',
+            '{prefix}{command} <on/off>',
+            '{prefix}{command} message <сообщение>',
+            '\`\nПеременные в сообщении:\n\`{user.name}\`- имя пользователя\n\`{user.id}\`- идентификатор пользователя\n\`{user.tag}\`- тег пользователя (например, \`Findus#\`**7449**)\n\`{user.mention}\` - упоминание пользователя \`(например, @Findus)'
+        ]
+    },
     userPerms: [
         "MANAGE_GUILD"
     ]
