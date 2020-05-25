@@ -229,7 +229,7 @@ exports.output = async ({message, guild, args}) => {
 
 exports.data = {
     triggers: ['apply'],
-    description: 'Tymczasowa customowa komenda. Niedługo zostanie ulepszona i otrzyma oficjalne wsparcie. (Tłumaczenie tej funkcji razem z poprawkami i ulepszeniami pojawi się w następnej wersji)',
+    description: '[KOMENDA EKSPERYMENTALNA] Niedługo zostanie ulepszona i otrzyma oficjalne wsparcie. (Tłumaczenie tej funkcji razem z poprawkami i ulepszeniami pojawi się w następnej wersji)',
     usage: [
         '{prefix}{command} <argumenty> - zgłoszenie',
         '{prefix}{command} -set <#channel> addrole <role mention/nothing (to disable)>',

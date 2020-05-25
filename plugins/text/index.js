@@ -8,7 +8,7 @@ module.exports = {
     en: ':newspaper: Texts',
     ru: ':newspaper: тексты'
   },
-  id: 'text',
+  id: 'texts',
   description: {
     pl: 'Różne generatory tekstów.',
     en: 'Different text generators.',
