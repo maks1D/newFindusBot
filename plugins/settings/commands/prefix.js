@@ -1,7 +1,7 @@
 exports.output = async ({message, guild, args}) => {
     var translations = {en: [], pl: [], ru: []}
 
-    if(args.length >= 1 && args[0].length <= 100){
+    if(args[0] && args[0].length >= 1 && args[0].length <= 100){
         translations.pl[0] = `${ef.emotes.markYes}Pomyślnie zmieniono prefix na: \`${args[0]}\``
         translations.en[0] = `${ef.emotes.markYes}Successfully changed the prefix to: \`${args[0]}\``
         translations.ru[0] = `${ef.emotes.markYes}Успешно изменили префикс на: \`${args[0]}\``
@@ -10,7 +10,7 @@ exports.output = async ({message, guild, args}) => {
             object: message,
             message: `${translations[guild.settings.language][0]}`
         })
-    } else if(args[0].length < 100) {
+    } else if(args[0] && args[0].length < 100) {
         translations.pl[0] = `${ef.emotes.markNo}Twój prefix jest za długi.`
         translations.en[0] = `${ef.emotes.markNo}Your prefix is too long.`
         translations.ru[0] = `${ef.emotes.markNo}Ваш префикс слишком длинный.`
