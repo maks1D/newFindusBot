@@ -14,6 +14,8 @@ exports.output = async ({message, guild, args}) => {
         })
     }
 
+    if (args[0].slice(args[0].length - 1, args[0].length) == '%') args[0] = args[0].slice(0, args[0].length - 1)
+
     if((args[0] && args[0] !== 'earrape' && isNaN(args[0])) || args[0] < 0 || args[0] > 200) {
         translations.pl[0] = `${ef.emotes.markNo} Podaj poprawną głośność.`
         translations.en[0] = `${ef.emotes.markNo} Enter the correct volume.`

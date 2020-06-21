@@ -16,4 +16,8 @@ exports.init = async () => {
     ef.music = require("./music")
     ef.cache = {}
     ef.cache.youtube = {}
+
+    ef.player.on('error', (error, node) => {
+        console.log(error)
+    })
 }

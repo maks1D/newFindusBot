@@ -66,7 +66,7 @@ const play = async (song, message) => {
                 var next = ef.queue[message.guild.id].queue.shift()
     
                 if(!next) {
-                    return ef.queue[message.guild.id].nowPlaying = {}
+                    return ef.queue[message.guild.id].nowPlaying = ''
                 } else {
                     setTimeout(() => {
                         play(next, message)
