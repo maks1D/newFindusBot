@@ -1,55 +1,9 @@
 exports.output = async ({message, guild, args}) => {
     var translations = {en: [], pl: [], ru: []}
 
-    async function check() {
-        if(!message.member.voiceChannel) {
-            translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`
-            translations.en[0] = `${ef.emotes.markNo} You are not connected to any voice channel.`
-            translations.ru[0] = `${ef.emotes.markNo} Вы не подключены к какому-либо голосовому каналу.`
-            ef.models.send({
-                object: message,
-                message: `${translations[guild.settings.language][0]}`,
-                color: ef.colors.red
-            })
-            return -1
-        } else {
-            if(!message.guild.voiceConnection){
-                translations.pl[0] = `${ef.emotes.markNo} Nie jestem obecnie połączony z żadnym kanałem głosowym.`
-                translations.en[0] = `${ef.emotes.markNo} I am not connected to any voice channel.`
-                translations.ru[0] = `${ef.emotes.markNo} Я не подключен ни к одному голосовому каналу`
-                ef.models.send({
-                    object: message,
-                    message: `${translations[guild.settings.language][0]}`,
-                    color: ef.colors.red
-                })
-                return -1
-            } else if(message.guild.voiceConnection.channel.id != message.member.voiceChannel.id) {
-                translations.pl[0] = `${ef.emotes.markNo} Nie jestem obecnie połączony z tym kanałem głosowym.`
-                translations.en[0] = `${ef.emotes.markNo} I am not currently connected to this voice channel.`
-                translations.ru[0] = `${ef.emotes.markNo} В настоящее время я не подключен к этому голосовому каналу.`
-                ef.models.send({
-                    object: message,
-                    message: `${translations[guild.settings.language][0]}`,
-                    color: ef.colors.red
-                })
-                return -1
-            }
-        }
-        return 0
-    }
+    const player =  ef.player.players.get(message.guild.id)
 
-    if(!ef.roles.developers.includes(message.author.id) || !ef.queue[message.guild.id]) { if (await check() == -1) return }
-    
-    var state = await ef.player.pause(message)
-    if(state == true) {
-        translations.pl[0] = `${ef.emotes.markYes} Pomyślnie zatrzymano odtwarzanie utworu.`
-        translations.en[0] = `${ef.emotes.markYes} Music paused successfully.`
-        translations.ru[0] = `${ef.emotes.markYes} Фильм успешно остановлен.`
-        ef.models.send({
-            object: message,
-            message: `${translations[guild.settings.language][0]}`
-        })
-    } else {
+    if (!player || !player.playing) {
         translations.pl[0] = `${ef.emotes.markNo} Nic nie jest aktualnie odtwarzane.`
         translations.en[0] = `${ef.emotes.markNo} Nothing is currently playing.`
         translations.ru[0] = `${ef.emotes.markNo} Ничего в данный момент не играет.`
@@ -59,6 +13,21 @@ exports.output = async ({message, guild, args}) => {
             color: ef.colors.red
         })
     }
+    
+    if (!ef.queue[message.guild.id]) new ef.music.queue(message.guild.id)
+    let queue = ef.queue[message.guild.id]
+
+    if (!queue.nowPlaying.paused) queue.pause()
+
+    await player.pause(true)
+
+    translations.pl[0] = `${ef.emotes.markYes} Pomyślnie zatrzymano odtwarzanie utworu.`
+    translations.en[0] = `${ef.emotes.markYes} Music paused successfully.`
+    translations.ru[0] = `${ef.emotes.markYes} Фильм успешно остановлен.`
+    ef.models.send({
+        object: message,
+        message: `${translations[guild.settings.language][0]}`
+    })
 }
 
 exports.data = {
@@ -70,5 +39,6 @@ exports.data = {
     },
     usage: [
         '{prefix}{command}'
-    ]
+    ],
+    voice: true
 }
