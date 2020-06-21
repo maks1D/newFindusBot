@@ -31,10 +31,15 @@ class ef extends Client {
         this.tokens.secrets = [
             'fortniteapi',
             'MONGO_ID',
-            'youtubeapi',
             'badoszapi',
             'maindiscordapi',
             'betadiscordapi',
+            'LavalinkPass',
+            'LavalinkHost_1',
+            'LavalinkHost_2',
+            'LavalinkPort',
+            'SpotifyID',
+            'SpotifySecret',
             'istest'
         ]
 
@@ -88,6 +93,20 @@ class ef extends Client {
             }
 
             this.http = require('snekfetch')
+
+            await new Promise(async (resolve, reject) => {
+                const result = await this.http.get(`https://${this.tokens.LavalinkHost_1}/loadtracks}`)
+                .catch(err => {
+                    if(err.status !== 503) {
+                        this.tokens.LavalinkHost = this.tokens.LavalinkHost_1
+                    } else {
+                        this.tokens.LavalinkHost = this.tokens.LavalinkHost_2
+                    }
+                    return null
+                })
+        
+                resolve()
+            })
 
             this.eventHandler = new (require('./handlers/events.js'))(this)
 
