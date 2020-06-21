@@ -20,12 +20,32 @@ const play = async (song, message) => {
         ef.queue[message.guild.id].channel = message.channel.id
 
         if(player.playing) {
-            ef.queue[message.guild.id].queue.push(song)
+            let parsedSong = Object.assign({
+                title: '',
+                url: '',
+                paused: false,
+                length: 0,
+                req: '',
+                track: '',
+                pd: 0,
+                date: Date.now()
+            }, song)
+            ef.queue[message.guild.id].queue.push(parsedSong)
 
             resolve('queue')
         } else {
             await player.play(song.track)
-            ef.queue[message.guild.id].nowPlaying = song
+            let parsedSong = Object.assign({
+                title: '',
+                url: '',
+                paused: false,
+                length: 0,
+                req: '',
+                track: '',
+                pd: 0,
+                date: Date.now()
+            }, song)
+            ef.queue[message.guild.id].nowPlaying = parsedSong
 
             player.once('end', async data => {
                 if(ef.queue[message.guild.id].loop) {
@@ -46,7 +66,7 @@ const play = async (song, message) => {
                 var next = ef.queue[message.guild.id].queue.shift()
     
                 if(!next) {
-                    return
+                    return ef.queue[message.guild.id].nowPlaying = {}
                 } else {
                     setTimeout(() => {
                         play(next, message)

@@ -21,6 +21,7 @@ exports.output = async ({message, guild, args}) => {
 
         let queue = ef.queue[message.guild.id]
         queue.loop = false
+        queue.repeat = false
 
         await player.stop()
 

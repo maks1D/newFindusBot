@@ -114,7 +114,7 @@ module.exports = async (message, prefix, guild) => {
     if (command.data.voice) {
         if (!ef.queue) return
 
-        if (ef.roles.developers.includes(message.author.id)) {
+        if (!ef.roles.developers.includes(message.author.id)) {
             if(!message.member.voiceChannel && !(command.data.triggers[0] === 'queue')) {
                 translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`
                 translations.en[0] = `${ef.emotes.markNo} You are not connected to any voice channel.`
