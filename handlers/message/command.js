@@ -1,3 +1,5 @@
+const { matchesProperty } = require('lodash')
+
 module.exports = async (message, prefix, guild) => {
     var translations = {en: [], pl: [], ru: []}
 
@@ -107,6 +109,72 @@ module.exports = async (message, prefix, guild) => {
             message: `${translations[guild.settings.language][3]}`,
             color: ef.colors.red
         })
+    }
+
+    if (command.data.voice) {
+        if (!ef.queue) return
+
+        if (ef.roles.developers.includes(message.author.id)) {
+            if(!message.member.voiceChannel && !(command.data.triggers[0] === 'queue')) {
+                translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`
+                translations.en[0] = `${ef.emotes.markNo} You are not connected to any voice channel.`
+                translations.ru[0] = `${ef.emotes.markNo} Вы не подключены к какому-либо голосовому каналу.`
+                ef.models.send({
+                    object: message,
+                    message: `${translations[guild.settings.language][0]}`,
+                    color: ef.colors.red
+                })
+                return
+            } else {
+                if(!ef.player.players.has(message.guild.id) && !(command.data.triggers[0] === 'play')){
+                    translations.pl[0] = `${ef.emotes.markNo} Nie jestem obecnie połączony z żadnym kanałem głosowym.`
+                    translations.en[0] = `${ef.emotes.markNo} I am not connected to any voice channel.`
+                    translations.ru[0] = `${ef.emotes.markNo} Я не подключен ни к одному голосовому каналу`
+                    ef.models.send({
+                        object: message,
+                        message: `${translations[guild.settings.language][0]}`,
+                        color: ef.colors.red
+                    })
+                    return
+                } else if(!(command.data.triggers[0] === 'queue') && ef.player.voiceStates.has(message.guild.id) && ef.player.voiceStates.get(message.guild.id).channel_id != message.member.voiceChannel.id) {
+                    translations.pl[0] = `${ef.emotes.markNo} Nie jestem obecnie połączony z tym kanałem głosowym.`
+                    translations.en[0] = `${ef.emotes.markNo} I am not currently connected to this voice channel.`
+                    translations.ru[0] = `${ef.emotes.markNo} В настоящее время я не подключен к этому голосовому каналу.`
+                    ef.models.send({
+                        object: message,
+                        message: `${translations[guild.settings.language][0]}`,
+                        color: ef.colors.red
+                    })
+                    return
+                }
+            }
+        } else {
+            if (!ef.queue[message.guild.id]) {
+                if(!message.member.voiceChannel) {
+                    translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`
+                    translations.en[0] = `${ef.emotes.markNo} You are not connected to any voice channel.`
+                    translations.ru[0] = `${ef.emotes.markNo} Вы не подключены к какому-либо голосовому каналу.`
+                    ef.models.send({
+                        object: message,
+                        message: `${translations[guild.settings.language][0]}`,
+                        color: ef.colors.red
+                    })
+                    return
+                } else {
+                    if(!(command.data.triggers[0] === 'play')){
+                        translations.pl[0] = `${ef.emotes.markNo} Nie jestem obecnie połączony z żadnym kanałem głosowym.`
+                        translations.en[0] = `${ef.emotes.markNo} I am not connected to any voice channel.`
+                        translations.ru[0] = `${ef.emotes.markNo} Я не подключен ни к одному голосовому каналу`
+                        ef.models.send({
+                            object: message,
+                            message: `${translations[guild.settings.language][0]}`,
+                            color: ef.colors.red
+                        })
+                        return
+                    }
+                }
+            }
+        }
     }
 
     if(await require('../args')(args, command, message, guild)) return

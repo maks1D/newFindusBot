@@ -1,32 +1,26 @@
 module.exports = async (oldMem, newMem) => {
     try{
-        var vC = oldMem.voiceChannelID
-        var guild = oldMem.guild.id
-        var player = ef.queue[guild]
-        if (!player || vC != player.connection.channel.id) return
-        if (!ef.channels.get(player.connection.channel.id)) return
-        var nconnected = true
-        var array = ef.channels.get(player.connection.channel.id).members.array()
-        for(var key in array) {
-            if(array[key].user.id == ef.user.id) {
-                nconnected = false
-            }
-        }
-        if(nconnected == true) {
-            ef.queue[guild].queue = []
-            ef.queue[guild].player.end()
-            await ef.guilds.get(guild).voiceConnection.disconnect()
-            delete ef.queue[guild]
-            return
-        }
-        if (ef.channels.get(player.connection.channel.id).members.size == 1) {
-            if(player.autoleave == false) return
+        let vC = oldMem.voiceChannelID
+        let player = await ef.player.players.get(oldMem.guild.id)
+        if (!player) return
+        if (ef.player.voiceStates.has(oldMem.guild.id) && vC != ef.player.voiceStates.get(oldMem.guild.id).channel_id) return
+        let botChID = ef.player.voiceStates.get(oldMem.guild.id).channel_id
+        if (!ef.channels.get(botChID)) return
+        if (ef.queue[oldMem.guild.id].autoleave !== true) return
+        if (ef.channels.get(botChID).members.size == 1) {
             setTimeout(async () => {
-                if (ef.channels.get(player.connection.channel.id).members.size == 1) {
-                    ef.queue[guild].queue = []
-                    await ef.queue[guild].player.end()
-                    await ef.guilds.get(guild).voiceConnection.disconnect()
-                    delete ef.queue[guild]
+                if (ef.channels.get(botChID).members.size == 1) {
+                    let queue = ef.queue[oldMem.guild.id]
+                    if(queue) {
+                        queue.songs = []
+                        queue.loop = false
+                        queue.repeat = false
+
+                        await player.stop()
+                    }
+                    await ef.player.leave(oldMem.guild.id)
+
+                    delete ef.queue[oldMem.guild.id]
                 }
             }, 10 * 1000)
         }
