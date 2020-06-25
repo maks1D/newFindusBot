@@ -1,5 +1,5 @@
 exports.output = async ({message, args}) => {
-    const emojis = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯', '🇰', '🇱', '🇲', '🇳', '🇴', '🇵', '🇶', '🇷', '🇸', '🇹', '🇺', '🇻', '🇼', '🇽', '🇾', '🇿']
+    const emojis = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯', '🇰', '🇱', '🇲', '🇳', '🇴', '🇵', '🇶', '🇷', '🇸', '🇹']
     
     args = args.join(' ')
 
@@ -14,18 +14,19 @@ exports.output = async ({message, args}) => {
         return message.delete(1000)
     }
 
-    if (args.length - 1 > 26) {
+    args = args.split(",")
+
+    if ((args.length - 1) > 20) {
         return ef.models.send({
             object: message,
-            message: `${ef.emotes.markNo} You have provided too much options. Maximum amount is 26.`,
+            message: `${ef.emotes.markNo} You have provided too much options. Maximum amount is 20.`,
             color: ef.colors.red
         })
     }
 
-    args = args.split(",")
     let text = `\`${args[0]}\`\n\n`
     for (let i = 0; i < args.length - 1; i++) {
-        if (i < 26) {
+        if (i < 20) {
             text += `${':regional_indicator_' + String.fromCharCode('a'.charCodeAt(0) + i) + ':'}\`${args[i+1]}\`\n`
         }
     }
@@ -47,7 +48,7 @@ exports.output = async ({message, args}) => {
   
   exports.data = {
     triggers: ['poll', 'vote'],
-    description: 'Creates poll. Max 26 options.',
+    description: 'Creates poll. Max 20 options.',
     usage: [
         '{prefix}{command} <text>',
         '{prefix}{command} <text>, <option 1>, <option 2>, ...',
