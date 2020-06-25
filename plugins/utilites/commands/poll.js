@@ -14,10 +14,11 @@ exports.output = async ({message, args}) => {
         return message.delete(1000)
     }
 
-    if (args.length > 26) {
+    if (args.length - 1 > 26) {
         return ef.models.send({
             object: message,
-            message: `${ef.emotes.markNo} You have provided too much options. Maximum amount is 26.`
+            message: `${ef.emotes.markNo} You have provided too much options. Maximum amount is 26.`,
+            color: ef.colors.red
         })
     }
 
