@@ -103,13 +103,16 @@ Usage:
 
     translations.pl[2] =
 `\nWpisz: \`${ef.prefix}help <ID modułu>\`, aby uzyskać szczegółowe informacje.
-Wpisz: \`${ef.prefix}language <pl/en/ru>\`, aby zmienić język.`
+Wpisz: \`${ef.prefix}language <pl/en/ru>\`, aby zmienić język.
+Zaproś mnie [tutaj](https://discord.com/api/oauth2/authorize?client_id=538655104664862721&permissions=8&scope=bot).`
     translations.en[2] =
 `\nType: \`${ef.prefix}help <plugin ID>\` to get detailed informations.
-Type: \`${ef.prefix}language <pl/en/ru>\` to change language.`
+Type: \`${ef.prefix}language <pl/en/ru>\` to change language.
+Invite me [here](https://discord.com/api/oauth2/authorize?client_id=538655104664862721&permissions=8&scope=bot).`
     translations.ru[2] =
 `\nнапишите: \`${ef.prefix}help <плагины ID>\` чтобы получить подробную информацию.
-напишите: \`${ef.prefix}language <pl/en/ru>\` чтобы сменить язык.`
+напишите: \`${ef.prefix}language <pl/en/ru>\` чтобы сменить язык.
+Invite me [here](https://discord.com/api/oauth2/authorize?client_id=538655104664862721&permissions=8&scope=bot).`
     
     help += translations[guild.settings.language][2]
 

@@ -1,5 +1,5 @@
 {
-    "notes": "-pełne wsparcie 2 nowych języków (angielski i rosyjski), 13 nowych komend, ulepszenia i usprawnienia, naprawione błędy i nowa wersja!",
+    "notes": "-pełne wsparcie 2 nowych języków (angielski i rosyjski), 13 nowych komend, ulepszenia i usprawnienia, naprawione błędy i nowa wersja! Nowe komendy nie będą tłumaczone na wszystkie języki z powodu zmiany sposobu przechowywania tłumaczeń.",
     "version": "3.0",
     "notify": true
 }
