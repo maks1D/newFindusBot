@@ -37,6 +37,15 @@ exports.output = async ({message, guild, args}) => {
     }
 
     await ef.music.player.getSong(track).then(async search => {
+        if (search === 'OutOfMemory') {
+            ef.music.wakeUpLavalink()
+            return ef.models.send({
+                object: message,
+                message: `${ef.emotes.markNo} Waking up player. Please wait...`,
+                color: ef.colors.red
+            })
+        }
+
         if (search.loadType == 'NO_MATCHES') {
 
             if (ef.cache.youtube.hasOwnProperty(track)) {

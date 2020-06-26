@@ -9,15 +9,18 @@ const play = async (song, message) => {
 
         var player = await ef.player.players.get(message.guild.id)
 
+        ef.queue[message.guild.id].channel = message.channel.id
+
         if(!player) {
             player = await ef.player.join({
                 guild: message.guild.id,
                 channel: message.member.voiceChannel.id,
                 node: "1"
-            }, { selfdeaf: true })
+            }, { selfdeaf: true }).catch(e => {
+                console.log(e)
+                resolve('wakeup')
+            })
         }
-
-        ef.queue[message.guild.id].channel = message.channel.id
 
         if(player.playing) {
             let parsedSong = Object.assign({
@@ -119,10 +122,13 @@ const getSong = async string => {
                                     .set("Authorization", ef.tokens.LavalinkPass)
                                     .catch(err => {
                                         console.log(err)
+                                        if (err.status === 500) {
+                                            resolve('OutOfMemory')
+                                        }
                                         return null
                                     })
         if(!result) {
-            throw 'Error. Please try again'
+            resolve('OutOfMemory')
         }
 
         resolve(result.body)

@@ -114,6 +114,14 @@ module.exports = async (message, prefix, guild) => {
     if (command.data.voice) {
         if (!ef.queue) return
 
+        if (ef.music.freeze === true) {
+            return ef.models.send({
+                object: message,
+                message: `${ef.emotes.markNo} Waking up player... Please wait...`,
+                color: ef.colors.red
+            })
+        }
+
         if (!ef.roles.developers.includes(message.author.id)) {
             if(!message.member.voiceChannel && !(command.data.triggers[0] === 'queue')) {
                 translations.pl[0] = `${ef.emotes.markNo} Nie jesteś połączony z żadnym kanałem głosowym.`

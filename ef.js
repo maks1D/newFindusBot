@@ -40,6 +40,9 @@ class ef extends Client {
             'LavalinkPort',
             'SpotifyID',
             'SpotifySecret',
+            'HerokuCLIUserID',
+            'HerokuCLIToken',
+            'currentApp',
             'istest'
         ]
 
