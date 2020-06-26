@@ -26,9 +26,7 @@ exports.output = async ({message, args}) => {
 
     let text = `\`${args[0]}\`\n\n`
     for (let i = 0; i < args.length - 1; i++) {
-        if (i < 20) {
-            text += `${':regional_indicator_' + String.fromCharCode('a'.charCodeAt(0) + i) + ':'}\`${args[i+1]}\`\n`
-        }
+        text += `${':regional_indicator_' + String.fromCharCode('a'.charCodeAt(0) + i) + ':'}\`${args[i + 1]}\`\n`
     }
 
     const poll = await ef.models.send({
@@ -38,9 +36,7 @@ exports.output = async ({message, args}) => {
     })
 
     for (i = 0; i < args.length - 1; i++) {
-        if (i < 20) {
-            await poll.react(emojis[i])
-        }
+        await poll.react(emojis[i])
     }
 
     return message.delete(1000)
@@ -55,8 +51,8 @@ exports.output = async ({message, args}) => {
     ],
     args: [
         {
-            'type':'text',
-            'name':'text'
+            'type': 'text',
+            'name': 'text'
         }
     ]
   }
