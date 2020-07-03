@@ -1,5 +1,4 @@
-const {Manager} = require("@lavacord/discord.js")
-const { play } = require("./music/player")
+const { Manager } = require("@lavacord/discord.js")
 
 const nodes = [
     {id: "1", host: ef.tokens.LavalinkHost, port: ef.tokens.LavalinkPort, password: ef.tokens.LavalinkPass}
@@ -86,6 +85,8 @@ exports.init = async () => {
                         
                                 let message = ef.queue[keys[i]].message
                                 let song = ef.queue[keys[i]].nowPlaying
+
+                                await ef.player.leave(message.guild.id)
     
                                 ef.music.player.play(song, message).then(async () => {
                                     var translations = {en: [], pl: [], ru: []}
