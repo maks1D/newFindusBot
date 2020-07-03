@@ -13,7 +13,7 @@ const play = async (song, message) => {
         ef.queue[message.guild.id].channel = message.channel.id
         ef.queue[message.guild.id].message = message
 
-        if (ef.player.nodes.get("1").connected === false || ef.player.nodes.get("1").stats.memory.free < 40000000) {
+        if (ef.player.nodes.get("1").connected === false || ef.player.nodes.get("1").stats.memory.reservable - ef.player.nodes.get("1").stats.memory.allocated < 30000000) {
             
             let parsedSong = Object.assign({
                 title: '',
