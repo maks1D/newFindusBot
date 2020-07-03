@@ -32,7 +32,7 @@ exports.init = async () => {
         let interval = setInterval(async () => {
             const result = await ef.http.get(`https://${ef.tokens.LavalinkHost}/loadtracks}`)
             .catch(err => {
-                if(err.status !== 503) {
+                if(err.status !== 503 && ef.player.nodes.get("1").connected === true) {
                     
                     let temp = ef.player.voiceStates
                     temp.forEach(async tmp => {
@@ -41,6 +41,8 @@ exports.init = async () => {
                         
                             let message = ef.queue[tmp.guild_id].message
                             let song = ef.queue[tmp.guild_id].nowPlaying
+
+                            ef.queue[tmp.guild_id].revoke = false
 
                             ef.music.player.play(song, message).then(async () => {
                                 var translations = {en: [], pl: [], ru: []}
@@ -79,8 +81,7 @@ exports.init = async () => {
                     let keys = Object.keys(ef.queue)
 
                     for (let i = 0; i < keys.length; i++) {
-                        let q = ef.queue[keys[i]]
-                        if (q.vC !== null) {
+                        if (ef.queue[keys[i]].revoke === false) {
                             if (ef.queue[keys[i]].nowPlaying !== '') {
                         
                                 let message = ef.queue[keys[i]].message
@@ -118,7 +119,7 @@ exports.init = async () => {
                                     })
                                 })
                             }
-                            ef.queue[keys[i]].vC = null
+                            ef.queue[keys[i]].revoke = false
                         }
                     }
 

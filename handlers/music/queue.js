@@ -1,16 +1,7 @@
 module.exports = class queue {
     constructor(guildid) {
-        this.nowPlaying = {
-            title: '',
-            url: '',
-            paused: false,
-            length: 0,
-            req: '',
-            track: '',
-            pd: 0, 
-            date: Date.now()
-        }
-        this.vC = null
+        this.nowPlaying = ''
+        this.revoke = false
         this.queue = []
         this.volume = 100
         this.autoleave = true
@@ -37,3 +28,16 @@ module.exports = class queue {
         this.nowPlaying.paused = false
     }
 }
+
+/*
+{
+    title: '',
+    url: '',
+    paused: false,
+    length: 0,
+    req: '',
+    track: '',
+    pd: 0, 
+    date: Date.now()
+}
+*/

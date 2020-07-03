@@ -27,9 +27,7 @@ const play = async (song, message) => {
             }, song)
 
             if (ef.queue[message.guild.id].nowPlaying == '') {
-                if (!player) {
-                    ef.queue[message.guild.id].vC = message.member.voiceChannel.id
-                }
+                ef.queue[message.guild.id].revoke = true
                 ef.queue[message.guild.id].nowPlaying = parsedSong
             } else {
                 ef.queue[message.guild.id].queue.push(parsedSong)
