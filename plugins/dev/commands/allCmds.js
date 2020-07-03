@@ -3,10 +3,13 @@ exports.output = async ({message, guild, args}) => {
         normal: [],
         count: 0
     }
+
     await ef.plugins.forEach(plugin => {
-        for(const command of plugin.commands){
-            commands.normal.push(`\`${command.data.triggers[0]}\``)
-            commands.count++
+        if (plugin.id !== 'dev' || args[0] === '-showdev') {
+            for(const command of plugin.commands){
+                commands.normal.push(`\`${command.data.triggers[0]}\``)
+                commands.count ++
+            }
         }
     })
     var mess = `:newspaper: **Lista wszystkich komend:**\n\n`
@@ -22,7 +25,7 @@ exports.data = {
     triggers: ['allcmds'],
     description: 'Lista wszystkich komend.',
     usage: [
-        '{prefix}{command}'
+        '{prefix}{command} [-showdev]'
     ],
     developer: true
 }

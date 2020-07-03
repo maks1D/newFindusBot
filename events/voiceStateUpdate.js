@@ -3,6 +3,7 @@ module.exports = async (oldMem, newMem) => {
         let vC = oldMem.voiceChannelID
         let player = await ef.player.players.get(oldMem.guild.id)
         if (!player) return
+        if (!ef.player.voiceStates.get(oldMem.guild.id)) return
         let botChID = ef.player.voiceStates.get(oldMem.guild.id).channel_id
         if (!ef.channels.get(botChID)) return
         if (ef.queue[oldMem.guild.id].autoleave !== true) return

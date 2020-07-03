@@ -1,4 +1,5 @@
 const q = require('./queue')
+const { URLSearchParams } = require("url")
 
 const play = async (song, message) => {
 
@@ -10,6 +11,31 @@ const play = async (song, message) => {
         var player = await ef.player.players.get(message.guild.id)
 
         ef.queue[message.guild.id].channel = message.channel.id
+        ef.queue[message.guild.id].message = message
+
+        if (ef.player.nodes.get("1").connected === false) {
+            
+            let parsedSong = Object.assign({
+                title: '',
+                url: '',
+                paused: false,
+                length: 0,
+                req: '',
+                track: '',
+                pd: 0,
+                date: Date.now()
+            }, song)
+
+            if (ef.queue[message.guild.id].nowPlaying == '') {
+                if (!player) {
+                    ef.queue[message.guild.id].vC = message.member.voiceChannel.id
+                }
+                ef.queue[message.guild.id].nowPlaying = parsedSong
+            } else {
+                ef.queue[message.guild.id].queue.push(parsedSong)
+            }
+            return resolve('wakeup')
+        }
 
         if(!player) {
             player = await ef.player.join({
@@ -37,7 +63,11 @@ const play = async (song, message) => {
 
             resolve('queue')
         } else {
-            await player.play(song.track)
+            try {
+                await player.play(song.track)
+            } catch (error) {
+                return resolve('wakeup')
+            }
             let parsedSong = Object.assign({
                 title: '',
                 url: '',
@@ -58,8 +88,8 @@ const play = async (song, message) => {
     
                 }
     
-                if(ef.queue[message.guild.id].repeat) {
-                    ef.queue[message.guild.id].repeat = false
+                if(ef.queue[message.guild.id].repeat > 0) {
+                    ef.queue[message.guild.id].repeat --
                     var song = ef.queue[message.guild.id].nowPlaying
                     song.req = "Loop"
                     return play(song, message)
@@ -116,9 +146,41 @@ const play = async (song, message) => {
     })
 }
 
-const getSong = async string => {
+const YouTube = require('youtube-node')
+const YouTube_Search = new YouTube()
+YouTube_Search.setKey(ef.tokens.youtubeAPI)
+
+const getSong = async search => {
+
+    let records = 15
+
+    let promise = await new Promise((resolve, reject) => {
+        YouTube_Search.search(search, records, (err, result) => {
+            if (err) return resolve('https://youtube.com/watch?v=error')
+
+            if (result.items[0] === undefined) return resolve('https://youtube.com/watch?v=error')
+
+            let url 
+
+            for (let i = 0; i < result.items.length; i++) {
+                if (result.items[i].id.kind === 'youtube#video') {
+                    url = 'https://youtube.com/watch?v='
+                    return resolve(url + result.items[i].id.videoId)
+                } else if (result.items[i].id.kind === 'youtube#playlist') {
+                    url = 'https://www.youtube.com/playlist?list='
+                    return resolve(url + result.items[i].id.playlistId)
+                }
+            }
+
+            return resolve('https://youtube.com/watch?v=error')
+        })
+    })
+
+    const params = new URLSearchParams()
+    params.append("identifier", await promise)
+
     return new Promise(async (resolve, reject) => {
-        const result = await ef.http.get(`https://${ef.tokens.LavalinkHost}/loadtracks?identifier=${encodeURIComponent(string)}`)
+        const result = await ef.http.get(`https://${ef.tokens.LavalinkHost}/loadtracks?${params}`)
                                     .set("Authorization", ef.tokens.LavalinkPass)
                                     .catch(err => {
                                         console.log(err)
@@ -127,6 +189,9 @@ const getSong = async string => {
                                         }
                                         return null
                                     })
+        if (result === null) return
+        
+
         if(!result) {
             resolve('OutOfMemory')
         }

@@ -10,6 +10,7 @@ module.exports = class queue {
             pd: 0, 
             date: Date.now()
         }
+        this.vC = null
         this.queue = []
         this.volume = 100
         this.autoleave = true
@@ -17,8 +18,9 @@ module.exports = class queue {
         this.autounmute = false
         this.npmessages = true
         this.loop = false
-        this.repeat = false
+        this.repeat = 0
         this.channel = ''
+        this.message = ''
         this.pause = this.pause
         this.resume = this.resume
 

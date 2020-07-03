@@ -1,5 +1,3 @@
-const base64 = require('base-64')
-
 exports.output = async ({message, guild, args}) => {
     await ef.models.send({
 
@@ -10,7 +8,7 @@ exports.output = async ({message, guild, args}) => {
     })
 
     ef.http.delete(`https://api.heroku.com/apps/${ef.tokens.currentApp}/dynos`)
-            .set("Authorization", 'Basic ' + base64.encode(ef.tokens.HerokuCLIUserID + ':' + ef.tokens.HerokuCLIToken))
+            .set("Authorization", 'Basic ' + Buffer.from(ef.tokens.HerokuCLIUserID + ':' + ef.tokens.HerokuCLIToken).toString('base64'))
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/vnd.heroku+json; version=3')
             .catch(err => {

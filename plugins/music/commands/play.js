@@ -91,7 +91,7 @@ exports.output = async ({message, guild, args}) => {
                     title: song.info.title.replace(/`/g, "'"),
                     channel: song.info.author,
                     length: song.info.length,
-                    requester: message.author.tag,
+                    req: message.author.tag,
                     url: song.info.uri,
                     track: song.track
                 })
@@ -121,7 +121,7 @@ exports.output = async ({message, guild, args}) => {
                     if(!song) return
                     ef.music.player.play(song, message).then(async () => {
                         var translations = {en: [], pl: [], ru: []}
-                        translations.pl[0] = `${ef.emotes.markYes} Teraz odtwarzam: **${song.title}**.\n\Utwór z kanału: **${song.channel}**.`
+                        translations.pl[0] = `${ef.emotes.markYes} Teraz odtwarzam: **${song.title}**.\n\nUtwór z kanału: **${song.channel}**.`
                         translations.en[0] = `${ef.emotes.markYes} Now playing: **${song.title}**. \n\nTrack from channel: **${song.channel}**.`
                         translations.ru[0] = `${ef.emotes.markYes} **${song.title}** успешно добавлен в очередь. \n\nВидео с канала: **${song.channel}**.`
                         translations.pl[1] = `🔉 ${ef.queue[message.guild.id].volume}% • Duration: ${await ef.utils.time.formatLength(song.length) || 'N/A'} • Requested by ${song.req}`
@@ -191,7 +191,7 @@ exports.output = async ({message, guild, args}) => {
                     thumbnail: url,
                     footer: `${translations[guild.settings.language][1]}`
                 })
-            } else {
+            } else if (type == 'queue') {
                 translations.pl[0] = `${ef.emotes.markYes} Pomyślnie dodano utwór **${parsedSong.title}** do kolejki.\n\nUtwór z kanału: **${parsedSong.channel}**.`
                 translations.en[0] = `${ef.emotes.markYes} **${parsedSong.title}** successfully added to the queue. \n\nTrack from channel: **${parsedSong.channel}**.`
                 translations.ru[0] = `${ef.emotes.markYes} **${parsedSong.title}** успешно добавлен в очередь. \n\nВидео с канала: **${parsedSong.channel}**.`
@@ -204,6 +204,13 @@ exports.output = async ({message, guild, args}) => {
                     message: `${translations[guild.settings.language][0]}`,
                     thumbnail: url,
                     footer: `${translations[guild.settings.language][1]}`
+                })
+            } else {
+                ef.music.wakeUpLavalink()
+                return ef.models.send({
+                    object: message,
+                    message: `${ef.emotes.markNo} Waking up player. Please wait...`,
+                    color: ef.colors.red
                 })
             }
         })

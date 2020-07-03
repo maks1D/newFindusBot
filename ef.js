@@ -43,6 +43,7 @@ class ef extends Client {
             'HerokuCLIUserID',
             'HerokuCLIToken',
             'currentApp',
+            'youtubeAPI',
             'istest'
         ]
 
