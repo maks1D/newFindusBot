@@ -80,7 +80,7 @@ exports.init = async () => {
                     let keys = Object.keys(ef.queue)
 
                     for (let i = 0; i < keys.length; i++) {
-                        if (ef.queue[keys[i]].revoke === false) {
+                        if (ef.queue[keys[i]].revoke === true) {
                             if (ef.queue[keys[i]].nowPlaying !== '') {
                         
                                 let message = ef.queue[keys[i]].message

@@ -35,7 +35,7 @@ const play = async (song, message) => {
             return resolve('wakeup')
         }
 
-        if(!player) {
+        if(!player || ef.queue[message.guild.id].revoke === true) {
             player = await ef.player.join({
                 guild: message.guild.id,
                 channel: message.member.voiceChannel.id,
