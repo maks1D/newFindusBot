@@ -18,6 +18,15 @@ exports.output = async ({message, guild, args}) => {
         a = tmp
     }
  
+    if(a < -1000000000 || b > 1000000000)
+    {
+        ef.models.send({
+            object: message,
+            message: `Podaj liczby z przedziału [-1000000000, 1000000000]` // TODO: tłumaczenie  
+        });
+
+        return;
+    }
     var rng = await ef.utils.number.random(a, b)
     translations.pl[1] = `**Oto liczba którą wylosowałeś:** \`${rng}\``
     translations.en[1] = `**Here is the number you have drawn:** \`${rng}\``
