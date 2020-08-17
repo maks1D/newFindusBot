@@ -100,12 +100,12 @@ class ef extends Client {
 
             await new Promise(async (resolve, reject) => {
                 const result = await this.http.get(`https://${this.tokens.LavalinkHost_1}/loadtracks}`)
-                .catch(err => {
+                .catch(async err => {
                     if(err.status !== 503) {
                         this.tokens.LavalinkHost = this.tokens.LavalinkHost_1
                     } else {
                         const result = await this.http.get(`https://${this.tokens.LavalinkHost_2}/loadtracks}`)
-                        .catch(err => {
+                        .catch(async err => {
                             if(err.status !== 503) {
                                 this.tokens.LavalinkHost = this.tokens.LavalinkHost_2
                             } else {
