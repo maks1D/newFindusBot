@@ -36,10 +36,14 @@ exports.output = async ({message, args}) => {
     })
 
     for (i = 0; i < args.length - 1; i++) {
-        await poll.react(emojis[i])
+        try {
+            await poll.react(emojis[i])
+        } catch (e) {}
     }
 
-    return message.delete(1000)
+    try {
+        message.delete(1000)
+    } catch (e) {}
   }
   
   exports.data = {
@@ -54,6 +58,10 @@ exports.output = async ({message, args}) => {
             'type': 'text',
             'name': 'text'
         }
+    ],
+    botPerms: [
+        'ADD_REACTIONS',
+        'MANAGE_MESSAGES'
     ]
   }
   
