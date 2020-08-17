@@ -1,7 +1,7 @@
 const Canvas = require("canvas");
 const fs = require("fs");
-var frtnt = require("fortnite")
-var Fortnite = new frtnt(ef.tokens["fortniteapi"])
+//var frtnt = require("fortnite")
+//var Fortnite = new frtnt(ef.tokens["fortniteapi"])
 
 async function draw(Platform, Message, Data)
 {
@@ -190,7 +190,7 @@ async function draw(Platform, Message, Data)
 
 async function check(Username, Message, guild){
 
-    var Platforms = [["pc", "PC"], ["xbl", "Xbox"], ["psn", "PlayStation"]];
+    /*var Platforms = [["pc", "PC"], ["xbl", "Xbox"], ["psn", "PlayStation"]];
 
     var user = Username.split(' ')
 
@@ -262,7 +262,7 @@ async function check(Username, Message, guild){
                 require('../../../handlers/error')(Message, guild, err)
             }
         })
-    }
+    }*/
 }
 
 exports.output = async ({message, guild, args}) => {

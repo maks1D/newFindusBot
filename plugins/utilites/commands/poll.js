@@ -60,8 +60,7 @@ exports.output = async ({message, args}) => {
         }
     ],
     botPerms: [
-        'ADD_REACTIONS',
-        'MANAGE_MESSAGES'
+        'ADD_REACTIONS'
     ]
   }
   
