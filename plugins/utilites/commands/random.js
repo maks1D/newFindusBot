@@ -1,22 +1,12 @@
 exports.output = async ({message, args}) => {
 
-    args = args.join(' ')
-
-    if (!args.includes(",")) {
-        ef.models.send({
-            object: message,
-            message: `**You have drawn option 1:** \`${args[0]}\``
-        })
-        return
-    }
-
-    args = args.split(",")
+    args = args.join(' ').split(",");
 
     let id = await ef.utils.number.random(0, args.length - 1)
 
     ef.models.send({
         object: message,
-        message: `**You have drawn option ${id + 1}:** \`${args[id]}\``
+        message: `**You have drawn option ${id + 1}:** \`${args[id].trim()}\``
     })
   }
   
