@@ -104,7 +104,16 @@ class ef extends Client {
                     if(err.status !== 503) {
                         this.tokens.LavalinkHost = this.tokens.LavalinkHost_1
                     } else {
-                        this.tokens.LavalinkHost = this.tokens.LavalinkHost_2
+                        const result = await this.http.get(`https://${this.tokens.LavalinkHost_2}/loadtracks}`)
+                        .catch(err => {
+                            if(err.status !== 503) {
+                                this.tokens.LavalinkHost = this.tokens.LavalinkHost_2
+                            } else {
+                                console.log("Frozen own process (error on connection with Lavalink)") 
+                                while(true){}
+                            }
+                            return null
+                        })
                     }
                     return null
                 })
