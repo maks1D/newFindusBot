@@ -29,6 +29,8 @@ exports.init = async () => {
                             })
         
         let interval = setInterval(async () => {
+            await ef.player.connect()
+            
             const result = await ef.http.get(`https://${ef.tokens.LavalinkHost}/loadtracks}`)
             .catch(async err => {
                 if(err.status !== 503 && ef.player.nodes.get("1").connected === true) {
