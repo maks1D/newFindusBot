@@ -13,6 +13,8 @@ const play = async (song, message) => {
         ef.queue[message.guild.id].channel = message.channel.id
         ef.queue[message.guild.id].message = message
 
+//TODO: FIX MEMORY FORMULA SO IT WORKS
+
         if (ef.player.nodes.get("1").connected === false || ((ef.player.nodes.get("1").stats.memory.reservable - ef.player.nodes.get("1").stats.memory.allocated + ef.player.nodes.get("1").stats.memory.free) < 30000000)) {
             
             let parsedSong = Object.assign({
@@ -42,7 +44,7 @@ const play = async (song, message) => {
                 node: "1"
             }, { selfdeaf: true }).catch(e => {
                 console.log(e)
-                resolve('wakeup')
+                return resolve('wakeup')
             })
         }
 
@@ -79,6 +81,7 @@ const play = async (song, message) => {
             ef.queue[message.guild.id].nowPlaying = parsedSong
 
             player.once('end', async data => {
+
                 if(ef.queue[message.guild.id].loop) {
                     var song = ef.queue[message.guild.id].nowPlaying
                     song.req = "Loop"
@@ -101,7 +104,7 @@ const play = async (song, message) => {
                 } else {
                     setTimeout(() => {
                         play(next, message)
-                    }, 400)
+                    }, 1000)
     
                     var guilds = await ef.db.findDoc('servers')
                     var guild = 0
@@ -116,7 +119,6 @@ const play = async (song, message) => {
                         guild = {settings: {language: 'en'}}
                     }
     
-                    var player = await ef.player.players.get(message.guild.id)
                     const url = (next.url.startsWith("https://www.youtube.com/") ? `https://i.ytimg.com/vi/${next.url.replace("https://www.youtube.com/watch?v=", "")}/hqdefault.jpg` : ``)
                     var translations = {en: [], pl: [], ru: []}
                     translations.pl[0] = `${ef.emotes.markYes} Teraz odtwarzam: **${next.title}**.\n\Utwór z kanału: **${next.channel}**.`
