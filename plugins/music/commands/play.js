@@ -235,5 +235,6 @@ exports.data = {
             '{prefix}{command} <название песни / фильма на YouTube / ссылка на видео на YouTube>'
         ]
     },
-    voice: true
+    voice: true,
+    disable: true
 }

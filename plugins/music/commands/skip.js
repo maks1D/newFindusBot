@@ -102,5 +102,6 @@ exports.data = {
             '{prefix}{command} <номер трека в очереди>'
         ]
     },
-    voice: true
+    voice: true,
+    disable: true
 }

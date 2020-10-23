@@ -98,7 +98,7 @@ class ef extends Client {
 
             this.http = require('snekfetch')
 
-            await new Promise(async (resolve, reject) => {
+            /*await new Promise(async (resolve, reject) => {
                 const result = await this.http.get(`https://${this.tokens.LavalinkHost_1}/loadtracks}`)
                 .catch(async err => {
                     if(err.status !== 503) {
@@ -119,7 +119,7 @@ class ef extends Client {
                 })
         
                 resolve()
-            })
+            })*/
 
             this.eventHandler = new (require('./handlers/events.js'))(this)
 

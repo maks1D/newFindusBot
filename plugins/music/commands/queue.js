@@ -53,5 +53,6 @@ exports.data = {
     usage: [
         '{prefix}{command}'
     ],
-    voice: true
+    voice: true,
+    disable: true
 }

@@ -16,6 +16,6 @@ module.exports = {
   },
   author: 'Findus#7449',
   commands: commands,
-  devOnly: false,
-  hiddenInHelp: false
+  devOnly: true,
+  hiddenInHelp: true
 }

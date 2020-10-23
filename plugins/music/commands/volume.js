@@ -71,5 +71,6 @@ exports.data = {
             '{prefix}{command} earrape'
         ]
     },
-    voice: true
+    voice: true,
+    disable: true
 }

@@ -61,5 +61,6 @@ exports.data = {
         '{prefix}{command}',
         '{prefix}{command} <number of repeats>'
     ],
-    voice: true
+    voice: true,
+    disable: true
 }

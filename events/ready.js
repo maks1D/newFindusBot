@@ -2,7 +2,7 @@ module.exports = async () => {
     require('../handlers/plugins')()
     require('../handlers/presence')()
     require('../handlers/update')()
-    require('../handlers/player').init()
+    //require('../handlers/player').init()
     require('../handlers/dbupdate').init()
     require('../handlers/herokuhourlimit')()
     if(ef.tokens.istest == 'true') {
