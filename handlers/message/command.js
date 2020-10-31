@@ -86,6 +86,10 @@ module.exports = async (message, prefix, guild) => {
         })
     }
 
+    message.guild.fetchMember(message.author.id)
+
+    message.mentions.members.array().forEach(member => message.guild.fetchMember(member))
+
     let userPerms
     let botPerms
 
