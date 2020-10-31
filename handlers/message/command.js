@@ -86,8 +86,8 @@ module.exports = async (message, prefix, guild) => {
         })
     }
 
-    const userPerms
-    const botPerms
+    let userPerms
+    let botPerms
 
     try {
         userPerms = message.guild.members.get(message.author.id).permissions
