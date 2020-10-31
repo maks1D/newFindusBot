@@ -41,5 +41,5 @@ exports.data = {
         '{prefix}{command}'
     ],
     voice: true,
-    disable: true
+    disabled: true
 }

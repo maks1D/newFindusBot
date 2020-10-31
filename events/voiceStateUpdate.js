@@ -1,5 +1,5 @@
 module.exports = async (oldMem, newMem) => {
-    try{
+    /*try{
         let vC = oldMem.voiceChannelID
         let player = await ef.player.players.get(oldMem.guild.id)
         if (!player) return
@@ -26,7 +26,7 @@ module.exports = async (oldMem, newMem) => {
         }
     } catch(err) {
         console.log(err)
-    }
+    }*/
 }
 
   

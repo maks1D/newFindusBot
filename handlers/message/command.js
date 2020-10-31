@@ -86,8 +86,22 @@ module.exports = async (message, prefix, guild) => {
         })
     }
 
-    const userPerms = message.guild.members.get(message.author.id).permissions
-    const botPerms = message.guild.members.get(ef.user.id).permissions
+    const userPerms
+    const botPerms
+
+    try {
+        userPerms = message.guild.members.get(message.author.id).permissions
+        botPerms = message.guild.members.get(ef.user.id).permissions
+    } catch (e) {
+        if (command.data.userPerms.length > 0 || command.data.botPerms.length > 0) {
+            return ef.models.send({
+                object: message,
+                message: `Sorry, but permission check required to perform this command failed. Developer is working on fixing this issue.`,
+                color: ef.colors.red
+            })
+        }
+    }
+    
 
     if(command.data.userPerms.some(perm => !userPerms.has(perm)) && !ef.roles.developers.includes(message.author.id)) {
         const perm = command.data.userPerms.filter(perm => !userPerms.has(perm))[0]
@@ -114,6 +128,12 @@ module.exports = async (message, prefix, guild) => {
     }
 
     if (command.data.voice) {
+        return ef.models.send({
+            object: message,
+            message: `Because of issues with bot's player, music plugin is currently disabled. Developer is working on fixing this issue.`,
+            color: ef.colors.red
+        })
+
         if (!ef.queue) return
 
         if (ef.music.freeze === true) {
@@ -198,6 +218,7 @@ module.exports = async (message, prefix, guild) => {
     .catch(err => {
         return require('../error')(message, guild, err)
     })
+    
     if(ef.type != 'beta') {
         ef.models.send({
             channel: ef.channelsdb.logs,

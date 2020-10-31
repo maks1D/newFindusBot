@@ -236,5 +236,5 @@ exports.data = {
         ]
     },
     voice: true,
-    disable: true
+    disabled: true
 }
