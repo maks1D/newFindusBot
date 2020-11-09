@@ -11,15 +11,15 @@ exports.output = async ({message, guild, args}) => {
                 var channel
 
                 if(message.guild.channels.get(id)){
-                    channel = message.guild.channels.get(id).id
+                    channel = message.guild.channels.get(id)
                 } else if(message.guild.channels.get(args[1])) {
-                    channel = message.guild.channels.get(args[1]).id
+                    channel = message.guild.channels.get(args[1])
                 }
                 if(channel && channel.type === 'text'){
-                    ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.channel": channel}, 'servers')
-                    translations.pl[0] = `${ef.emotes.markYes}Pomyślnie ustawiono kanał na: <#${channel}>.`
-                    translations.en[0] = `${ef.emotes.markYes}The channel has been successfully set to: <#${channel}>.`
-                    translations.ru[0] = `${ef.emotes.markYes}Канал был успешно настроен на: <#${channel}>.`
+                    ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.channel": channel.id}, 'servers')
+                    translations.pl[0] = `${ef.emotes.markYes}Pomyślnie ustawiono kanał na: <#${channel.id}>.`
+                    translations.en[0] = `${ef.emotes.markYes}The channel has been successfully set to: <#${channel.id}>.`
+                    translations.ru[0] = `${ef.emotes.markYes}Канал был успешно настроен на: <#${channel.id}>.`
                     return ef.models.send({
                         object: message,
                         message: `${translations[guild.settings.language][0]}`
