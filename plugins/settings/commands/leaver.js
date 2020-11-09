@@ -15,7 +15,7 @@ exports.output = async ({message, guild, args}) => {
                 } else if(message.guild.channels.get(args[1])) {
                     channel = message.guild.channels.get(args[1]).id
                 }
-                if(channel){
+                if(channel && channel.type === 'text'){
                     ef.db.editDoc({'id': `${guild.id}`}, {"settings.leaver.channel": channel}, 'servers')
                     translations.pl[0] = `${ef.emotes.markYes}Pomyślnie ustawiono kanał na: <#${channel}>.`
                     translations.en[0] = `${ef.emotes.markYes}The channel has been successfully set to: <#${channel}>.`
