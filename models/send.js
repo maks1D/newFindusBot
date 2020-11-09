@@ -23,7 +23,7 @@ module.exports = async (data) => {
         .setThumbnail(data.thumbnail)
         .setImage(data.image)
         .setColor(data.color)
-        .setTitle(data.title)
+        .setTitle(data.title.slice(0,256))
         .setFooter(data.footer)
         .setAuthor(data.author[0], data.author[1])
         .setURL(data.url)
