@@ -137,3 +137,11 @@ class ef extends Client {
 }
 
 new ef({})
+
+process.on('unhandledRejection', e => {
+    console.log(e)
+})
+
+process.on('uncaughtException', e => {
+    console.log(e)
+})
