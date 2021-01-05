@@ -19,7 +19,7 @@ async function send(user, message, guild)  {
         translations.pl[0] = `Statystyki dla ${user}`
         translations.en[0] = `Stats for ${user}`
         translations.ru[0] = `Статистика для ${user}`
-        ef.models.send({
+        await ef.models.send({
             object: message,
             message: ``,
             image: `attachment://${user}.png`,
