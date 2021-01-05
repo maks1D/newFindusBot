@@ -4,7 +4,7 @@ var translations = {en: [], pl: [], ru: []}
 
 async function send(user, message, guild)  {
     const response = await ef.http.get(`${baseURL}${user}.png`)
-    fs.writeFileSync(`${__dirname}/trash.txt`, response.body)
+    fs.writeFileSync(`${__dirname}/${user}.png`, response.body)
     var data = fs.readFileSync(`${__dirname}/trash.txt`, 'utf8')
     if(data == "ensure==BadPlayerException"){
         translations.pl[0] = `${ef.emotes.markNo}Użytkownik nie istnieje!`
@@ -22,7 +22,7 @@ async function send(user, message, guild)  {
         ef.models.send({
             object: message,
             message: ``,
-            image: `${baseURL}${user}.png`,
+            image: `attachment://${user}.png`,
             footer: `${translations[guild.settings.language][0]}`
         })
     }
