@@ -124,9 +124,9 @@ module.exports = async (message, prefix, guild) => {
     if (command.data.botPerms.some(perm => !botPerms.has(perm))) {
         const perm = command.data.botPerms.filter(perm => !botPerms.has(perm))[0]
 
-        translations.pl[3] = `${ef.emotes.markNo}**${ef.user.username}** nie posiada następującego uprawnienia: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` ${botRolePerms.has(perm) ? `[w aktualnym kanale]` : ``}!`
-        translations.en[3] = `${ef.emotes.markNo}**${ef.user.username}** does not have the following permission: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` ${botRolePerms.has(perm) ? `[in current channel]` : ``}!`
-        translations.ru[3] = `${ef.emotes.markNo}**${ef.user.username}** не имеет следующего разрешения: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` ${botRolePerms.has(perm) ? `[в текущем канале]` : ``}!`
+        translations.pl[3] = `${ef.emotes.markNo}**${ef.user.username}** nie posiada następującego uprawnienia: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\`${botRolePerms.has(perm) ? ` [w aktualnym kanale]` : ``}!`
+        translations.en[3] = `${ef.emotes.markNo}**${ef.user.username}** does not have the following permission: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\`${botRolePerms.has(perm) ? ` [in current channel]` : ``}!`
+        translations.ru[3] = `${ef.emotes.markNo}**${ef.user.username}** не имеет следующего разрешения: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\`${botRolePerms.has(perm) ? ` [в текущем канале]` : ``}!`
         return ef.models.send({
             object: message,
             message: `${translations[guild.settings.language][3]}`,
