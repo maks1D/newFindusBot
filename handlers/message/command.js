@@ -92,10 +92,12 @@ module.exports = async (message, prefix, guild) => {
 
     let userPerms
     let botPerms
+    let botRolePerms
 
     try {
         userPerms = message.guild.members.get(message.author.id).permissions
-        botPerms = message.guild.members.get(ef.user.id).permissions
+        botPerms = message.channel.permissionsFor(message.guild.me)
+        botRolePerms = message.guild.members.get(ef.user.id).permissions
     } catch (e) {
         if (command.data.userPerms.length > 0 || command.data.botPerms.length > 0) {
             return ef.models.send({
@@ -109,9 +111,9 @@ module.exports = async (message, prefix, guild) => {
 
     if(command.data.userPerms.some(perm => !userPerms.has(perm)) && !ef.roles.developers.includes(message.author.id)) {
         const perm = command.data.userPerms.filter(perm => !userPerms.has(perm))[0]
-        translations.pl[2] = `${ef.emotes.markNo}Potrzebujesz uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\` aby użyć tej komendy!`
-        translations.en[2] = `${ef.emotes.markNo}You need \`${perm.replace(`_`,` `).toTitleCase()}\` permission to use this command!`
-        translations.ru[2] = `${ef.emotes.markNo}Вам нужно \`${perm.replace(`_`,` `).toTitleCase()}\` разрешение, чтобы использовать эту команду!`
+        translations.pl[2] = `${ef.emotes.markNo}Potrzebujesz uprawnienia: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` aby użyć tej komendy!`
+        translations.en[2] = `${ef.emotes.markNo}You need \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` permission to use this command!`
+        translations.ru[2] = `${ef.emotes.markNo}Вам нужно \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` разрешение, чтобы использовать эту команду!`
         return ef.models.send({
             object: message,
             message: `${translations[guild.settings.language][2]}`,
@@ -121,9 +123,10 @@ module.exports = async (message, prefix, guild) => {
 
     if (command.data.botPerms.some(perm => !botPerms.has(perm))) {
         const perm = command.data.botPerms.filter(perm => !botPerms.has(perm))[0]
-        translations.pl[3] = `${ef.emotes.markNo}**${ef.user.username}** nie posiada następującego uprawnienia: \`${perm.replace(`_`,` `).toTitleCase()}\`!`
-        translations.en[3] = `${ef.emotes.markNo}**${ef.user.username}** does not have the following permission: \`${perm.replace(`_`,` `).toTitleCase()}\`!`
-        translations.ru[3] = `${ef.emotes.markNo}**${ef.user.username}** не имеет следующего разрешения: \`${perm.replace(`_`,` `).toTitleCase()}\`!`
+
+        translations.pl[3] = `${ef.emotes.markNo}**${ef.user.username}** nie posiada następującego uprawnienia: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` ${botRolePerms.has(perm) ? `[w aktualnym kanale]` : ``}!`
+        translations.en[3] = `${ef.emotes.markNo}**${ef.user.username}** does not have the following permission: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` ${botRolePerms.has(perm) ? `[in current channel]` : ``}!`
+        translations.ru[3] = `${ef.emotes.markNo}**${ef.user.username}** не имеет следующего разрешения: \`${perm.replace(new RegExp(`_`, 'g'), ' ').toTitleCase()}\` ${botRolePerms.has(perm) ? `[в текущем канале]` : ``}!`
         return ef.models.send({
             object: message,
             message: `${translations[guild.settings.language][3]}`,
