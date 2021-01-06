@@ -36,13 +36,11 @@ exports.output = async ({message, args}) => {
     })
 
     for (i = 0; i < args.length - 1; i++) {
-        try {
-            await poll.react(emojis[i])
-        } catch (e) {}
+        await poll.react(emojis[i])
     }
 
     try {
-        message.delete(1000)
+        await message.delete(1000)
     } catch (e) {}
   }
   
@@ -60,7 +58,9 @@ exports.output = async ({message, args}) => {
         }
     ],
     botPerms: [
-        'ADD_REACTIONS'
+        'ADD_REACTIONS',
+        'READ_MESSAGE_HISTORY',
+        'USE_EXTERNAL_EMOJIS'
     ]
   }
   
