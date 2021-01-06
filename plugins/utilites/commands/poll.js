@@ -11,7 +11,10 @@ exports.output = async ({message, args}) => {
         })
         await poll.react(ef.emotes.markYesID)
         await poll.react(ef.emotes.markNoID)
-        return message.delete(1000).catch(e => {})
+        if (message.deletable)
+            message.delete(1000)
+        
+        return;
     }
 
     args = args.split(",")
@@ -39,8 +42,8 @@ exports.output = async ({message, args}) => {
         await poll.react(emojis[i])
     }
 
-
-    message.delete(1000).catch(e => {})
+    if (message.deletable)
+        message.delete(1000)
   }
   
   exports.data = {
