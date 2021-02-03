@@ -1,16 +1,50 @@
 const { Attachment } = require('discord.js')
+const canvas = require('canvas')
+const sizeOf = require('image-size')
 
-const baseURL = "https://gen.plancke.io/exp/";
+const planckeBaseURL = 'https://gen.plancke.io/exp/'
+const paniekBaseURL = 'https://hypixel.paniek.de/signature/'
+const mojangAPI = 'https://api.mojang.com/users/profiles/minecraft/'
 var translations = {en: [], pl: [], ru: []}
 
 exports.output = async ({message, guild, args}) => {
-    var user = args.join(' ');
+    let user = args[0]
+    let stats = args.length > 1 ? args[1] : 'general'
     translations.pl[0] = `${ef.emotes.markNo}Podaj poprawną nazwę użytkownika!`
     translations.en[0] = `${ef.emotes.markNo}Please enter a valid username!`
     translations.ru[0] = `${ef.emotes.markNo}Пожалуйста введите действительное имя пользователя!`
     if(/[^a-z0-9_]/i.test(user)) return ef.models.send({object: message, message: `${translations[guild.settings.language][0]}`, color: ef.colors.red})
     
-    const response = await ef.http.get(`${baseURL}${user}.png`);
+    let desiredEndpoint = ''
+
+    switch(stats) {
+        case 'general':
+            desiredEndpoint = 'general'
+            break;
+        case 'general-info':
+            desiredEndpoint = 'general-tooltip'
+            break;
+        case 'bedwars':
+            desiredEndpoint = 'bedwars'
+            break;
+        case 'duels':
+            desiredEndpoint = 'duels'
+            break;
+        case 'skywars':
+            desiredEndpoint = 'skywars?show_survived_players=true'
+            break;
+        case 'guild':
+            desiredEndpoint = 'guild/general'
+            break;
+        default:
+            return ef.models.send({
+                object: message,
+                message: `${ef.emotes.markNo}Select correct statistic to check!`,
+                color: ef.colors.red
+            })
+    }
+
+    const response = await ef.http.get(`${planckeBaseURL}${user}.png`);
 
     if(Buffer.from(response.body).toString('utf8') == "ensure==BadPlayerException"){
         translations.pl[0] = `${ef.emotes.markNo}Użytkownik nie istnieje!`
@@ -22,7 +56,23 @@ exports.output = async ({message, guild, args}) => {
             color: ef.colors.red
         })
     } else {
-        const file = new Attachment(response.body, `${user}.png`)
+        const mojangAPIResponse = await ef.http.get(`${mojangAPI}${user}`)
+
+        const UUID = mojangAPIResponse.body.id
+
+        const paniekAPIResponse = await ef.http.get(`${paniekBaseURL}${UUID}/${desiredEndpoint}`)
+
+        let img = new canvas.Image()
+        img.src = paniekAPIResponse.body
+
+        let can = canvas.createCanvas(img.width, img.height)
+        let ctx = can.getContext('2d')
+        ctx.fillStyle = '#ffffff'
+        ctx.fillRect(0, 0, img.width, img.height)
+        ctx.drawImage(img, 0, 0, img.width, img.height)
+        can.createPNGStream()
+
+        const file = new Attachment(can.createPNGStream(), `${user}.png`)
         
         translations.pl[0] = `Statystyki dla ${user}`
         translations.en[0] = `Stats for ${user}`
@@ -41,19 +91,19 @@ exports.output = async ({message, guild, args}) => {
 exports.data = {
     triggers: ['hypixelstats', 'hystat'],
     description: {
-        pl: 'Pokazuje poziom doświadczenia z serwera Hypixel w Minecraft.',
-        en: 'Shows the level of experience from the Hypixel server in Minecraft.',
-        ru: 'Показывает уровень опыта работы с сервером Hypixel в Minecraft.'
+        pl: 'Pokazuje wybrane statystyki użytkownika z serwera Hypixel w Minecraft.',
+        en: 'Shows desired user stats from the Hypixel server in Minecraft.',
+        ru: 'Показывает желаемую пользовательскую статистику с сервера Hypixel в Minecraft.'
     },
     usage: {
         pl: [
-            '{prefix}{command} <nazwa użytkownika w Minecraft>'
+            '{prefix}{command} <nazwa użytkownika w Minecraft> <general/general-info/bedwars/duels/skywars/guild>'
         ],
         en: [
-            '{prefix}{command} <Minecraft username>'
+            '{prefix}{command} <Minecraft username> <general/general-info/bedwars/duels/skywars/guild>'
         ],
         ru: [
-            '{prefix}{command} <Имя пользователя Minecraft>'
+            '{prefix}{command} <Имя пользователя Minecraft> <general/general-info/bedwars/duels/skywars/guild>'
         ]
     },
     args: {
