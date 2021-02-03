@@ -26,5 +26,5 @@ exports.data = {
     usage: [
         '{prefix}{command} <command>'
     ],
-    developer: true
+    developer: false
 }
