@@ -1,6 +1,5 @@
 const { Attachment } = require('discord.js')
 const canvas = require('canvas')
-const sizeOf = require('image-size')
 
 const planckeBaseURL = 'https://gen.plancke.io/exp/'
 const paniekBaseURL = 'https://hypixel.paniek.de/signature/'
